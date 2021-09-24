@@ -10,7 +10,7 @@ namespace DataAccessLayer.Abstract
         void Insert(T t);
         void Update(T t);
         void Delete(T t);
-        Task<List<T>> GetAll();
-        Task<T> GetById(int id);
+        List<T> GetAll();
+        T GetById(int id);
     }
 }
