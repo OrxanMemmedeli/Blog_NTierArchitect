@@ -12,32 +12,32 @@ namespace DataAccessLayer.Repositories
     public class GenericRepository<T> : IGenericDal<T> where T : class
     {
         BlogContext context = new BlogContext();
-        public async void Delete(T t)
+        public void Delete(T t)
         {
             context.Remove(t);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
-        public async Task<List<T>> GetAll()
+        public List<T> GetAll()
         {
-            return await context.Set<T>().ToListAsync();
+            return context.Set<T>().ToList();
         }
 
-        public async Task<T> GetById(int id)
+        public T GetById(int id)
         {
-            return await context.Set<T>().FindAsync(id);
+            return context.Set<T>().Find(id);
         }
 
-        public async void Insert(T t)
+        public void Insert(T t)
         {
-            await context.AddAsync(t);
-            await context.SaveChangesAsync();
+            context.Add(t);
+            context.SaveChanges();
         }
 
-        public async void Update(T t)
+        public void Update(T t)
         {
             context.Update(t);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
     }
 }
