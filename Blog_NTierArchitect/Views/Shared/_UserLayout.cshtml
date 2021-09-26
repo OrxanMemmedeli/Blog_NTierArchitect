@@ -2,7 +2,7 @@
 <html lang="zxx">
 
 <head>
-    <title>KhanBlog</title>
+    <title>@ViewBag.Title | KhanBlog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta name="keywords" content="Blog" />
@@ -30,20 +30,20 @@
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
                 <div class="col-md-4 logo text-left">
-                    <a class="navbar-brand" href="~/index.html">
-                        <i class="fab fa-linode"></i> Weblog
+                    <a class="navbar-brand" href="#">
+                        <i class="fab fa-linode"></i> KhanBlog
                     </a>
                 </div>
                 <div class="col-md-4 top-forms text-center mt-lg-3 mt-md-1 mt-0">
-                    <span>Welcome Back!</span>
+                    <span>Xoş gəlmisiniz!</span>
                     <span class="mx-lg-4 mx-md-2  mx-1">
                         <a href="~/login.html">
-                            <i class="fas fa-lock"></i> Sign In
+                            <i class="fas fa-lock"></i> Daxil ol
                         </a>
                     </span>
                     <span>
                         <a href="~/register.html">
-                            <i class="far fa-user"></i> Register
+                            <i class="far fa-user"></i> Qeydiyyat
                         </a>
                     </span>
                 </div>
@@ -52,13 +52,13 @@
                     <ul class="social_list1 mt-3">
 
                         <li>
-                            <a href="~/#" class="facebook1 mx-2">
+                            <a href="#" class="facebook1 mx-2">
                                 <i class="fab fa-facebook-f"></i>
 
                             </a>
                         </li>
                         <li>
-                            <a href="~/#" class="twitter2">
+                            <a href="#" class="twitter2">
                                 <i class="fab fa-twitter"></i>
 
                             </a>
@@ -90,14 +90,17 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">
-                                Home
+                                Əsas Səhifə
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="~/about.html">About</a>
+                            <a class="nav-link" href="">Haqqımda</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Blog">Məqalələr</a>
+                        </li>
+                        @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 Features
@@ -111,14 +114,14 @@
                                 <a class="dropdown-item" href="~/blog3.html">3 Column Blog</a>
 
                             </div>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link" href="~/contact.html">Contact</a>
+                            <a class="nav-link" href="">Əlaqə</a>
                         </li>
 
                     </ul>
                     <form action="#" method="post" class="form-inline my-2 my-lg-0 header-search">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search here..." name="Search" required="">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Burada axtarın ..." name="Search" required="">
                         <button class="btn btn1 my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                     </form>
 
