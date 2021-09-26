@@ -21,5 +21,16 @@ namespace Blog_NTierArchitect.Controllers
             var datas = _blogManager.GetAllWithRelationships();
             return View(datas);
         }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = _blogManager.GetById((int)id);
+            return View(blog);
+        }
     }
 }
