@@ -29,7 +29,7 @@ namespace Blog_NTierArchitect.Controllers
                 return NotFound();
             }
 
-            var blog = _blogManager.GetById((int)id);
+            var blog = _blogManager.GetBlogByID((int)id);
             return View(blog);
         }
     }

@@ -13,6 +13,7 @@ namespace BusinessLayer.Abstract
         List<Blog> GetAll();
         Blog GetById(int id);
         List<Blog> GetAllWithRelationships();
+        List<Blog> GetBlogByID(int id);
 
     }
 }
