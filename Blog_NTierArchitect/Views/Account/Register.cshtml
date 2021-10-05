@@ -1,0 +1,65 @@
+﻿@model EntityLayer.Concrete.Writer
+@{
+    ViewData["Title"] = "Qeydiyyat";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Əsas Səhifə</a>
+    </li>
+    <li class="breadcrumb-item active">Qeydiyyat</li>
+</ol>
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Müəllif Qeydiyyat Səhifəsi</h3>
+        <div class="inner-sec">
+            <div class="login p-5 bg-light mx-auto mw-100">
+                <form asp-action="Register" asp-controller="Account" method="post">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom01">Ad və Soyadınız</label>
+                            <input type="text" class="form-control" id="validationDefault01" asp-for="Name" placeholder="Ad və Soyadınız" required="" autocomplete="off">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom02">Email adresiniz</label>
+                            <input type="email" class="form-control" id="validationDefault02" asp-for="Email" placeholder="Email adresiniz" required="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1 mb-2">Şifrəniz</label>
+                            <input type="password" class="form-control" id="password1" asp-for="Password" placeholder="Şifrəniz" required="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword2 mb-2">Şifrənin təkrarı</label>
+                            <input type="password" class="form-control" id="password2" asp-for="ConfirmPassword" placeholder="Şifrənin təkrarı" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputPassword1 mb-2">Foto şəkliniz</label>
+                            <input type="text" class="form-control" id="password1" asp-for="Image" placeholder="" required="">
+                        </div>
+                    </div>
+                    <p>
+                        <a id="rules">Qaydaları oxudum və qəbul edirəm. (üzərinə kliklə)</a>
+                    </p>
+                    <button type="submit" class="btn btn-primary submit mb-4">Qeydiyyatdan keç</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+<script>
+    $('#rules').click(function () {
+        swal("Daxil etmis oldugunuz e-mail adresine melumat ve xeber tipli metn ve ya bənzəri məktublar göndəriləcəkdir. Əgər bu xiddətməd çıxmaq istəsəniz admin heyəti ilə əlaqə saxlamanız tələb olunacaqdır. Əlavə olaraq şifrəniz və email adresiniz bazada şifrələnmiş formada saxlanılacaqdır. ");
+    });
+</script>
