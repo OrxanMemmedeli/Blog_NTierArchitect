@@ -21,7 +21,7 @@ namespace Blog_NTierArchitect.Controllers
             _writerManager = new WriterManager(new EFWriterRepository());
             _writerValidator = new WriterValidator();
         }
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }        
