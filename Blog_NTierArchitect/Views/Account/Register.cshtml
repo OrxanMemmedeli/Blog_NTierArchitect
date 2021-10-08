@@ -18,30 +18,38 @@
         <div class="inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
                 <form asp-action="Register" asp-controller="Account" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">Ad və Soyadınız</label>
                             <input type="text" class="form-control" id="validationDefault01" asp-for="Name" placeholder="Ad və Soyadınız" required="" autocomplete="off">
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Email adresiniz</label>
-                            <input type="email" class="form-control" id="validationDefault02" asp-for="Email" placeholder="Email adresiniz" required="" autocomplete="off">
+                            <input type="email" class="form-control" id="validationDefault02" asp-for="Email" placeholder="Email adresiniz" required="" autocomplete="off">                      
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
+
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword1 mb-2">Şifrəniz</label>
                             <input type="password" class="form-control" id="password1" asp-for="Password" placeholder="Şifrəniz" required="">
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword2 mb-2">Şifrənin təkrarı</label>
                             <input type="password" class="form-control" id="password2" asp-for="ConfirmPassword" placeholder="Şifrənin təkrarı" required="">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="exampleInputPassword1 mb-2">Foto şəkliniz</label>
                             <input type="text" class="form-control" id="password1" asp-for="Image" placeholder="" required="">
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                     </div>
                     <p>
@@ -60,6 +68,6 @@
 <script src="~/Default/lib/jquery/dist/jquery.js"></script>
 <script>
     $('#rules').click(function () {
-        swal("Daxil etmis oldugunuz e-mail adresine melumat ve xeber tipli metn ve ya bənzəri məktublar göndəriləcəkdir. Əgər bu xiddətməd çıxmaq istəsəniz admin heyəti ilə əlaqə saxlamanız tələb olunacaqdır. Əlavə olaraq şifrəniz və email adresiniz bazada şifrələnmiş formada saxlanılacaqdır. ");
+        swal("Sistemə qeydiyyat şərtləri","Daxil etmis oldugunuz e-mail adresine melumat ve xeber tipli metn ve ya bənzəri məktublar göndəriləcəkdir. Əgər bu xiddətməd çıxmaq istəsəniz admin heyəti ilə əlaqə saxlamanız tələb olunacaqdır. Əlavə olaraq şifrəniz və email adresiniz bazada şifrələnmiş formada saxlanılacaqdır. ");
     });
 </script>
