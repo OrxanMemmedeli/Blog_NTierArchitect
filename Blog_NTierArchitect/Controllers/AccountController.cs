@@ -1,9 +1,11 @@
-﻿using BusinessLayer.Concrete;
+﻿using Blog_NTierArchitect.Models;
+using BusinessLayer.Concrete;
 using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +26,24 @@ namespace Blog_NTierArchitect.Controllers
         public IActionResult Login()
         {
             return View();
-        }        
-        
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
+            List<City> citys = new List<City>(){
+                new City { ID = 1, Name = "Bakı"},
+                new City { ID = 2, Name = "Oğuz"},
+                new City { ID = 3, Name = "Şəki"},
+                new City { ID = 4, Name = "Qəbələ"},
+                new City { ID = 5, Name = "Sumqayət"},
+                new City { ID = 6, Name = "Şamaxı"},
+                new City { ID = 7, Name = "Xızı"},
+                new City { ID = 8, Name = "Quba"},
+            };
+
+            ViewData["CityID"] = new SelectList(citys, "ID", "Name");
+
             return View();
         }
 

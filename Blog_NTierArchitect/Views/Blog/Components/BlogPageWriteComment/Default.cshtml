@@ -1,0 +1,13 @@
+﻿
+<div class="comment-top">
+    <h4>Yorum yaz</h4>
+    <div class="comment-bottom">
+        <form asp-action="WriteComment" asp-controller="Comment" method="post">
+            <input type="hidden" name="id" value="@TempData["CommentBlogID"]" />
+            <input class="form-control" type="text" name="Name" placeholder="Ad və Soyadınız" required="" autocomplete="off">
+            <input class="form-control" type="text" name="Subject" placeholder="Başlıq" required="" autocomplete="off">
+            <textarea class="form-control" name="Message" placeholder="Mesajınız..." required=""></textarea>
+            <button type="submit" class="btn btn-primary submit">Göndər</button>
+        </form>
+    </div>
+</div>
