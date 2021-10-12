@@ -32,5 +32,6 @@ namespace Blog_NTierArchitect.Controllers
             var blog = _blogManager.GetBlogByID((int)id);
             return View(blog);
         }
+
     }
 }

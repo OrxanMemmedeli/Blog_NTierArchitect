@@ -24,7 +24,7 @@ namespace BusinessLayer.Validations
                 .Matches("[A-Z]").WithMessage("Şifrədə ən azı 1 BÖYÜK simvol olmalıdır (nümunə Aa123!!)")
                 .Matches("[a-z]").WithMessage("Şifrədə ən azı 1 KİÇİK simvol olmalıdır (nümunə Aa123!!)")
                 .Matches("[0-9]").WithMessage("Şifrədə ən azı 1 RƏQƏM olmalıdır (nümunə Aa123!!)")
-                .Matches("[^a-zA-Z0-9]").WithMessage("Şifrədə tələblərə uyğun olmalıdır. (nümunə Aa123!!)"); ;
+                .Matches("[^a-zA-Z0-9]").WithMessage("Şifrədə xüsusi simvollar olmalıdır. (nümunə Aa123!!)");
             RuleFor(x => x.ConfirmPassword)
                 .NotEmpty().WithMessage("Şifrənin təkrarı boş ola bilməz")
                 .MinimumLength(6).WithMessage("Şifrə minimum 6 simvol ola bilər. (nümunə Aa123!!)")

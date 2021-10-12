@@ -10,8 +10,8 @@ namespace DataAccessLayer.Concrete.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
-            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
         }
 
 
@@ -21,6 +21,7 @@ namespace DataAccessLayer.Concrete.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Writer> Writers { get; set; }
+        public DbSet<NewsLetter> NewsLetters{ get; set; }
 
     }
 
