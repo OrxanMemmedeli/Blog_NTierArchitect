@@ -1,9 +1,12 @@
-﻿
+﻿<div class="tech-btm">
+    <img src="~/images/email-newsletters-for-marketers.png" class="img-fluid" alt="newsletters" />
+</div>
+
 <div class="tech-btm">
     <h4>Email bülletenimizə üzv olun</h4>
     <p>Blogdakı bütün məqalələr emailinə gəlsin. </p>
     <form asp-action="Subscribe" asp-controller="NewsLetter" method="post">
-        <input type="hidden" name="id" value="@TempData["SubscribeID"]"/>
+        <input type="hidden" name="id" value="@TempData["SubscribeID"]" />
         <input type="email" placeholder="Email" required="" name="Email">
         <input type="submit" value="Abone ol">
     </form>

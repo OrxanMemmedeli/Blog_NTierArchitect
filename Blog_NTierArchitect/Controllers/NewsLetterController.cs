@@ -19,7 +19,7 @@ namespace Blog_NTierArchitect.Controllers
         }
 
         [HttpPost]
-        public IActionResult Subscribe(string Email, int id)
+        public IActionResult Subscribe(string Email, int? id)
         {
             NewsLetter newsLetter = new NewsLetter();
             newsLetter.Email = Email;
@@ -27,7 +27,12 @@ namespace Blog_NTierArchitect.Controllers
             _newsLetterManager.NewsLetterAdd(newsLetter);
 
             TempData["SubscribeSuccess"] = "Mail adresiniz sisteme uğurla qeyd edildi. Abone olduğunuz üçün təşəkkür edirik.";
-            return Redirect("/Blog/Details/"+id);
+            if (id != null)
+            {
+                return Redirect("/Blog/Details/" + id);
+            }
+            return Redirect("/About");
+            
         }
     }
 }
