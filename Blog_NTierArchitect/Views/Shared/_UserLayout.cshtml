@@ -30,7 +30,7 @@
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
                 <div class="col-md-4 logo text-left">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="/">
                         <i class="fab fa-linode"></i> KhanBlog
                     </a>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/">
                                 Əsas Səhifə
                                 <span class="sr-only">(current)</span>
                             </a>
@@ -142,12 +142,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-                        <h3>About US</h3>
-                        <p>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. lacinia eget consectetur sed, convallis at tellus..</p>
-                        <div class="read">
-                            <a href="~/single.html" class="btn btn-primary read-m">Read More</a>
-                        </div>
+                        @await Component.InvokeAsync("UserLayoutFooter_About")
                     </div>
+
                     <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
 
                         <div class="tech-btm">
@@ -213,17 +210,8 @@
                     </div>
                     <!-- subscribe -->
                     <div class="col-lg-4 subscribe-main footer-grid-agileits-w3ls text-left">
-                        <h2>Signup to our newsletter</h2>
-                        <div class="subscribe-main text-left">
-                            <div class="subscribe-form">
-                                <form action="#" method="post" class="subscribe_form">
-                                    <input class="form-control" type="email" placeholder="Enter your email..." required="">
-                                    <button type="submit" class="btn btn-primary submit">Submit</button>
-                                </form>
-                                <div class="clearfix"> </div>
-                            </div>
-                            <p>We respect your privacy.No spam ever!</p>
-                        </div>
+                        @await Component.InvokeAsync("BlogPageMailSubscribe")
+                        <p>Məxfiliyinizə hörmət edirik və adresinizi ikinci bir tərəf ilə paylaşmırıq</p>
                         <!-- //subscribe -->
                     </div>
                 </div>
@@ -262,10 +250,9 @@
                     </div>
                     <div class="w3layouts-agile-copyrightbottom">
                         <p>
-                            © 2018 Weblog. All Rights Reserved | Design by
+                            © @DateTime.Now.Year KhanBlog. All Rights Reserved | Design by
                             <a href="http://w3layouts.com/">W3layouts</a>
                         </p>
-
                     </div>
                 </div>
 
