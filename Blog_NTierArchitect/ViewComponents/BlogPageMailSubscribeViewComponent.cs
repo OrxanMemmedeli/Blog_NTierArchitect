@@ -11,7 +11,7 @@ namespace Blog_NTierArchitect.ViewComponents
     public class BlogPageMailSubscribeViewComponent : ViewComponent
     {
 
-        public IViewComponentResult Invoke(int id)
+        public IViewComponentResult Invoke(int? id)
         {
             TempData["SubscribeID"] = id;
             return View();
