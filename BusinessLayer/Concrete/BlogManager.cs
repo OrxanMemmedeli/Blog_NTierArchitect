@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -54,6 +55,11 @@ namespace BusinessLayer.Concrete
         public Blog GetById(int id)
         {
             return _blogDal.GetById(id);
+        }
+
+        public List<Blog> GetLastThreePosts()
+        {
+            return _blogDal.GetAll().OrderByDescending(x => x.CreatedDate).Take(3).ToList();
         }
     }
 }

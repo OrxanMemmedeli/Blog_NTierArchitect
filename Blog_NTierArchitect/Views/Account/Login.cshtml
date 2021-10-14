@@ -9,15 +9,15 @@
         <h3 class="tittle">Müəllif - Daxil Ol</h3>
         <div class="row inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
-                <form asp-action="Login" asp-controller="Account" method="post">
+                <form asp-action="Login" asp-controller="Account" method="post" asp-route-returnUrl="@ViewBag.ReturnUrl">
                     <div class="form-group">
                         <label for="exampleInputEmail1 mb-2">Email ünvanınız</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email ünvanınız" required="">
+                        <input name="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email ünvanınız" required="">
                         <small id="emailHelp" class="form-text text-muted">Email ünvanınızı ikinci bir şəxlə heç vaxt paylaşmayacağıq.</small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1 mb-2">Şifrəniz</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Şifrəniz" required="">
+                        <input name="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Şifrəniz" required="">
                     </div>
                     <div class="form-check mb-2">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -31,3 +31,12 @@
     </div>
 </section>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["LoginMessage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["LoginMessage"].ToString()))");
+    </script>
+}
