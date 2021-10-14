@@ -1,32 +1,99 @@
 ﻿using Blog_NTierArchitect.Models;
 using BusinessLayer.Concrete;
 using BusinessLayer.Validations;
+using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Blog_NTierArchitect.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly WriterManager _writerManager;
         private readonly WriterValidator _writerValidator;
-
+        private readonly BlogContext _context;
         public AccountController()
         {
             _writerManager = new WriterManager(new EFWriterRepository());
             _writerValidator = new WriterValidator();
+            _context = new BlogContext();
         }
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                if (Url.IsLocalUrl(ViewBag.ReturnUrl))
+                {
+                    return Redirect(ViewBag.ReturnUrl);
+                }
+                else
+                {
+                    return Redirect("/Admin");
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(Writer writer, string returnUrl)
+        {
+
+            var user = _context.Writers.SingleOrDefault(u => u.Email == writer.Email && u.Password == writer.Password && u.Status == true);
+
+            if (user != null)
+            {
+
+                var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, user.Email), // İstifadeci adini yaxalamaq ucun
+                            //new Claim(ClaimTypes.Role, user.Role) //Role imkanlari yaratmaq ucun 
+                        };
+
+                var useridentity = new ClaimsIdentity(claims, "Login");
+                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(useridentity);
+
+                HttpContext.SignInAsync(claimsPrincipal);
+
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return Redirect("/Blog");
+                }
+            }
+
+
+            TempData["LoginMessage"] = "Uğursuz əməliyat";
+
+            return View();
+        }
+
+        public IActionResult Denied()
         {
             return View();
         }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
 
         [HttpGet]
         public IActionResult Register()

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.Concrete.Context
 {
-    class BlogContext : DbContext
+    public class BlogContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,7 +21,7 @@ namespace DataAccessLayer.Concrete.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Writer> Writers { get; set; }
-        public DbSet<NewsLetter> NewsLetters{ get; set; }
+        public DbSet<NewsLetter> NewsLetters { get; set; }
 
     }
 

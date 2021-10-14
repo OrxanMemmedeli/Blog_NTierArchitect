@@ -1,7 +1,10 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +28,24 @@ namespace Blog_NTierArchitect
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+            {
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                o.LoginPath = "/Account/Login";
+                o.LogoutPath = "/Account/LogOut";
+                o.AccessDeniedPath = "/Account/Denied"; //Role uygun olmadiqda yonelmeni temin edecekdir.
+                o.SlidingExpiration = true;
+            });
+
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }); // all controller check for login 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +62,7 @@ namespace Blog_NTierArchitect
                 app.UseHsts();
             }
             //app.UseStatusCodePages(); // Ag sehifede error kodunu yazmaq
-            app.UseStatusCodePagesWithReExecute("/ErrorPage/Index","?code{0}");
+            app.UseStatusCodePagesWithReExecute("/ErrorPage/Index", "?code{0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -49,6 +70,7 @@ namespace Blog_NTierArchitect
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
