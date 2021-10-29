@@ -24,7 +24,7 @@ namespace Blog_NTierArchitect.Controllers
             NewsLetter newsLetter = new NewsLetter();
             newsLetter.Email = Email;
 
-            _newsLetterManager.NewsLetterAdd(newsLetter);
+            _newsLetterManager.Add(newsLetter);
 
             TempData["SubscribeSuccess"] = "Mail adresiniz sisteme uğurla qeyd edildi. Abone olduğunuz üçün təşəkkür edirik.";
             if (id != null)

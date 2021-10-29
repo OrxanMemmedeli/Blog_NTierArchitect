@@ -17,19 +17,14 @@ namespace BusinessLayer.Concrete
             _blogDal = blogDal;
         }
 
-        public void BlogAdd(Blog t)
+        public void Add(Blog t)
         {
             _blogDal.Insert(t);
         }
 
-        public void BlogDelete(Blog t)
+        public void Delete(Blog t)
         {
             _blogDal.Delete(t);
-        }
-
-        public void BlogUpdate(Blog t)
-        {
-            _blogDal.Update(t);
         }
 
         public List<Blog> GetAll()
@@ -60,6 +55,11 @@ namespace BusinessLayer.Concrete
         public List<Blog> GetLastThreePosts()
         {
             return _blogDal.GetAll().OrderByDescending(x => x.CreatedDate).Take(3).ToList();
+        }
+
+        public void Update(Blog t)
+        {
+            _blogDal.Update(t);
         }
     }
 }

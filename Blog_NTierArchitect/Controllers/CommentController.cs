@@ -32,7 +32,7 @@ namespace Blog_NTierArchitect.Controllers
             comment.Content = Message;
             comment.BlogID = id;
 
-            _commentManager.CommentAdd(comment);
+            _commentManager.Add(comment);
 
             TempData["CommentSuccess"] = "Şərhiniz qeyde alınmışdır. Şərh üçün təşəkkür edirik.";
             return Redirect("/Blog/Details/" + id);

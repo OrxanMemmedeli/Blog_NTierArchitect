@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BusinessLayer.Abstract
 {
-    public interface IAboutService
+    public interface IAboutService : IGenericService<About>
     {
-        List<About> GetAll();
     }
 }

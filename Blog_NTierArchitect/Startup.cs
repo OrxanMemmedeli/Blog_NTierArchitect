@@ -74,6 +74,11 @@ namespace Blog_NTierArchitect
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute(
+                    name: "area",
+                    pattern: "{area}/{controller=Blog}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Blog}/{action=Index}/{id?}");

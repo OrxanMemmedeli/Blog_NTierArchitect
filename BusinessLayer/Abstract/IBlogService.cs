@@ -5,16 +5,11 @@ using System.Text;
 
 namespace BusinessLayer.Abstract
 {
-    interface IBlogService
+    interface IBlogService : IGenericService<Blog>
     {
-        void BlogAdd(Blog t);
-        void BlogUpdate(Blog t);
-        void BlogDelete(Blog t);
-        List<Blog> GetAll();
-        Blog GetById(int id);
         List<Blog> GetAllWithRelationships();
         List<Blog> GetAllWithByWriter(int id);
         List<Blog> GetBlogByID(int id);
-
+        List<Blog> GetLastThreePosts();
     }
 }
