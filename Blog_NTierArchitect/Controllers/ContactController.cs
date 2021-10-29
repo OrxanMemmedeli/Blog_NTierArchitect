@@ -25,7 +25,7 @@ namespace Blog_NTierArchitect.Controllers
         [HttpPost]
         public IActionResult Index(Contact model)
         {
-            _contactManager.ContactAdd(model);
+            _contactManager.Add(model);
 
             TempData["MessageSuccess"] = "Mesajınız qeyde alınmışdır. Mesaj üçün təşəkkür edirik.";
             return View();

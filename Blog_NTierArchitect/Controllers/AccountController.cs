@@ -122,7 +122,7 @@ namespace Blog_NTierArchitect.Controllers
             {
                 writer.Status = true;
                 writer.About = "Haqqında məlumat yaz";
-                _writerManager.WriterAdd(writer);
+                _writerManager.Add(writer);
                 return RedirectToAction("Index", "Blog");
             }
             else
