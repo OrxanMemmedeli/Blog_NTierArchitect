@@ -14,8 +14,8 @@ namespace EntityLayer.Concrete
         public string Content { get; set; }
         public string ThumbnailImage { get; set; }
         public string Image { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public bool Status { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public bool Status { get; set; } = true;
 
         public int CategoryID { get; set; }
         public int WriterID { get; set; }

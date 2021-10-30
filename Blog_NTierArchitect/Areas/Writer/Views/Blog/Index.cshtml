@@ -4,66 +4,76 @@
     ViewData["Title"] = "Bloglar";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Sizin Bloglar</h4>
-        <p class="card-description">
-            <a asp-action="Create" class="btn btn-primary">Yeni Blog</a>
-        </p>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Başlıq
-                    </th>
-                    <th>
-                        Mətn
-                    </th>
-                    <th>
-                        Şəkil(icon)
-                    </th>
-                    <th>
-                        Şəkil
-                    </th>
-                    <th>
-                        Yaradılma tarixi
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @item.Title
-                        </td>
-                        <td style="max-width: 400px;word-break: break-all; white-space: normal;">
-                            @item.Content
-                        </td>
-                        <td>
-                            @item.ThumbnailImage
-                        </td>
-                        <td>
-                            @item.Image
-                        </td>
-                        <td>
-                            @item.CreatedDate.ToShortDateString()
-                        </td>
-                        <td>
-                            @item.Status
-                        </td>
-                        <td style="font-size:20px">
-                            
-                            <a asp-action="Edit" asp-route-id="@item.ID" class="text-warning" title="Düzəliş et"><i class="mdi mdi-table-edit"></i> </a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID" class="text-danger" title="Sil"><i class="mdi mdi-delete"></i> </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+
+<h4 class="card-title">Sizin Bloglar</h4>
+<p class="card-description">
+    <a asp-action="Create" class="btn btn-primary">Yeni Blog</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Başlıq
+            </th>
+            <th>
+                Mətn
+            </th>
+            <th>
+                Şəkil(icon)
+            </th>
+            <th>
+                Şəkil
+            </th>
+            <th>
+                Yaradılma tarixi
+            </th>
+            <th>
+                Kateqoriya
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td style="max-width: 400px;word-break: break-all; white-space: normal;">
+                    @item.Content
+                </td>
+                <td>
+                    @item.ThumbnailImage
+                </td>
+                <td>
+                    @item.Image
+                </td>
+                <td>
+                    @item.CreatedDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.CategoryID
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="text-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Passiv</span>
+                    }
+                </td>
+                <td style="font-size:20px">
+
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="text-warning" title="Düzəliş et"><i class="mdi mdi-table-edit"></i> </a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="text-danger" title="Sil"><i class="mdi mdi-delete"></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
