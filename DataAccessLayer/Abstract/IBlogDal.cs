@@ -8,5 +8,6 @@ namespace DataAccessLayer.Abstract
     public interface IBlogDal : IGenericDal<Blog>
     {
         List<Blog> GetAllWithRelationships();
+        List<Blog> GetAllWithRelationshipsByWriter(int id);
     }
 }

@@ -56,16 +56,16 @@
                     @item.CreatedDate.ToShortDateString()
                 </td>
                 <td>
-                    @item.CategoryID
+                    @item.Category.Name
                 </td>
                 <td>
                     @if (item.Status)
                     {
-                        <span class="text-success">Aktiv</span>
+                        <span class="badge badge-success">Aktiv</span>
                     }
                     else
                     {
-                        <span class="text-danger">Passiv</span>
+                        <span class="badge badge-danger">Passiv</span>
                     }
                 </td>
                 <td style="font-size:20px">

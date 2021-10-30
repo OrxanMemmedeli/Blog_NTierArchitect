@@ -40,7 +40,7 @@ namespace Blog_NTierArchitect.Controllers
                 }
                 else
                 {
-                    return Redirect("/Admin");
+                    return Redirect("/Writer");
                 }
             }
             return View();

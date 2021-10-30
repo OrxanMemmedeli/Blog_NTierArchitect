@@ -2,6 +2,7 @@
 using BusinessLayer.Validations;
 using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
+using DataAccessLayer.EntityFramework.NewFolder;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -17,26 +18,35 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     public class BlogController : Controller
     {
         private readonly BlogManager _blogManager;
+        private readonly CategoryManager _categoryManager;
         private readonly BlogValidator _blogValidator;
-        private readonly BlogContext _context;
+        //private readonly BlogContext _context;
 
         public BlogController()
         {
             _blogManager = new BlogManager(new EFBlogRepository());
+            _categoryManager = new CategoryManager(new EFCategoryRepository());
             _blogValidator = new BlogValidator();
-            _context = new BlogContext();
+            //_context = new BlogContext();
         }
 
         public IActionResult Index()
         {
-            var blogsByWriter = _blogManager.GetAllWithByWriter(1);
+            var blogsByWriter = _blogManager.GetAllWithRelationshipsByWriter(1);
             return View(blogsByWriter);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name");
+            //ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name");
+            List<SelectListItem> items = (from x in _categoryManager.GetAll()
+                                          select new SelectListItem
+                                          {
+                                              Text = x.Name,
+                                              Value = x.ID.ToString()
+                                          }).ToList();
+            ViewData["CategoryID"] = items;
             return View();
         }
 
