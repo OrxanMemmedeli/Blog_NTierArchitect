@@ -66,5 +66,17 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             _blogManager.Add(blog);
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = _blogManager.GetById((int)id);
+            _blogManager.Delete(blog);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
