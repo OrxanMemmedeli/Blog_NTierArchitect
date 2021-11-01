@@ -11,6 +11,6 @@ namespace BusinessLayer.Abstract
         List<Blog> GetAllWithRelationshipsByWriter(int id);
         List<Blog> GetAllWithByWriter(int id);
         List<Blog> GetBlogByID(int id);
-        List<Blog> GetLastThreePosts();
+        List<Blog> GetLastPosts(int count);
     }
 }

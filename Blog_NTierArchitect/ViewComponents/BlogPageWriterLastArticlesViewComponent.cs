@@ -19,7 +19,7 @@ namespace Blog_NTierArchitect.ViewComponents
 
         public  IViewComponentResult Invoke(int? id=1)
         {
-            var blogs = _blogManager.GetAllWithByWriter((int)id);
+            var blogs = _blogManager.GetAllWithByWriter((int)id).OrderByDescending(c => c.CreatedDate).Take(5);
             return View(blogs);
         }
     }
