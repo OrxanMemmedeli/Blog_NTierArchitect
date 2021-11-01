@@ -71,55 +71,83 @@
                 <td style="font-size:20px">
 
                     <a asp-action="Edit" asp-route-id="@item.ID" class="text-warning" title="Düzəliş et"><i class="mdi mdi-table-edit"></i> </a> |
-                    <button type="submit" class="text-danger ajax_delete" title="Sil" onclick="Delete(@item.ID)"><i class="mdi mdi-delete"></i> </button>
+                    <a class="text-danger" title="Sil" onclick="Delete(@item.ID)"><i class="mdi mdi-delete"></i> </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+    <script>
+        function Delete(id) {
+
+            swal({
+                title: "Silmək isdədiyinizdən əminsinizmi?",
+                text: "Silmə əməliyatı nəticəsində məlumat bir dəfəlik siliməcəkdir!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sil",
+                cancelButtonText: "Ləğv et",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }.then(okay => {
+                if (okay) {
+                    window.location.href = "~/Writer/Delete/" + id;
+                } else {
+                    swal("Ləğv edildi", "Məlumat silinmədi", "error");
+                }
+
+
+            };
+
+        //$(".ajax_delete").on("click", function () {
+        //    swal({
+        //        title: "Silmək isdədiyinizdən əminsinizmi?",
+        //        text: "Silmə əməliyatı nəticəsində məlumat bir dəfəlik siliməcəkdir!",
+        //        type: "warning",
+        //        showCancelButton: true,
+        //        confirmButtonColor: "#DD6B55",
+        //        confirmButtonText: "Sil",
+        //        cancelButtonText: "Ləğv et",
+        //        closeOnConfirm: false,
+        //        closeOnCancel: false
+        //    }.then(okay => {
+        //        if (okay) {
+        //            window.location.href = "~/Writer/Delete/" + id;
+        //        } else {
+        //            swal("Ləğv edildi", "Məlumat silinmədi", "error");
+        //        }
+        //})
+    </script>*@
 
 <script>
     function Delete(id) {
-
-        swal({
-            title: "Silmək isdədiyinizdən əminsinizmi?",
-            text: "Silmə əməliyatı nəticəsində məlumat bir dəfəlik siliməcəkdir!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Sil",
-            cancelButtonText: "Ləğv et",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        }.then(okay => {
-            if (okay) {
-                window.location.href = "~/Writer/Delete/" + id;
-            } else {
-                swal("Ləğv edildi", "Məlumat silinmədi", "error");
-            }
-
-
-        };
-
-    //$(".ajax_delete").on("click", function () {
-    //    swal({
-    //        title: "Silmək isdədiyinizdən əminsinizmi?",
-    //        text: "Silmə əməliyatı nəticəsində məlumat bir dəfəlik siliməcəkdir!",
-    //        type: "warning",
-    //        showCancelButton: true,
-    //        confirmButtonColor: "#DD6B55",
-    //        confirmButtonText: "Sil",
-    //        cancelButtonText: "Ləğv et",
-    //        closeOnConfirm: false,
-    //        closeOnCancel: false
-    //    }.then(okay => {
-    //        if (okay) {
-    //            window.location.href = "~/Writer/Delete/" + id;  
-    //        } else {
-    //            swal("Ləğv edildi", "Məlumat silinmədi", "error");
-    //        }
-    //})
+        var url = "/Writer/Blog/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Writer/Index', '_self');
+        }
+    };
 </script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["DeleteBlog"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteBlog"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditBlog"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditBlog"].ToString()))");
+    </script>
+}
