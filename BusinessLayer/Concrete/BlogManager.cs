@@ -57,9 +57,9 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetById(id);
         }
 
-        public List<Blog> GetLastThreePosts()
+        public List<Blog> GetLastPosts(int count)
         {
-            return _blogDal.GetAll().OrderByDescending(x => x.CreatedDate).Take(3).ToList();
+            return _blogDal.GetAll().OrderByDescending(x => x.CreatedDate).Take(count).ToList();
         }
 
         public void Update(Blog t)

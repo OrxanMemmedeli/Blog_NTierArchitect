@@ -17,7 +17,7 @@ namespace Blog_NTierArchitect.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var LastThreeBlogs = _blogManager.GetLastThreePosts();
+            var LastThreeBlogs = _blogManager.GetLastPosts(3);
             return View(LastThreeBlogs);
         }
     }
