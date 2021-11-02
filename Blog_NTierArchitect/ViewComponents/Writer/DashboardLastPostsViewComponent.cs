@@ -14,7 +14,7 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 
         public DashboardLastPostsViewComponent()
         {
-            _blogManager = new BlogManager(new EFBlogRepository()); ;
+            _blogManager = new BlogManager(new EFBlogRepository()); 
         }
 
         public IViewComponentResult Invoke()
