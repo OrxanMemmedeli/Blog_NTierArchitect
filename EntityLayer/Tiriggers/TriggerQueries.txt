@@ -1,0 +1,21 @@
+﻿create Trigger AddBlogIDInScoreTable
+on Blogs
+after insert 
+as
+declare @Id int
+Select @Id = ID from inserted
+Insert into BlogScores (BlogID,Total,ScoreCount)
+Values (@Id,0,0)
+
+++--------------------------------------------------++
+
+create trigger AddScoreWhenAddNewComment
+on Comments
+After insert
+as
+Declare @Id int
+Declare @Score int
+Declare @Count int
+Select @Id=BlogID, @Score=Score from inserted
+update BlogScores set Total = Total + @Score, ScoreCount += 1
+where BlogID = @Id

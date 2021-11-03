@@ -32,6 +32,7 @@
     <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Areas\Writer\Data\" />
     <Folder Include="Areas\Writer\Models\" />
+    <Folder Include="Homework3\" />
   </ItemGroup>
 
 </Project>
