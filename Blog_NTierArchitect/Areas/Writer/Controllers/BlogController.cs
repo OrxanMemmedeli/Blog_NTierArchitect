@@ -2,7 +2,6 @@
 using BusinessLayer.Validations;
 using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
-using DataAccessLayer.EntityFramework.NewFolder;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;

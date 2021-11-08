@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -23,12 +24,7 @@ namespace BusinessLayer.Concrete
 
         public void Delete(Comment t)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Comment> GetAll(int id)
-        {
-            return _commentDal.GetAll(x => x.BlogID == id);
+            _commentDal.Delete(t);
         }
 
         public List<Comment> GetAll()
@@ -36,14 +32,19 @@ namespace BusinessLayer.Concrete
             return _commentDal.GetAll();
         }
 
+        public List<Comment> GetAll(Expression<Func<Comment, bool>> Filter)
+        {
+            return _commentDal.GetAll(Filter);
+        }
+
         public Comment GetById(int id)
         {
-            throw new NotImplementedException();
+            return _commentDal.GetById(id);
         }
 
         public void Update(Comment t)
         {
-            throw new NotImplementedException();
+            _commentDal.Update(t);
         }
     }
 }

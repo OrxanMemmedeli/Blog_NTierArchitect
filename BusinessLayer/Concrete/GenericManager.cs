@@ -2,6 +2,7 @@
 using DataAccessLayer.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -21,22 +22,27 @@ namespace BusinessLayer.Concrete
 
         public void Delete(T t)
         {
-            throw new NotImplementedException();
+            _genericDal.Delete(t);
         }
 
         public List<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _genericDal.GetAll();
+        }
+
+        public List<T> GetAll(Expression<Func<T, bool>> Filter)
+        {
+            return _genericDal.GetAll(Filter);
         }
 
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return _genericDal.GetById(id);
         }
 
         public void Update(T t)
         {
-            throw new NotImplementedException();
+            _genericDal.Update(t);
         }
     }
 }

@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -23,17 +24,22 @@ namespace BusinessLayer.Concrete
 
         public void Delete(Writer t)
         {
-            throw new NotImplementedException();
+            _writerDal.Delete(t);
         }
 
         public List<Writer> GetAll()
         {
-            throw new NotImplementedException();
+            return _writerDal.GetAll();
+        }
+
+        public List<Writer> GetAll(Expression<Func<Writer, bool>> Filter)
+        {
+            return _writerDal.GetAll(Filter);
         }
 
         public Writer GetById(int id)
         {
-            throw new NotImplementedException();
+            return _writerDal.GetById(id);
         }
 
         public List<Writer> GetWritersByID(int id)
@@ -43,7 +49,7 @@ namespace BusinessLayer.Concrete
 
         public void Update(Writer t)
         {
-            throw new NotImplementedException();
+            _writerDal.Update(t);
         }
     }
 }

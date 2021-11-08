@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.EntityFramework.NewFolder;
+using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

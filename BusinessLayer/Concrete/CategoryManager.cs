@@ -1,9 +1,10 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
-using DataAccessLayer.EntityFramework.NewFolder;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,11 @@ namespace BusinessLayer.Concrete
         public List<Category> GetAll()
         {
             return _categoryDal.GetAll();
+        }
+
+        public List<Category> GetAll(Expression<Func<Category, bool>> Filter)
+        {
+            return _categoryDal.GetAll(Filter);
         }
 
         public Category GetById(int id)

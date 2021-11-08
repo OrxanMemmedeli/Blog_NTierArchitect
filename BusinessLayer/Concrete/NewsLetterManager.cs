@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -23,22 +24,27 @@ namespace BusinessLayer.Concrete
 
         public void Delete(NewsLetter t)
         {
-            throw new NotImplementedException();
+            _newsLetterDal.Delete(t);
         }
 
         public List<NewsLetter> GetAll()
         {
-            throw new NotImplementedException();
+            return _newsLetterDal.GetAll();
+        }
+
+        public List<NewsLetter> GetAll(Expression<Func<NewsLetter, bool>> Filter)
+        {
+            return _newsLetterDal.GetAll(Filter);
         }
 
         public NewsLetter GetById(int id)
         {
-            throw new NotImplementedException();
+            return _newsLetterDal.GetById(id);
         }
 
         public void Update(NewsLetter t)
         {
-            throw new NotImplementedException();
+            _newsLetterDal.Update(t);
         }
     }
 }
