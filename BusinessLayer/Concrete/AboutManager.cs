@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -18,12 +19,12 @@ namespace BusinessLayer.Concrete
 
         public void Add(About t)
         {
-            throw new NotImplementedException();
+            _aboutDal.Insert(t);
         }
 
         public void Delete(About t)
         {
-            throw new NotImplementedException();
+            _aboutDal.Delete(t);
         }
 
         public List<About> GetAll()
@@ -31,14 +32,19 @@ namespace BusinessLayer.Concrete
             return _aboutDal.GetAll();
         }
 
+        public List<About> GetAll(Expression<Func<About, bool>> Filter)
+        {
+            return _aboutDal.GetAll(Filter);
+        }
+
         public About GetById(int id)
         {
-            throw new NotImplementedException();
+            return _aboutDal.GetById(id);
         }
 
         public void Update(About t)
         {
-            throw new NotImplementedException();
+            _aboutDal.Update(t);
         }
     }
 }

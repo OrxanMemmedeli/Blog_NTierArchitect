@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BusinessLayer.Concrete
@@ -30,6 +31,11 @@ namespace BusinessLayer.Concrete
         public List<Blog> GetAll()
         {
             return _blogDal.GetAll();
+        }
+
+        public List<Blog> GetAll(Expression<Func<Blog, bool>> Filter)
+        {
+            return _blogDal.GetAll(Filter);
         }
 
         public List<Blog> GetAllWithByWriter(int id)
