@@ -1,0 +1,56 @@
+﻿@model EntityLayer.Concrete.Notification
+
+@{
+    ViewData["Title"] = "Yeni Bildiriş";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h4>Yeni Bildiriş</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Bildiriş Tipi</label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Bildiriş mətni</label>
+                <input asp-for="Details" class="form-control" />
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Bildiriş Simvolu</label>
+                <input asp-for="Symbol" class="form-control" />
+                <a href="/Admin/Notification/Icons" target="_blank">simvollara keçid</a>
+                <span asp-validation-for="Symbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Bildiriş rəngi</label>
+                <input asp-for="Color" class="form-control" type="color"/>
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> Bildiriş Statusu
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Bildiriş tarixi</label>
+                <input asp-for="NotificationDate" class="form-control" type="date" />
+                <span asp-validation-for="NotificationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
