@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Notification>
+
+@{
+    ViewData["Title"] = "Bildirişlər";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tip
+            </th>
+            <th>
+                Simvol
+            </th>
+            <th>
+                Mətn
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Tarix
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="border: 4px solid @item.Color">
+                <td>
+                    @item.Type
+                </td>
+                <td>
+                    <i class="@item.Symbol"></i>
+                </td>
+                <td>
+                    @item.Details
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Passiv</span>
+                    }
+                </td>
+                <td>
+                    ~ @(Math.Round((DateTime.Now - item.NotificationDate).TotalDays, 0)) gün əvvəl
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

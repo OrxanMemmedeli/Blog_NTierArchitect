@@ -5,7 +5,7 @@
     @foreach (var item in Model)
     {
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item preview-item">
+        <a href="/Writer/Notification" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
                 <div class="preview-icon" style="background-color:@item.Color">
                     <i class="@item.Symbol"></i>
@@ -19,5 +19,6 @@
     }
 
     <div class="dropdown-divider"></div>
-    <h6 class="p-3 mb-0 text-center">Bütün Bildirişlər</h6>
+    <a href="/Writer/Notification"><h6 class="p-3 mb-0 text-center">Bütün Bildirişlər</h6></a>
+    
 </div>
