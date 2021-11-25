@@ -36,6 +36,11 @@ namespace BusinessLayer.Concrete
             return _messageDal.GetAll(Filter);
         }
 
+        public List<Message> GetAllWithWriter(Expression<Func<Message, bool>> filter)
+        {
+            return _messageDal.GetAllWithWriter(filter);
+        }
+
         public Message GetById(int id)
         {
             return _messageDal.GetById(id);
