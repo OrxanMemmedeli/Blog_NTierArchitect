@@ -46,9 +46,15 @@ namespace BusinessLayer.Concrete
             return _messageDal.GetById(id);
         }
 
+        public Message GetOneWithWriter(Expression<Func<Message, bool>> filter)
+        {
+            return _messageDal.GetOneWithWriter(filter);
+        }
+
         public void Update(Message t)
         {
             _messageDal.Update(t);
         }
+
     }
 }

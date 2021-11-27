@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Message>
+
+@{
+    ViewData["Title"] = "Göndərilmiş Mesajlar";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h4 class="card-title">Göndərilmiş Mesajlar</h4>
+
+<p class="card-description">
+    <a asp-action="Create" class="btn btn-primary">Yeni Mesaj</a>
+    <a asp-action="Inbox" class="btn btn-dark">Gələn Mesajlar</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Başlıq
+            </th>
+            <th>
+                Mesaj mətni
+            </th>
+            <th>
+                Göndərilmə Tarixi
+            </th>
+            <th>
+                Göndərilən şəxs
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @item.CreatedDate.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiverUser.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID" class="text-primary" title="Ətraflı baxış"><i class="mdi mdi-information"></i> </a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

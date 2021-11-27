@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blog_NTierArchitect.ViewComponents.Writer
 {
+
     public class MessageViewComponent : ViewComponent
     {
         private readonly MessageManager _messageManager;
@@ -19,7 +20,7 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 
         public IViewComponentResult Invoke()
         {
-            int id = 2;
+            int id = 1;
             var messages = _messageManager.GetAllWithWriter(x => x.ReceiverID == id && x.Status == true);
             ViewBag.MessageCount = messages.Count();
             return View(messages);

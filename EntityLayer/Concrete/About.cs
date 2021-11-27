@@ -14,6 +14,6 @@ namespace EntityLayer.Concrete
         public string ImageFirst { get; set; }
         public string ImageSecond { get; set; }
         public string MyLocation { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
     }
 }
