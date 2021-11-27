@@ -18,7 +18,7 @@ namespace BusinessLayer.Validations
             RuleFor(x => x.Content)
                 .NotEmpty().WithMessage("Mətn hissəsi boş ola bilməz")
                 .MinimumLength(10).WithMessage("Mətn hissəsi ən az 10 simvol ola bilər")
-                .MaximumLength(1000).WithMessage("Mətn hissəsi ən çox 100 simvol ola bilər");
+                .MaximumLength(1000).WithMessage("Mətn hissəsi ən çox 1000 simvol ola bilər");
 
             RuleFor(x => x.Image)
                 .NotEmpty().WithMessage("Şəkil hissəsi boş ola bilməz");
