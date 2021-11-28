@@ -17,6 +17,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     public class BlogController : Controller
     {
         private readonly BlogManager _blogManager;
+        private readonly WriterManager _writerManager;
         private readonly CategoryManager _categoryManager;
         private readonly BlogValidator _blogValidator;
         //private readonly BlogContext _context;
@@ -24,6 +25,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         public BlogController()
         {
             _blogManager = new BlogManager(new EFBlogRepository());
+            _writerManager = new WriterManager(new EFWriterRepository());
             _categoryManager = new CategoryManager(new EFCategoryRepository());
             _blogValidator = new BlogValidator();
             //_context = new BlogContext();
@@ -31,7 +33,8 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
 
         public IActionResult Index()
         {
-            var blogsByWriter = _blogManager.GetAllWithRelationshipsByWriter(1);
+            var writerID = _writerManager.GetWriter(User.Identity.Name).ID;
+            var blogsByWriter = _blogManager.GetAllWithRelationshipsByWriter(writerID);
             return View(blogsByWriter);
         }
 
@@ -68,7 +71,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 ViewData["CategoryID"] = categories;
                 return View(blog);
             }
-            blog.WriterID = 1;
+            blog.WriterID = _writerManager.GetWriter(User.Identity.Name).ID;
             _blogManager.Add(blog);
             return RedirectToAction(nameof(Index));
         }

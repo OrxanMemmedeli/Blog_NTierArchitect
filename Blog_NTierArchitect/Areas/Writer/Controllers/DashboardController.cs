@@ -13,18 +13,21 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     {
         private readonly BlogManager _blogManager;
         private readonly CategoryManager _categoryManager;
+        private readonly WriterManager _writerManager;
+
 
         public DashboardController()
         {
             _blogManager = new BlogManager(new EFBlogRepository());
             _categoryManager = new CategoryManager(new EFCategoryRepository());
+            _writerManager = new WriterManager(new EFWriterRepository());
         }
 
         public IActionResult Index()
         {
             ViewBag.TotalBlog = _blogManager.GetAll().Count();
             ViewBag.TotalCategory = _categoryManager.GetAll().Count();
-            ViewBag.BlogsByWriter = _blogManager.GetAllWithByWriter(1).Count();
+            ViewBag.BlogsByWriter = _blogManager.GetAllWithByWriter(_writerManager.GetWriter(User.Identity.Name).ID).Count();
             return View();
         }
     }
