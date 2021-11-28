@@ -32,7 +32,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         [HttpGet]
         public IActionResult Profil()
         {
-            WriterDataUpdate writer = _writerManager.GetById(1);
+            WriterDataUpdate writer = _writerManager.GetById(_writerManager.GetWriter(User.Identity.Name).ID);
             return View(writer);
         }
 

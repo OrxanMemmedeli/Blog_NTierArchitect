@@ -14,22 +14,24 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     {
         private readonly MessageManager _messageManager;
         private readonly MessageValidator _messageValidator;
+        private readonly WriterManager _writerManager;
         public MessageController()
         {
             _messageManager = new MessageManager(new EFMessageRepository());
             _messageValidator = new MessageValidator();
+            _writerManager = new WriterManager(new EFWriterRepository());
         }
 
         public IActionResult Inbox()
         {
-            int id = 1;
+            int id = _writerManager.GetWriter(User.Identity.Name).ID;
             var messages = _messageManager.GetAllWithWriter(x => x.ReceiverID == id);
             return View(messages);
         }
 
         public IActionResult SentMessages()
         {
-            int id = 1;
+            int id = _writerManager.GetWriter(User.Identity.Name).ID;
             var messages = _messageManager.GetAllWithWriter(x => x.SenderID == id);
             return View(messages);
         }
