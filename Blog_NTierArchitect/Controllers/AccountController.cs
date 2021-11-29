@@ -73,7 +73,7 @@ namespace Blog_NTierArchitect.Controllers
                 }
                 else
                 {
-                    return Redirect("/Blog");
+                    return Redirect("/Writer/Dashboard");
                 }
             }
 
@@ -91,7 +91,7 @@ namespace Blog_NTierArchitect.Controllers
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Login","Account");
         }
 
 
