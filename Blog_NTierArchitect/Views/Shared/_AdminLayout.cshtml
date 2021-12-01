@@ -17,6 +17,14 @@
     <link href="~/admin/css/animate.css" rel="stylesheet">
     <link href="~/admin/css/style.css" rel="stylesheet">
 
+    <link href="~/admin/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/admin/font-awesome/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/admin/font-awesome/css/fontawesome.css" rel="stylesheet" />
+
+    @*<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>*@
+
 </head>
 
 <body>
@@ -51,6 +59,10 @@
                             <li><a href="index.html">Dashboard v.1</a></li>
                         </ul>
                     </li>
+                    <li class="active">
+                        <a href="/Admin/Category"><i class="fa fa-bell"></i> <span class="nav-label">Kateqoriyalar</span></a>
+                    </li>
+
                     <li class="active">
                         <a href="/Admin/Notification"><i class="fa fa-bell"></i> <span class="nav-label">Bildirişlər</span></a>
                     </li>
@@ -202,7 +214,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox ">
-                            <div class="ibox-content text-center p-md">
+                            <div class="ibox-content p-md">
                                 @RenderBody()
                             </div>
                         </div>

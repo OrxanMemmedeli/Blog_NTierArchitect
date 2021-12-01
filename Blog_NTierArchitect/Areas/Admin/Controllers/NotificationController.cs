@@ -35,6 +35,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Notification notification)
         {
             ValidationResult results = _validator.Validate(notification);
