@@ -1,0 +1,65 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<EntityLayer.Concrete.Category>
+
+@{
+    ViewData["Title"] = "Kateqoriyalar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Yeni Kateqoriya</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kateqoriya
+            </th>
+            <th>
+                Açıqlama
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Desctiption)
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Passiv</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş Et"><i class="fas fa-edit test" style="color:green"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fas fa-trash-alt" style="color:red"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                    new PagedListRenderOptions
+                    {
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" }
+                    }
+               )
