@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tools.Conrete;
 using X.PagedList;
 
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
@@ -17,11 +18,12 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     {
         private readonly CategoryManager _categoryManager;
         private readonly CategoryValidator _validator;
-
+        private readonly ExcelExport<Category> _excelExport;
         public CategoryController()
         {
             _categoryManager = new CategoryManager(new EFCategoryRepository());
             _validator = new CategoryValidator();
+            _excelExport = new ExcelExport<Category>();
         }
 
         public IActionResult Index(int page = 1)
@@ -69,6 +71,15 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             
             _categoryManager.Delete(category);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ExportDataToExcel()
+        {
+            List<Category> categories = _categoryManager.GetAll();
+
+            var content =  _excelExport.ExportToExcel(categories);
+
+            return File(content, "application/vdn.openxmlformats-officedocument.spreadsheetml.sheet", "Cateqoriyalar-Admin.xlsx");
         }
     }
 }
