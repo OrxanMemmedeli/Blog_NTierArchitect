@@ -57,6 +57,6 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return View();
         }
 
-        //public void ()
+        
     }
 }
