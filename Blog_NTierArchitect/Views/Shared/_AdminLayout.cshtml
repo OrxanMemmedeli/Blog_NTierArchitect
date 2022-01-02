@@ -25,7 +25,7 @@
     @*<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>*@
-    <script src="~/admin/js/jquery-3.1.1.min.js"></script>
+
 </head>
 
 <body>
@@ -236,7 +236,7 @@
 
 
     <!-- Mainly scripts -->
- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/admin/js/popper.min.js"></script>
     <script src="~/admin/js/bootstrap.js"></script>
     <script src="~/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -248,6 +248,7 @@
 
     <script src="~/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
+    @RenderSectionAsync("Scripts")
 
 </body>
 
