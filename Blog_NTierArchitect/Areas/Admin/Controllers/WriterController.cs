@@ -36,5 +36,14 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             var jsonFormat = JsonConvert.SerializeObject(writer);
             return Json(jsonFormat);
         }
+
+        public IActionResult Create(EntityLayer.Concrete.Writer writer)
+        {
+            return Json(writer);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
