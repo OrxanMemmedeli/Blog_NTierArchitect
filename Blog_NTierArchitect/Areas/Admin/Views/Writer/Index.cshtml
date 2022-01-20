@@ -32,7 +32,6 @@
         </tr>
     </thead>
     <tbody id="writerList">
-
     </tbody>
 </table>
 
@@ -50,6 +49,20 @@
     </div>
 </div>
 
+
+<div style=" background-color:lightgoldenrodyellow; padding:15px">
+    <p>
+        <button type="button" id="btnGetByID" class="btn btn-bitbucket">Yazar gətir</button>
+    </p>
+    <h3>ID-yə uyğun yazarın gətirilməsi  </h3>
+    <input type="number" name="id" class="form-control" placeholder="yazar ID" id="writerID" />
+    <br />
+    <div class="col-lg-12">
+        <div class="contact-box" id="getByID">
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -85,9 +98,11 @@
                     let writer = jQuery.parseJSON(data);
                     //console.log(writer);
                     let table = `<a class="row" href="/Admin/Writer/Edit/${writer.ID}"><div class="col-4"><div class="text-center"><img alt="image" class="rounded-circle m-t-xs img-fluid" src="${writer.Image}"><div class="m-t-xs font-bold">${writer.Status}</div></div></div><div class="col-8"><h3><strong>${writer.Name}</strong></h3><p>${writer.Email}</p><address>${writer.About}</address></div></a>`;
+
                     $("#getByID").html(table);
                 }
             })
         });
     </script>
 }
+
