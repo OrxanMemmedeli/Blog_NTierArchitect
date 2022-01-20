@@ -29,5 +29,12 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             var jsonList = JsonConvert.SerializeObject(writers);
             return Json(jsonList);
         }
+
+        public IActionResult GetWriter(int id)
+        {
+            var writer = _writerManager.GetById(id);
+            var jsonFormat = JsonConvert.SerializeObject(writer);
+            return Json(jsonFormat);
+        }
     }
 }
