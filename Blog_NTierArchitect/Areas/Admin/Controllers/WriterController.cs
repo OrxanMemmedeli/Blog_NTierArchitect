@@ -1,9 +1,14 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,9 +18,14 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     public class WriterController : Controller
     {
         private readonly WriterManager _writerManager;
-        public WriterController()
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly WriterValidator _validator;
+
+        public WriterController(IWebHostEnvironment webHostEnvironment)
         {
             _writerManager = new WriterManager(new EFWriterRepository());
+            _webHostEnvironment = webHostEnvironment;
+            _validator = new WriterValidator();
         }
 
         public IActionResult Index()
@@ -37,13 +47,40 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return Json(jsonFormat);
         }
 
-        public IActionResult Create(EntityLayer.Concrete.Writer writer)
+        [HttpPost]
+        public IActionResult Create(EntityLayer.Concrete.Writer writer, IFormFile Picture)
         {
-            return Json(writer);
+            ValidationResult results = _validator.Validate(writer);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(writer);
+            }
+            if (Picture != null)
+            {
+                UploadImage(writer, Picture);
+            }
+
+            _writerManager.Add(writer);
+            return RedirectToAction(nameof(Index));
         }
-        public IActionResult Create()
+
+        private void UploadImage(EntityLayer.Concrete.Writer writer, IFormFile Picture)
         {
-            return View();
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string extension = Path.GetExtension(Picture.FileName);
+            string newImageName = Guid.NewGuid() + extension;
+            string path = Path.Combine(wwwRootPath, "UploadImages", newImageName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                writer.Image = "/UploadImages/" + newImageName;
+                Picture.CopyTo(fileStream);
+            }
+
         }
     }
 }

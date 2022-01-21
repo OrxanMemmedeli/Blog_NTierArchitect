@@ -44,6 +44,9 @@
 
 @section Scripts {
     <script>
+        import { json } from "d3";
+import { data } from "jquery";
+
         window.onload = function () {
             $.ajax({
                 contentType: "application/json",
@@ -81,6 +84,68 @@
                 }
             })
         });
+
+        //$("#btnWriterPost").click(function () {
+        //    let writerA = {
+        //        Name: $("#Name").val(),
+        //        Status: $("#Status").val(),
+        //        Email: $("#Email").val(),
+        //        Password: $("#Password").val(),
+        //        ConfirmPassword: $("#ConfirmPassword").val(),
+        //        About: $("#About").val(),
+        //    };
+
+        //    var myfile = document.getElementById("Picture");
+        //    var formData = new FormData();
+        //    if (myfile.files.length > 0) {
+        //        for (var i = 0; i < myfile.files.length; i++) {
+        //            formData.append('file-' + i, myfile.files[i]);
+        //        }
+        //    }
+
+        //    $.ajax({
+        //        type: "post",
+        //        url: "/Admin/Writer/Create",
+        //        data: { writer: writerA, Picture: formData },
+        //        success: function () {
+        //            alert("Yazar əlavə edildi.")
+        //        },
+        //    });
+        //})
+
+        $("#writerCreateForm").on('submit', function (e) {
+            console.log(e);
+            e.preventDefault();
+            console.log(e);
+            console.log(new FormData(this));
+
+            $.ajax({
+                type: "post",
+                url: "/Admin/Writer/Create",
+                data: new FormData(this),
+                dataType: "json",
+                contentType: false,
+                cache: false,
+                beforeSend: function () {
+                    $('#btnWriterPost').attr("disabled", "disabled");
+                    $('#writerCreateForm').css("opacity", ".5");
+                },
+                success: function (responce) {
+                    let data = jQuery.parseJSON(responce);
+                    alert(data);
+                },
+            });
+        });
+
+        //file type validation
+        //$("#Picture").change(function () {
+        //    var file = this.files[0];
+        //    var fileType = file.type;
+        //    var match = ["image/jpeg", "image/png", "image/jpg"];
+        //    if (!((fileType == match[0]) || (fileType == match[1]) || (fileType == match[2]))) {
+        //        alert("Seçilmiş fayl tipi 'jpeg, png və jpg' olmalıdır.")
+        //    }
+        //})
     </script>
 }
-
+ 
