@@ -48,7 +48,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(EntityLayer.Concrete.Writer writer, IFormFile Picture)
+        public IActionResult Create(EntityLayer.Concrete.Writer writer)
         {
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
@@ -59,26 +59,26 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 }
                 return View(writer);
             }
-            if (Picture != null)
+            if (writer.Picture != null)
             {
-                UploadImage(writer, Picture);
+                UploadImage(writer);
             }
 
             _writerManager.Add(writer);
             return RedirectToAction(nameof(Index));
         }
 
-        private void UploadImage(EntityLayer.Concrete.Writer writer, IFormFile Picture)
+        private void UploadImage(EntityLayer.Concrete.Writer writer)
         {
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            string extension = Path.GetExtension(Picture.FileName);
+            string extension = Path.GetExtension(writer.Picture.FileName);
             string newImageName = Guid.NewGuid() + extension;
             string path = Path.Combine(wwwRootPath, "UploadImages", newImageName);
 
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 writer.Image = "/UploadImages/" + newImageName;
-                Picture.CopyTo(fileStream);
+                writer.Picture.CopyTo(fileStream);
             }
 
         }
