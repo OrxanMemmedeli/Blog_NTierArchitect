@@ -115,9 +115,7 @@
         $("#btnWriterPost").on('click', function (evt) {
             evt.preventDefault();
 
-            console.log(evt);
-
-            let writerA = {
+            var writer = {
                 Name: $("#Name").val(),
                 Status: $("#Status").val(),
                 Email: $("#Email").val(),
@@ -126,17 +124,17 @@
                 About: $("#About").val(),
                 Picture: document.getElementById("Picture").files[0],
             };
-            console.log(writerA);
-
-            var fdata = new FormData();
-            fdata.append("Writer", writerA);
+            console.log(JSON.stringify(writer));
 
             $.ajax({
                 type: "post",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                traditional: true,
+                //processData: false,
+                data: JSON.stringify(writer),
                 url: "/Admin/Writer/Create",
-                data: fdata,
-                processData: false,
-                contentType: false,
+
                 beforeSend: function () {
                     $('#btnWriterPost').attr("disabled", "disabled");
                     $('#writerCreateForm').css("opacity", ".5");
@@ -145,6 +143,9 @@
                     let data = jQuery.parseJSON(responce);
                     alert(data);
                 },
+                error: function (e, t, x) {
+                    alert(t);
+                }
             });
         });
 
