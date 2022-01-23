@@ -51,7 +51,7 @@ namespace Blog_NTierArchitect.Controllers
         public IActionResult Login(Writer writer, string returnUrl)
         {
 
-            var user = _context.Writers.SingleOrDefault(u => u.Email == writer.Email && u.Password == writer.Password && u.Status == true);
+            var user = _context.Writers.FirstOrDefault(u => u.Email == writer.Email && u.Password == writer.Password && u.Status == true);
 
             if (user != null)
             {
