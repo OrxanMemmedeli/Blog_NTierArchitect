@@ -57,6 +57,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+
                 return View(writer);
             }
             if (writer.Picture != null)
