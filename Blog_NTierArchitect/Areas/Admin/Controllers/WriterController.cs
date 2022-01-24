@@ -51,14 +51,14 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         public IActionResult Create(EntityLayer.Concrete.Writer writer)
         {
             ValidationResult results = _validator.Validate(writer);
-            List<string> errors = new List<string>(); 
+            List<string> errors = new List<string>();
             if (!results.IsValid)
             {
                 foreach (var item in results.Errors)
                 {
                     errors.Add(item.ErrorMessage);
                 }
- 
+
                 return Json(JsonConvert.SerializeObject(errors));
             }
             if (writer.Picture != null)
@@ -84,6 +84,41 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 writer.Picture.CopyTo(fileStream);
             }
 
+        }
+
+        private void DeleteImage(string imageName)
+        {
+            if (imageName != null)
+            {
+                string path = Path.Combine(_webHostEnvironment.WebRootPath, "UploadImages", imageName);
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo != null)
+                {
+                    System.IO.File.Delete(path);
+                    fileInfo.Delete();
+                }
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var writer = _writerManager.GetById((int)id);
+            if (writer == null)
+            {
+                return NotFound();
+            }
+            if (writer.Image != null)
+            {
+                DeleteImage(writer.Image.Substring(writer.Image.LastIndexOf("/") + 1));
+            }
+            _writerManager.Delete(writer);
+            return Json(null);
         }
     }
 }
