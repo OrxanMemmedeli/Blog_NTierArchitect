@@ -46,8 +46,7 @@
 
     <script>
 
-
-        window.onload = function () {
+        function GetAllWriters() {
             $.ajax({
                 contentType: "application/json",
                 dataType: "json",
@@ -59,13 +58,19 @@
                     let bodyRows = "";
 
                     $.each(writers, (index, value) => {
-                        bodyRows += `<tr><td><img src="${value.Image}" style="width:50px; height:50px" /></td><td>${value.Name}</td><td>${value.Email}</td><td>${value.Status}</td><td>${value.About}</td><td><a href="/Admin/Writer/Edit/${value.ID}" title="Düzəliş Et"><i class="fa fa-edit test" style="color:green"></i></a> | <a href="/Admin/Writer/Delete/${value.ID}" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash-alt" style="color:red"></i></a></td></tr >`;
+                        bodyRows += `<tr><td><img src="${value.Image}" style="width:50px; height:50px" /></td><td>${value.Name}</td><td>${value.Email}</td><td>${value.Status}</td><td>${value.About}</td><td><a href="/Admin/Writer/Edit/${value.ID}" title="Düzəliş Et"><i class="fa fa-edit test" style="color:green"></i></a> | <a href="/Admin/Writer/Delete/${value.ID}" title="Sil" onclick="DeleteWriter(${value.ID})"><i class="fa fa-trash-alt" style="color:red"></i></a></td></tr >`;
                     });
 
                     $("#writerList").html(bodyRows);
                 },
             });
+        }
+
+        window.onload = function () {
+            GetAllWriters();
         };
+
+
 
         $('#btnGetByID').click(x => {
             let id = $('#writerID').val();
@@ -145,7 +150,7 @@
                     }
                     else {
                         alert("Məlumat əlavə edildi.");
-                        location.reload();
+                        GetAllWriters();
                     }
 
                 },
@@ -165,7 +170,22 @@
             }
         });
 
-
+        function DeleteWriter(id) {
+            if (id != null) {
+                var confirmText = confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?');
+                if (confirmText) {
+                    $.ajax({
+                        url: "/Admin/Writer/Delete/" + id,
+                        type: "Post",
+                        dataType: "json",
+                        success: function (response) {
+                            alert("Məlumat silindi.");
+                            GetAllWriters();
+                        }
+                    });
+                };
+            };
+        };
     </script>
 }
 
