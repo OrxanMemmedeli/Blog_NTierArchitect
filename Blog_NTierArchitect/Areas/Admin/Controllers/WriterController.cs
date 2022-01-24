@@ -51,14 +51,15 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         public IActionResult Create(EntityLayer.Concrete.Writer writer)
         {
             ValidationResult results = _validator.Validate(writer);
+            List<string> errors = new List<string>(); 
             if (!results.IsValid)
             {
                 foreach (var item in results.Errors)
                 {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    errors.Add(item.ErrorMessage);
                 }
-
-                return View(writer);
+ 
+                return Json(JsonConvert.SerializeObject(errors));
             }
             if (writer.Picture != null)
             {
@@ -66,7 +67,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             }
 
             _writerManager.Add(writer);
-            return RedirectToAction(nameof(Index));
+
+            return Json(null);
         }
 
         private void UploadImage(EntityLayer.Concrete.Writer writer)
