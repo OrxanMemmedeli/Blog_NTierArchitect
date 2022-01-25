@@ -42,10 +42,12 @@
 
 @await Component.InvokeAsync("WriterCreate")
 
+
+@await Component.InvokeAsync("WriterEdit")
+
 @section Scripts {
 
     <script>
-
         function GetAllWriters() {
             $.ajax({
                 contentType: "application/json",
@@ -58,7 +60,7 @@
                     let bodyRows = "";
 
                     $.each(writers, (index, value) => {
-                        bodyRows += `<tr><td><img src="${value.Image}" style="width:50px; height:50px" /></td><td>${value.Name}</td><td>${value.Email}</td><td>${value.Status}</td><td>${value.About}</td><td><a href="/Admin/Writer/Edit/${value.ID}" title="Düzəliş Et"><i class="fa fa-edit test" style="color:green"></i></a> | <a href="/Admin/Writer/Delete/${value.ID}" title="Sil" onclick="DeleteWriter(${value.ID})"><i class="fa fa-trash-alt" style="color:red"></i></a></td></tr >`;
+                        bodyRows += `<tr><td><img src="${value.Image}" style="width:50px; height:50px" /></td><td>${value.Name}</td><td>${value.Email}</td><td>${value.Status}</td><td>${value.About}</td><td><a title="Düzəliş Et" onclick="FillInputs(${value.ID})"><i class="fa fa-edit test" style="color:green"></i></a> | <a title="Sil" onclick="DeleteWriter(${value.ID})"><i class="fa fa-trash-alt" style="color:red"></i></a></td></tr >`;
                     });
 
                     $("#writerList").html(bodyRows);
@@ -69,8 +71,6 @@
         window.onload = function () {
             GetAllWriters();
         };
-
-
 
         $('#btnGetByID').click(x => {
             let id = $('#writerID').val();
@@ -150,6 +150,7 @@
                     }
                     else {
                         alert("Məlumat əlavə edildi.");
+                        $('#myModal5').modal('hide');
                         GetAllWriters();
                     }
 
@@ -175,7 +176,8 @@
                 var confirmText = confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?');
                 if (confirmText) {
                     $.ajax({
-                        url: "/Admin/Writer/Delete/" + id,
+                        url: "/Admin/Writer/Delete",
+                        data: { id: id },
                         type: "Post",
                         dataType: "json",
                         success: function (response) {
@@ -186,7 +188,83 @@
                 };
             };
         };
+
+        function FillInputs(id) {
+            if (id != null) {
+                $.ajax({
+                    contentType: "application/json",
+                    dataType: "json",
+                    type: "Get",
+                    url: "/Admin/Writer/GetWriter",
+                    data: { id: id },
+                    success: function (data) {
+                        let writer = jQuery.parseJSON(data);
+                        console.log(writer.Image);
+
+                        var bool_value = writer.Status == true ? 'checked="checked"' : "";
+                        let EditForm = "";
+                        EditForm += `<div class="form-group col-md-10"><label class="control-label">Ad-Soyad</label><input id="NameE" asp-for="Name" class="form-control" value="${writer.Name}"/></div>`;
+                        EditForm += `<div class="form-group form-check col-md-2"><label class="control-label">Status</label><input type="checkbox" asp-for="Status" id="StatusE" ${bool_value} class="form-control"/></div>`;
+                        EditForm += `<div class="form-group col-md-6"><label class="control-label">Foto</label><input id="PictureE" asp-for="Picture" class="form-control" type="file" /></div>`;
+                        EditForm += `<div class="form-group col-md-6"><label class="control-label">Email</label><input id="EmailE" asp-for="Email" class="form-control" value="${writer.Email}" /></div>`;
+                        EditForm += `<div class="form-group col-md-6"><label class="control-label">Şifrə</label><input id="PasswordE" asp-for="Password" class="form-control" type="password" value="${writer.Password}" /></div>`;
+                        EditForm += `<div class="form-group col-md-6"><label class="control-label">Şifrənin Təkrarı</label><input id="ConfirmPasswordE" asp-for="ConfirmPassword" class="form-control" type="password" value="${writer.Password}"/></div>`;
+                        EditForm += `<div class="form-group col-md-12"><label class="control-label">Haqqında</label><textarea id="AboutE" asp-for="About" class="form-control" >${writer.About}</textarea></div>`;
+
+                        EditForm += `<div class="form-group col-md-12"><img src="${writer.Image}" alt="Alternate Text" style="width:200px; height:auto" /></div>`;
+
+                        $("#editContent").html(EditForm);
+
+                        $('#myModal6').modal('show');
+                    }
+                });
+            };
+        };
+
+        $("#btnEditPost").on('click', function (e) {
+            e.preventDefault();
+
+            var formDataEdit = new FormData();
+
+            formDataEdit.append('Name', $("#NameE").val());
+            formDataEdit.append('Status', $("#StatusE").val());
+            formDataEdit.append('Email', $("#EmailE").val());
+            formDataEdit.append('Password', $("#PasswordE").val());
+            formDataEdit.append('ConfirmPassword', $("#ConfirmPasswordE").val());
+            formDataEdit.append('About', $("#AboutE").val());
+            formDataEdit.append('Picture', document.getElementById("PictureE").files[0]);
+
+            $.ajax({
+                type: "post",
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formDataEdit,
+                url: "/Admin/Writer/Edit",
+                success: function (responce) {
+                    if (responce != null) {
+                        let data = jQuery.parseJSON(responce);
+                        let alert = "";
+                        $.each(data, (index, value) => {
+                            alert += `*${value}</br>`;
+                        });
+                        $("#EditResponce").html(alert);
+                    }
+                    else {
+                        alert("Məlumat yeniləndi.");
+                        $('#myModal6').modal('hide');
+                        GetAllWriters();
+                    }
+
+                },
+                error: function (e, t, x) {
+                    alert(t);
+                }
+            });
+        });
+
     </script>
 }
+
+
 
 

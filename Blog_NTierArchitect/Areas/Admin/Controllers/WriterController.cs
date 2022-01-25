@@ -98,7 +98,6 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                     fileInfo.Delete();
                 }
             }
-
         }
 
         [HttpPost]
@@ -117,7 +116,34 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             {
                 DeleteImage(writer.Image.Substring(writer.Image.LastIndexOf("/") + 1));
             }
-            _writerManager.Delete(writer);
+            //_writerManager.Delete(writer);
+            writer.Status = false;
+            _writerManager.Update(writer);
+            return Json(null);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(EntityLayer.Concrete.Writer writer)
+        {
+            ValidationResult results = _validator.Validate(writer);
+            List<string> errors = new List<string>();
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    errors.Add(item.ErrorMessage);
+                }
+
+                return Json(JsonConvert.SerializeObject(errors));
+            }
+            if (writer.Picture != null)
+            {
+                UploadImage(writer);
+            }
+
+            _writerManager.Update(writer);
+
             return Json(null);
         }
     }
