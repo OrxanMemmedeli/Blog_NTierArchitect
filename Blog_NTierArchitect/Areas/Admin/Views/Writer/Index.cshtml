@@ -66,7 +66,7 @@
                     $("#writerList").html(bodyRows);
                 },
             });
-        }
+        };
 
         window.onload = function () {
             GetAllWriters();
@@ -203,6 +203,7 @@
 
                         var bool_value = writer.Status == true ? 'checked="checked"' : "";
                         let EditForm = "";
+                        EditForm += `<input type="hidden" id="IDE" value="${writer.ID}" />`
                         EditForm += `<div class="form-group col-md-10"><label class="control-label">Ad-Soyad</label><input id="NameE" asp-for="Name" class="form-control" value="${writer.Name}"/></div>`;
                         EditForm += `<div class="form-group form-check col-md-2"><label class="control-label">Status</label><input type="checkbox" asp-for="Status" id="StatusE" ${bool_value} class="form-control"/></div>`;
                         EditForm += `<div class="form-group col-md-6"><label class="control-label">Foto</label><input id="PictureE" asp-for="Picture" class="form-control" type="file" /></div>`;
@@ -226,6 +227,7 @@
 
             var formDataEdit = new FormData();
 
+            formDataEdit.append('ID', $("#IDE").val());
             formDataEdit.append('Name', $("#NameE").val());
             formDataEdit.append('Status', $("#StatusE").val());
             formDataEdit.append('Email', $("#EmailE").val());
