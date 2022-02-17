@@ -24,5 +24,48 @@ namespace BlogApiDemo.Controllers
             return Ok(list);
         }
 
+        [HttpPost]
+        public ActionResult CreateEmployee(Employee employee)
+        {
+            _context.Add(employee);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetEmployee(int id)
+        {
+            var employee = _context.Employees.FirstOrDefault(x => x.ID == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteEmployee(int id)
+        {
+            var employee = _context.Employees.FirstOrDefault(x => x.ID == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            _context.Remove(employee);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult PutEmployee(int id, Employee employee)
+        {
+            if (id != employee.ID)
+            {
+                return BadRequest();
+            }
+            _context.Update(employee);
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }
