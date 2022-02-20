@@ -1,0 +1,13 @@
+﻿@model Blog_NTierArchitect.Models.EmployeeViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label for="name">Ad</label>
+    <input type="text" asp-for="Name" id="name"  class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-success">Əlavə et</button>
+</form>
+
