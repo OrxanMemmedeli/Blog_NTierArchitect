@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form method="post">
+<form method="post" asp-action="Create" asp-controller="Employee">
     <label for="name">Ad</label>
     <input type="text" asp-for="Name" id="name"  class="form-control" />
     <br />

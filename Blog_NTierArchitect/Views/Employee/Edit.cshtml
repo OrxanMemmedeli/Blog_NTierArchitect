@@ -1,0 +1,16 @@
+﻿@model Blog_NTierArchitect.Models.EmployeeViewModel
+@{
+    ViewData["Title"] = "Düzəliş et";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Düzəliş et</h1>
+
+<form asp-action="Edit" asp-controller="Employee" method="post">
+    <input type="hidden" asp-for="ID" value="@Model.ID" />
+    <input type="hidden" name="id" value="@Model.ID" />
+    <label for="name">Ad</label>
+    <input type="text" asp-for="Name" id="name" class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-success">Düzəliş et</button>
+</form>
