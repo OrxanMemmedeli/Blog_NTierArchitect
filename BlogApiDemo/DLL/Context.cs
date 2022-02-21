@@ -10,8 +10,8 @@ namespace BlogApiDemo.DLL
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=BlogAPIDemo; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=BlogAPIDemo; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=BlogAPIDemo; Integrated Security = true; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=BlogAPIDemo; Integrated Security = true; MultipleActiveResultSets = True");
         }
 
         public DbSet<Employee> Employees { get; set; }
