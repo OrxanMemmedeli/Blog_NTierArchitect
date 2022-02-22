@@ -82,7 +82,7 @@ namespace Blog_NTierArchitect.Controllers
             var httpclient = new HttpClient();
             var jsonEmployee = JsonConvert.SerializeObject(employee);
             StringContent content = new StringContent(jsonEmployee, Encoding.UTF8, "application/json");
-            var responseMessage = await httpclient.PutAsync(url + "api/Default", content);
+            var responseMessage = await httpclient.PutAsync(url + "api/Default/"+ employee.ID, content);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
