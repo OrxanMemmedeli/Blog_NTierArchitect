@@ -27,7 +27,7 @@ namespace Blog_NTierArchitect.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(UserSingUpViewModel model)
+        public async Task<IActionResult> Index(UserSignUpViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -42,7 +42,7 @@ namespace Blog_NTierArchitect.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Index", "LoginUser");
                 }
 
                 foreach (var item in result.Errors)
