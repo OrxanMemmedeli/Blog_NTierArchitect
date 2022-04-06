@@ -25,6 +25,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
 
         public IActionResult Index()
         {
+            var test = User.Identity.Name;
             ViewBag.TotalBlog = _blogManager.GetAll().Count();
             ViewBag.TotalCategory = _categoryManager.GetAll().Count();
             ViewBag.BlogsByWriter = _blogManager.GetAllWithByWriter(_writerManager.GetWriter(User.Identity.Name).ID).Count();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blog_NTierArchitect.Models.ViewModels
 {
-    public class UserSingUpViewModel
+    public class UserSignUpViewModel
     {
         [Display(Name = "Ad və Soyadınız")]
         [Required(ErrorMessage = "Ad və Soyad boş ola bilməz")]
