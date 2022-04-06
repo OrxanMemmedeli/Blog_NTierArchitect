@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataAccessLayer.Concrete.Context
 {
-    public class BlogContext : IdentityDbContext<AppUser>
+    public class BlogContext : IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

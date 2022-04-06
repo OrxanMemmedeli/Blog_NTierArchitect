@@ -1,3 +1,6 @@
+using Blog_NTierArchitect.IdentityLabrery;
+using DataAccessLayer.Concrete.Context;
+using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +30,14 @@ namespace Blog_NTierArchitect
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<BlogContext>();
+            services.AddIdentity<AppUser, AppRole>(x => {
+                x.Password.RequireUppercase = false; 
+            })
+                .AddErrorDescriber<TranslateErrorMessage>()
+                .AddEntityFrameworkStores<BlogContext>();
+
+
             services.AddControllersWithViews();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
