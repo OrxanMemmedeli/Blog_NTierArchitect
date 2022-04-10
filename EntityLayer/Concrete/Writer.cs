@@ -19,11 +19,9 @@ namespace EntityLayer.Concrete
         [NotMapped]
         public string ConfirmPassword { get; set; }
         public bool Status { get; set; }
-        public List<Blog> Blogs { get; set; }
+
         [NotMapped]
         public IFormFile Picture { get; set; }
-        public virtual ICollection<Message> Sender { get; set; }
-        public virtual ICollection<Message> Receiver { get; set; }
 
     }
 }
