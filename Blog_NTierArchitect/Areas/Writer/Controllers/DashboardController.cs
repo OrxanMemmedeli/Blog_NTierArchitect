@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,22 +15,22 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     {
         private readonly BlogManager _blogManager;
         private readonly CategoryManager _categoryManager;
-        private readonly WriterManager _writerManager;
+        private readonly UserManager<AppUser> _userManager;
 
 
-        public DashboardController()
+        public DashboardController(UserManager<AppUser> userManager)
         {
             _blogManager = new BlogManager(new EFBlogRepository());
             _categoryManager = new CategoryManager(new EFCategoryRepository());
-            _writerManager = new WriterManager(new EFWriterRepository());
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            var test = User.Identity.Name;
+            var id = Convert.ToInt32(_userManager.GetUserId(User));
             ViewBag.TotalBlog = _blogManager.GetAll().Count();
             ViewBag.TotalCategory = _categoryManager.GetAll().Count();
-            ViewBag.BlogsByWriter = _blogManager.GetAllWithByWriter(_writerManager.GetWriter(User.Identity.Name).ID).Count();
+            ViewBag.BlogsByWriter = _blogManager.GetAllWithByWriter(id).Count();
             return View();
         }
     }

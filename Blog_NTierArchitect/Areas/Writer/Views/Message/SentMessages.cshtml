@@ -44,7 +44,7 @@
                     @item.CreatedDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReceiverUser.Name)
+                    @Html.DisplayFor(modelItem => item.ReceiverUser.UserName)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ID" class="text-primary" title="Ətraflı baxış"><i class="mdi mdi-information"></i> </a> 
