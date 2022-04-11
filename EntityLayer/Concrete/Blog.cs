@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace EntityLayer.Concrete
@@ -23,6 +25,13 @@ namespace EntityLayer.Concrete
         public Category Category { get; set; }
         public AppUser Writer { get; set; }
         public List<Comment> Comments { get; set; }
+
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
+
+        [NotMapped]
+        public IFormFile ThumbnailImageFile { get; set; }
 
     }
 }

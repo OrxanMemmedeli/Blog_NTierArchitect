@@ -15,13 +15,11 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
     public class MessageViewComponent : ViewComponent
     {
         private readonly MessageManager _messageManager;
-        private readonly WriterManager _writerManager;
         private readonly UserManager<AppUser> _userManager;
 
         public MessageViewComponent(UserManager<AppUser> userManager)
         {
             _messageManager = new MessageManager(new EFMessageRepository());
-            _writerManager = new WriterManager(new EFWriterRepository());
             _userManager = userManager;
         }
 

@@ -16,14 +16,12 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     {
         private readonly MessageManager _messageManager;
         private readonly MessageValidator _messageValidator;
-        private readonly WriterManager _writerManager;
         private readonly UserManager<AppUser> _userManager;
 
         public MessageController(UserManager<AppUser> userManager)
         {
             _messageManager = new MessageManager(new EFMessageRepository());
             _messageValidator = new MessageValidator();
-            _writerManager = new WriterManager(new EFWriterRepository());
             _userManager = userManager;
         }
 

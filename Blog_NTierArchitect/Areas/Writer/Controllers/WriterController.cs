@@ -2,8 +2,10 @@
 using Blog_NTierArchitect.Areas.Writer.Models.ViewModelValidators;
 using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,23 +19,22 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     [Area("Writer")]
     public class WriterController : Controller
     {
-        private readonly WriterManager _writerManager;
         private readonly WriterDataUpdateValidator _validator;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly UserManager<AppUser> _userManager;
 
-        public WriterController(IWebHostEnvironment hostEnvironment)
+        public WriterController(IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager)
         {
-            _writerManager = new WriterManager(new EFWriterRepository());
             _validator = new WriterDataUpdateValidator();
             _hostEnvironment = hostEnvironment;
-
+            _userManager = userManager;
         }
 
         [HttpGet]
         public IActionResult Profil()
         {
 
-            WriterDataUpdate writer = _writerManager.GetById(_writerManager.GetWriter(User.Identity.Name).ID);
+            WriterDataUpdate writer = _userManager.Users.FirstOrDefault(x => x.UserName == HttpContext.User.Identity.Name);
             return View(writer);
         }
 
@@ -61,8 +62,8 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 UploadImage(viewModel);
             }
             
-            EntityLayer.Concrete.Writer writer = viewModel;
-            _writerManager.Update(writer);
+            EntityLayer.Concrete.AppUser writer = viewModel;
+            _userManager.UpdateAsync(writer);
             return RedirectToAction(nameof(Profil));
         }
 

@@ -10,6 +10,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Models.ViewModels
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public string UserName { get; set; }
         public string About { get; set; }
         public string Image { get; set; }
         public IFormFile ImageFile { get; set; }
@@ -19,33 +20,33 @@ namespace Blog_NTierArchitect.Areas.Writer.Models.ViewModels
         public string OldPassword { get; set; }
         public bool Status { get; set; }
 
-        public static implicit operator WriterDataUpdate(EntityLayer.Concrete.Writer model)
+        public static implicit operator WriterDataUpdate(EntityLayer.Concrete.AppUser model)
         {
             return new WriterDataUpdate
             {
-                ID = model.ID,
-                Name = model.Name,
+                ID = model.Id,
+                Name = model.NameSurname,
                 About = model.About,
-                Image = model.Image,
+                Image = model.ImageUrl,
                 Email = model.Email,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword,
+                Password = model.PasswordHash,
                 Status = model.Status,
+                UserName = model.UserName
             };
         }
 
-        public static implicit operator EntityLayer.Concrete.Writer(WriterDataUpdate model)
+        public static implicit operator EntityLayer.Concrete.AppUser(WriterDataUpdate model)
         {
-            return new EntityLayer.Concrete.Writer
+            return new EntityLayer.Concrete.AppUser
             {
-                ID = model.ID,
-                Name = model.Name,
+                Id = model.ID,
+                NameSurname = model.Name,
                 About = model.About,
-                Image = model.Image,
+                ImageUrl = model.Image,
                 Email = model.Email,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword,
+                PasswordHash = model.Password,
                 Status = model.Status,
+                UserName = model.UserName
             };
         }
     }

@@ -4,11 +4,13 @@ using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,19 +20,19 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     public class BlogController : Controller
     {
         private readonly BlogManager _blogManager;
-        private readonly WriterManager _writerManager;
         private readonly CategoryManager _categoryManager;
         private readonly BlogValidator _blogValidator;
+        private readonly IWebHostEnvironment _hostEnvironment;
         private readonly UserManager<AppUser> _userManager;
 
         //private readonly BlogContext _context;
 
-        public BlogController(UserManager<AppUser> userManager)
+        public BlogController(IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager)
         {
             _blogManager = new BlogManager(new EFBlogRepository());
-            _writerManager = new WriterManager(new EFWriterRepository());
             _categoryManager = new CategoryManager(new EFCategoryRepository());
             _blogValidator = new BlogValidator();
+            _hostEnvironment = hostEnvironment;
             _userManager = userManager;
             //_context = new BlogContext();
         }
@@ -59,6 +61,14 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         [HttpPost]
         public IActionResult Create(Blog blog)
         {
+            if (blog.ImageFile != null)
+            {
+                UploadImage(blog);
+            }
+            if (blog.ThumbnailImageFile != null)
+            {
+                UploadThumbnailImage(blog);
+            }
             ValidationResult results = _blogValidator.Validate(blog);
             if (!results.IsValid)
             {
@@ -80,6 +90,41 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private void UploadImage(Blog blog)
+        {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            string extension = Path.GetExtension(blog.ImageFile.FileName);
+            string newImageName = Guid.NewGuid() + extension;
+            string path = Path.Combine(wwwRootPath, "UploadImages", newImageName);
+            if (blog.Image != null)
+            {
+                System.IO.File.Delete(blog.Image);
+            }
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                blog.Image = "/UploadImages/" + newImageName;
+                blog.ImageFile.CopyTo(fileStream);
+            }
+
+        }
+        private void UploadThumbnailImage(Blog blog)
+        {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            string extension = Path.GetExtension(blog.ThumbnailImageFile.FileName);
+            string newImageName = Guid.NewGuid() + extension;
+            string path = Path.Combine(wwwRootPath, "UploadImages", newImageName);
+            if (blog.ThumbnailImage != null)
+            {
+                System.IO.File.Delete(blog.ThumbnailImage);
+            }
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                blog.ThumbnailImage = "/UploadImages/" + newImageName;
+                blog.ThumbnailImageFile.CopyTo(fileStream);
+            }
+
+        }
+
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -92,6 +137,15 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             {
                 return NotFound();
 
+            }
+
+            if (blog.Image != null)
+            {
+                System.IO.File.Delete(blog.Image);
+            }
+            if (blog.ThumbnailImage != null)
+            {
+                System.IO.File.Delete(blog.ThumbnailImage);
             }
 
             _blogManager.Delete(blog);
@@ -124,6 +178,14 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Blog blog)
         {
+            if (blog.ImageFile != null)
+            {
+                UploadImage(blog);
+            }
+            if (blog.ThumbnailImageFile != null)
+            {
+                UploadThumbnailImage(blog);
+            }
             ValidationResult results = _blogValidator.Validate(blog);
             if (!results.IsValid)
             {
