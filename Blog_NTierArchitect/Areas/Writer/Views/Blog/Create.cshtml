@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Başlıq</label>
@@ -18,12 +18,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Kiçik şəkil</label>
-                <input asp-for="ThumbnailImage" class="form-control" />
+                <input asp-for="ThumbnailImageFile" class="form-control" type="file"/>
                 <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Əsas şəkil</label>
-                <input asp-for="Image" class="form-control" />
+                <input asp-for="ImageFile" class="form-control" type="file" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Mətn</label>
-                <textarea asp-for="Content" class="form-control" ></textarea>
+                <textarea asp-for="Content" class="form-control" style="height:170px" ></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
