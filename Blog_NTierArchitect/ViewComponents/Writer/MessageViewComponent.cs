@@ -1,10 +1,13 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Blog_NTierArchitect.ViewComponents.Writer
 {
@@ -13,15 +16,18 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
     {
         private readonly MessageManager _messageManager;
         private readonly WriterManager _writerManager;
-        public MessageViewComponent()
+        private readonly UserManager<AppUser> _userManager;
+
+        public MessageViewComponent(UserManager<AppUser> userManager)
         {
             _messageManager = new MessageManager(new EFMessageRepository());
             _writerManager = new WriterManager(new EFWriterRepository());
+            _userManager = userManager;
         }
 
         public IViewComponentResult Invoke()
         {
-            int id = _writerManager.GetWriter(User.Identity.Name).ID;
+            var id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             var messages = _messageManager.GetAllWithWriter(x => x.ReceiverID == id && x.Status == true);
             ViewBag.MessageCount = messages.Count();
             return View(messages);

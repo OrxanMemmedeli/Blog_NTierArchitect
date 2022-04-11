@@ -12,7 +12,9 @@ namespace DataAccessLayer.Concrete.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"workstation id=CoreBlog.mssql.somee.com;packet size=4096;user id=OrkhanCore_SQLLogin_1;pwd=9gc1b4uvm8;data source=CoreBlog.mssql.somee.com;persist security info=False;initial catalog=CoreBlog; MultipleActiveResultSets = True");
+
         }
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)

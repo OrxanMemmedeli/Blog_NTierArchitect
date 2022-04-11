@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,23 +17,26 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         private readonly MessageManager _messageManager;
         private readonly MessageValidator _messageValidator;
         private readonly WriterManager _writerManager;
-        public MessageController()
+        private readonly UserManager<AppUser> _userManager;
+
+        public MessageController(UserManager<AppUser> userManager)
         {
             _messageManager = new MessageManager(new EFMessageRepository());
             _messageValidator = new MessageValidator();
             _writerManager = new WriterManager(new EFWriterRepository());
+            _userManager = userManager;
         }
 
         public IActionResult Inbox()
         {
-            int id = _writerManager.GetWriter(User.Identity.Name).ID;
+            int id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             var messages = _messageManager.GetAllWithWriter(x => x.ReceiverID == id);
             return View(messages);
         }
 
         public IActionResult SentMessages()
         {
-            int id = _writerManager.GetWriter(User.Identity.Name).ID;
+            int id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             var messages = _messageManager.GetAllWithWriter(x => x.SenderID == id);
             return View(messages);
         }
