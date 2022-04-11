@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Blog_NTierArchitect.ViewComponents.Writer
 {
@@ -21,8 +22,8 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 
         public IViewComponentResult Invoke()
         {
-            var id = Convert.ToInt32(_userManager.GetUserAsync(User));
-            var writers = _writerManager.GetWritersByID(_writerManager.GetWriter(User.Identity.Name).ID);
+            //var writers = Task.Run(async () => await _userManager.Users.FirstOrDefault(x => x.UserName == HttpContext.User.Identity.Name));            
+            AppUser writers = _userManager.Users.FirstOrDefault(x => x.UserName == HttpContext.User.Identity.Name);
             return View(writers);
         }
     }

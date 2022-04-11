@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -20,20 +21,23 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         private readonly WriterManager _writerManager;
         private readonly CategoryManager _categoryManager;
         private readonly BlogValidator _blogValidator;
+        private readonly UserManager<AppUser> _userManager;
+
         //private readonly BlogContext _context;
 
-        public BlogController()
+        public BlogController(UserManager<AppUser> userManager)
         {
             _blogManager = new BlogManager(new EFBlogRepository());
             _writerManager = new WriterManager(new EFWriterRepository());
             _categoryManager = new CategoryManager(new EFCategoryRepository());
             _blogValidator = new BlogValidator();
+            _userManager = userManager;
             //_context = new BlogContext();
         }
 
         public IActionResult Index()
         {
-            var writerID = _writerManager.GetWriter(User.Identity.Name).ID;
+            var writerID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             var blogsByWriter = _blogManager.GetAllWithRelationshipsByWriter(writerID);
             return View(blogsByWriter);
         }
@@ -71,7 +75,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 ViewData["CategoryID"] = categories;
                 return View(blog);
             }
-            blog.WriterID = _writerManager.GetWriter(User.Identity.Name).ID;
+            blog.WriterID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             _blogManager.Add(blog);
             return RedirectToAction(nameof(Index));
         }
