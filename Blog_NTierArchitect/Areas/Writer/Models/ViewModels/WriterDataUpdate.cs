@@ -47,6 +47,8 @@ namespace Blog_NTierArchitect.Areas.Writer.Models.ViewModels
                 PasswordHash = model.Password,
                 Status = model.Status,
                 UserName = model.UserName
+
+
             };
         }
     }

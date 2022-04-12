@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Writer
+﻿@model UserSignUpViewModel
 @{
     ViewData["Title"] = "Qeydiyyat";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -19,19 +19,24 @@
             <div class="login p-5 bg-light mx-auto mw-100">
                 <form asp-action="Register" asp-controller="Account" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="validationCustom01">Ad və Soyadınız</label>
-                            <input type="text" class="form-control" id="validationDefault01" asp-for="Name" placeholder="Ad və Soyadınız" required="" autocomplete="off">
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <input type="text" class="form-control" id="validationDefault01" asp-for="NameSurname" placeholder="Ad və Soyadınız" required="" autocomplete="off">
+                            <span asp-validation-for="NameSurname" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">İstifadəçi Adı</label>
+                            <input type="text" class="form-control" id="validationDefault03" asp-for="UserName" placeholder="Email adresiniz" required="" autocomplete="off">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
                             <label for="validationCustom02">Email adresiniz</label>
-                            <input type="email" class="form-control" id="validationDefault02" asp-for="Email" placeholder="Email adresiniz" required="" autocomplete="off">                      
+                            <input type="email" class="form-control" id="validationDefault02" asp-for="Email" placeholder="Email adresiniz" required="" autocomplete="off">
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -45,24 +50,13 @@
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1 mb-2">Foto şəkliniz</label>
-                            <input type="text" class="form-control" id="password1" asp-for="Image" placeholder="" required="">
-                            <span asp-validation-for="Image" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1 mb-2">Şəhərlər</label>
-                            <select class="form-control" asp-items="ViewBag.CityID">
-                                <option value="0">--Seç--</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox" asp-for="IsAcceptRules"><i></i> Qeydiyyat şərtlərini qəbul edirəm. </label></div>
                     </div>
-                    <p>
-                        <a id="rules">Qaydaları oxudum və qəbul edirəm. (üzərinə kliklə)</a>
-                    </p>
                     <button type="submit" class="btn btn-primary submit mb-4">Qeydiyyatdan keç</button>
 
+                    <p class="text-muted text-center"><small>Hesabınız varsa "Giriş" düyməsini sıxın.</small></p>
+                    <a class="btn btn-sm btn-white btn-block" href="/Account/Login">Giriş</a>
                 </form>
 
             </div>
@@ -74,6 +68,6 @@
 <script src="~/Default/lib/jquery/dist/jquery.js"></script>
 <script>
     $('#rules').click(function () {
-        swal("Sistemə qeydiyyat şərtləri","Daxil etmis oldugunuz e-mail adresine melumat ve xeber tipli metn ve ya bənzəri məktublar göndəriləcəkdir. Əgər bu xiddətməd çıxmaq istəsəniz admin heyəti ilə əlaqə saxlamanız tələb olunacaqdır. Əlavə olaraq şifrəniz və email adresiniz bazada şifrələnmiş formada saxlanılacaqdır. ");
+        swal("Sistemə qeydiyyat şərtləri", "Daxil etmis oldugunuz e-mail adresine melumat ve xeber tipli metn ve ya bənzəri məktublar göndəriləcəkdir. Əgər bu xiddətməd çıxmaq istəsəniz admin heyəti ilə əlaqə saxlamanız tələb olunacaqdır. Əlavə olaraq şifrəniz və email adresiniz bazada şifrələnmiş formada saxlanılacaqdır. ");
     });
 </script>

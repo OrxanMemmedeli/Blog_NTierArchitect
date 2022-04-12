@@ -42,7 +42,7 @@ namespace Blog_NTierArchitect
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
             {
-                o.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                 o.LoginPath = "/Account/Login";
                 o.LogoutPath = "/Account/LogOut";
                 o.AccessDeniedPath = "/Account/Denied"; //Role uygun olmadiqda yonelmeni temin edecekdir.
