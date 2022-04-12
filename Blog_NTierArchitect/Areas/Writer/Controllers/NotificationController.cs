@@ -22,5 +22,14 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             var notifications = _notificationManager.GetAll();
             return View(notifications);
         }
+
+        public IActionResult IsRead(int id)
+        {
+
+            var notification = _notificationManager.GetById(id);
+            notification.Status = false;
+            _notificationManager.Update(notification);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
