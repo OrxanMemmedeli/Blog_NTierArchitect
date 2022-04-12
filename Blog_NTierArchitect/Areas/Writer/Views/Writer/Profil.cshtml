@@ -54,7 +54,7 @@
             <div class="col-sm-12">
                 <div class="card-block">
                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Məlumatları Yenilə</h6>
-                  
+
                     <form class="forms-sample" asp-action="Profil" asp-controller="Writer" asp-area="Writer" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="ID" value="@Model.ID" />
@@ -69,6 +69,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="exampleInputName1">İstifadəçi Adı</label>
+                            <input type="text" class="form-control" placeholder="İstifadəçi Adı" asp-for="UserName">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
                             <label for="exampleInputEmail3">Email ünvanı</label>
                             <input type="email" class="form-control" asp-for="Email" placeholder="Email ünvanı">
                             <span asp-validation-for="Email" class="text-danger"></span>
@@ -76,7 +82,7 @@
 
                         <div class="form-group">
                             <label for="exampleInputPassword4">Şifrə <span class="text-danger"><i>Şifrəni dəyişmək istəmədiyiniz zaman müvafiq xananı boş saxlayın</i></span></label>
-                            <input type="password" class="form-control" asp-for="Password" placeholder="Yeni Şifrə" value="@null">
+                            <input type="password" class="form-control" asp-for="Password" placeholder="Yeni Şifrə" value="@null" autocomplete="off">
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
@@ -103,7 +109,7 @@
                             <textarea class="form-control" asp-for="About" rows="10"></textarea>
                             <span asp-validation-for="About" class="text-danger"></span>
                         </div>
-
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <button type="submit" class="btn btn-gradient-primary mr-2">Məlumatları yenilə</button>
                     </form>
                 </div>
@@ -116,3 +122,14 @@
 
 <script src="~/writer/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="~/writer/assets/js/file-upload.js"></script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["SuccessProfil"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["SuccessProfil"].ToString()))");
+    </script>
+}

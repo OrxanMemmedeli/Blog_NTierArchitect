@@ -31,21 +31,23 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Profil()
+        public async Task<IActionResult> Profil()
         {
 
-            WriterDataUpdate writer = _userManager.Users.FirstOrDefault(x => x.UserName == HttpContext.User.Identity.Name);
+            //WriterDataUpdate writer = _userManager.Users.FirstOrDefault(x => x.UserName == HttpContext.User.Identity.Name);            
+            WriterDataUpdate writer = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(writer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Profil(WriterDataUpdate viewModel)
+        public async Task<IActionResult> Profil(WriterDataUpdate viewModel)
         {
-            if (viewModel.Password == null && viewModel.ConfirmPassword == null)
+            PasswordControl(viewModel);
+
+            if (viewModel.ImageFile != null)
             {
-                viewModel.Password = viewModel.OldPassword;
-                viewModel.ConfirmPassword = viewModel.OldPassword;
+                UploadImage(viewModel);
             }
 
             ValidationResult results = _validator.Validate(viewModel);
@@ -57,14 +59,54 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 }
                 return View(viewModel);
             }
-            if (viewModel.ImageFile != null)
+
+
+            AppUser writer = await FillModel(viewModel);
+
+            var result = await _userManager.UpdateAsync(writer);
+            if (result.Succeeded)
             {
-                UploadImage(viewModel);
+                TempData["SuccessProfil"] = "Məlumatlar yeniləndi";
+                return RedirectToAction(nameof(Profil));
             }
-            
-            EntityLayer.Concrete.AppUser writer = viewModel;
-            _userManager.UpdateAsync(writer);
-            return RedirectToAction(nameof(Profil));
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError("", item.Description);
+                }
+                return View(viewModel);
+            }
+        }
+
+        private void PasswordControl(WriterDataUpdate viewModel)
+        {
+            if (viewModel.Password == null && viewModel.ConfirmPassword == null)
+            {
+                viewModel.Password = viewModel.OldPassword;
+                viewModel.ConfirmPassword = viewModel.OldPassword;
+            }
+            else
+            {
+                if (viewModel.Password == viewModel.ConfirmPassword)
+                {
+                    viewModel.Password = _userManager.PasswordHasher.HashPassword(viewModel, viewModel.Password);
+                    viewModel.ConfirmPassword = viewModel.Password;
+                }
+            }
+        }
+
+        private async Task<AppUser> FillModel(WriterDataUpdate viewModel)
+        {
+            AppUser writer = await _userManager.FindByNameAsync(User.Identity.Name);
+            writer.NameSurname = viewModel.Name;
+            writer.About = viewModel.About;
+            writer.ImageUrl = viewModel.Image;
+            writer.Email = viewModel.Email;
+            writer.PasswordHash = viewModel.Password;
+            writer.Status = viewModel.Status;
+            writer.UserName = viewModel.UserName;
+            return writer;
         }
 
         private void UploadImage(WriterDataUpdate writerDataUpdate)
