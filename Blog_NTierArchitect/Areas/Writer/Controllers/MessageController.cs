@@ -32,7 +32,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             return View(messages);
         }
 
-        public IActionResult SentMessages()
+        public IActionResult Sentbox()
         {
             int id = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             var messages = _messageManager.GetAllWithWriter(x => x.SenderID == id);
@@ -49,5 +49,19 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             var message = _messageManager.GetOneWithWriter(x => x.ID == id);
             return View(message);
         }
+
+        public IActionResult SendMessage()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SendMessage(Message message)
+        {
+            return View();
+        }
+
     }
 }

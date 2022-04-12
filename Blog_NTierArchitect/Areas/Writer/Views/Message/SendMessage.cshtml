@@ -1,0 +1,52 @@
+﻿@model EntityLayer.Concrete.Message
+
+@{
+    ViewData["Title"] = "Yeni Mesaj";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h4>Yeni Mesaj</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SendMessage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SenderID" class="control-label"></label>
+                <select asp-for="SenderID" class ="form-control" asp-items="ViewBag.SenderID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceiverID" class="control-label"></label>
+                <select asp-for="ReceiverID" class ="form-control" asp-items="ViewBag.ReceiverID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details" class="control-label"></label>
+                <input asp-for="Details" class="form-control" />
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

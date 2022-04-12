@@ -24,6 +24,8 @@
             <th>
                 Tarix
             </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -42,15 +44,18 @@
                 <td>
                     @if (item.Status)
                     {
-                        <span class="badge badge-success">Aktiv</span>
+                        <span class="badge badge-success">Oxunmadı</span>
                     }
                     else
                     {
-                        <span class="badge badge-danger">Passiv</span>
+                        <span class="badge badge-danger">Oxundu</span>
                     }
                 </td>
                 <td>
                     ~ @(Math.Round((DateTime.Now - item.NotificationDate).TotalDays, 0)) gün əvvəl
+                </td>
+                <td>
+                    <big><a href="/writer/Notification/IsRead/@item.ID" title="Oxundu olaraq işarələ"><i class="mdi mdi-read border-size-xl"></i></a></big>
                 </td>
             </tr>
         }
