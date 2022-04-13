@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,16 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents
 {
     public class BlogPageCommentViewComponent : ViewComponent
     {
-        private readonly CommentManager _commentManager;
+        private readonly ICommentService _commentService;
 
-        public BlogPageCommentViewComponent()
+        public BlogPageCommentViewComponent(ICommentService commentService)
         {
-            _commentManager = new CommentManager(new EFCommentRepository());
-
+            _commentService = commentService;
         }
+
         public IViewComponentResult Invoke(int id)
         {
-            var comments = _commentManager.GetAll(x => x.BlogID == id);
+            var comments = _commentService.GetAll(x => x.BlogID == id);
             return View(comments);
         }
     }

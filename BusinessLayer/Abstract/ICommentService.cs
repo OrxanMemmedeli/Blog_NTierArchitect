@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BusinessLayer.Abstract
 {
-    interface ICommentService : IGenericService<Comment>
+    public interface ICommentService : IGenericService<Comment>
     {
 
     }

@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.Validations;
 using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
@@ -19,18 +19,18 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     [Area("Writer")]
     public class BlogController : Controller
     {
-        private readonly BlogManager _blogManager;
-        private readonly CategoryManager _categoryManager;
+        private readonly IBlogService _blogService;
+        private readonly ICategoryService _categoryService;
         private readonly BlogValidator _blogValidator;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly UserManager<AppUser> _userManager;
 
         //private readonly BlogContext _context;
 
-        public BlogController(IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager)
+        public BlogController(IWebHostEnvironment hostEnvironment, UserManager<AppUser> userManager, IBlogService blogService, ICategoryService categoryService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
-            _categoryManager = new CategoryManager(new EFCategoryRepository());
+            _blogService = blogService;
+            _categoryService = categoryService;
             _blogValidator = new BlogValidator();
             _hostEnvironment = hostEnvironment;
             _userManager = userManager;
@@ -40,7 +40,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         public IActionResult Index()
         {
             var writerID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
-            var blogsByWriter = _blogManager.GetAllWithRelationshipsByWriter(writerID);
+            var blogsByWriter = _blogService.GetAllWithRelationshipsByWriter(writerID);
             return View(blogsByWriter);
         }
 
@@ -48,7 +48,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         public IActionResult Create()
         {
             //ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name");
-            List<SelectListItem> items = (from x in _categoryManager.GetAll()
+            List<SelectListItem> items = (from x in _categoryService.GetAll()
                                           select new SelectListItem
                                           {
                                               Text = x.Name,
@@ -76,7 +76,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from x in _categoryManager.GetAll()
+                List<SelectListItem> categories = (from x in _categoryService.GetAll()
                                               select new SelectListItem
                                               {
                                                   Text = x.Name,
@@ -86,7 +86,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 return View(blog);
             }
             blog.WriterID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
-            _blogManager.Add(blog);
+            _blogService.Add(blog);
             return RedirectToAction(nameof(Index));
         }
 
@@ -132,7 +132,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 return NotFound();
             }
 
-            var blog = _blogManager.GetById((int)id);
+            var blog = _blogService.GetById((int)id);
             if (blog == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 System.IO.File.Delete(blog.ThumbnailImage);
             }
 
-            _blogManager.Delete(blog);
+            _blogService.Delete(blog);
             TempData["DeleteBlog"] = "Blog silindi";
             return RedirectToAction(nameof(Index));
         }
@@ -156,14 +156,14 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            var blog = _blogManager.GetById((int)id);
+            var blog = _blogService.GetById((int)id);
             if (blog == null)
             {
                 return NotFound();
 
             }
 
-            List<SelectListItem> items = (from x in _categoryManager.GetAll()
+            List<SelectListItem> items = (from x in _categoryService.GetAll()
                                           select new SelectListItem
                                           {
                                               Text = x.Name,
@@ -193,7 +193,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from x in _categoryManager.GetAll()
+                List<SelectListItem> categories = (from x in _categoryService.GetAll()
                                               select new SelectListItem
                                               {
                                                   Text = x.Name,
@@ -203,7 +203,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
                 return View(blog);
             }
 
-            _blogManager.Update(blog);
+            _blogService.Update(blog);
             TempData["EditBlog"] = "Blog məlumatları yeniləndi.";
             return RedirectToAction(nameof(Index));
         }

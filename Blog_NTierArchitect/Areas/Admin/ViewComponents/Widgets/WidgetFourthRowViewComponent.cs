@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,14 +10,16 @@ namespace Blog_NTierArchitect.Areas.Admin.ViewComponents.Widgets
 {
     public class WidgetFourthRowViewComponent : ViewComponent
     {
-        private readonly AdminManager _adminManager;
-        public WidgetFourthRowViewComponent()
+        private readonly IAdminService _adminService;
+
+        public WidgetFourthRowViewComponent(IAdminService adminService)
         {
-            _adminManager = new AdminManager(new EFAdminRepository());
+            _adminService = adminService;
         }
+
         public IViewComponentResult Invoke()
         {
-            ViewBag.Admin = _adminManager.GetById(1);
+            ViewBag.Admin = _adminService.GetById(1);
             return View();
         }
     }

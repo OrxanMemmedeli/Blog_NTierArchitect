@@ -44,7 +44,7 @@
                     @item.Title
                 </td>
                 <td style="max-width: 400px;word-break: break-all; white-space: normal;">
-                    @item.Content
+                    @(item.Content.Length < 500 ? item.Content : item.Content.Substring(0, item.Content.Substring(0,500).LastIndexOf(" ")) + "...")
                 </td>
                 <td>
                     <img src="@item.ThumbnailImage" style="width:100px; height:auto" />

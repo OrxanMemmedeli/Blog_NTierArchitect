@@ -8,7 +8,7 @@
 <h4 class="card-title">Gələn Mesajlar</h4>
 
 <p class="card-description">
-    <a asp-action="Create" class="btn btn-primary">Yeni Mesaj</a>
+    <a asp-action="SendMessage" class="btn btn-primary">Yeni Mesaj</a>
     <a asp-action="Sentbox" class="btn btn-dark">Göndərilmiş Mesajlar</a>
 </p>
 
@@ -27,29 +27,43 @@
             <th>
                 Göndərən
             </th>
+            <th>
+                Status
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Subject)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Details)
-                </td>
-                <td>
-                    @item.CreatedDate.ToShortDateString()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SenderUser.UserName)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ID" class="text-primary" title="Ətraflı baxış"><i class="mdi mdi-information"></i> </a> 
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td style="max-width: 400px;word-break: break-all; white-space: normal;">
+                @(item.Details.Length <= 250 ? item.Details : item.Details.Substring(0, item.Details.Substring(0,250).LastIndexOf(" ")) + "...")
+            </td>
+            <td>
+                @item.CreatedDate.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderUser.UserName)
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <span class="badge badge-success">Oxunmadı</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Oxundu</span>
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID" class="text-primary" title="Ətraflı baxış"><i class="mdi mdi-information border-size-xl"></i> </a> |
+                <a asp-action="IsRead" asp-route-id="@item.ID" class="text-success" title="Oxundu olaraq işarələ"><i class="mdi mdi-read border-size-xl"></i> </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

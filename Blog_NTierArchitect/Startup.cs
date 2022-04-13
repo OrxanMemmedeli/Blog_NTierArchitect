@@ -36,6 +36,7 @@ namespace Blog_NTierArchitect
             })
                 .AddErrorDescriber<TranslateErrorMessage>()
                 .AddEntityFrameworkStores<BlogContext>();
+            services.Register();
 
 
             services.AddControllersWithViews();

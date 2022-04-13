@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,14 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents
 {
     public class UserLayoutFooter_LastThreePostsViewComponent : ViewComponent
     {
-        private readonly BlogManager _blogManager;
-        public UserLayoutFooter_LastThreePostsViewComponent()
+        private readonly IBlogService _blogService;
+
+        public UserLayoutFooter_LastThreePostsViewComponent(IBlogService blogService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
+            _blogService = blogService;
         }
+
         public IViewComponentResult Invoke()
         {
-            var LastThreeBlogs = _blogManager.GetLastPosts(3);
+            var LastThreeBlogs = _blogService.GetLastPosts(3);
             return View(LastThreeBlogs);
         }
     }
