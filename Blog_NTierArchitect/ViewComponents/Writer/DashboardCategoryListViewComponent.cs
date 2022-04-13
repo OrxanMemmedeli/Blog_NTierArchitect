@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,16 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 {
     public class DashboardCategoryListViewComponent : ViewComponent
     {
-        private readonly CategoryManager _categoryManager;
+        private readonly ICategoryService _categoryService;
 
-        public DashboardCategoryListViewComponent()
+        public DashboardCategoryListViewComponent(ICategoryService categoryService)
         {
-            _categoryManager = new CategoryManager(new EFCategoryRepository()); 
+            _categoryService = categoryService;
         }
 
         public IViewComponentResult Invoke()
         {
-            var categories = _categoryManager.GetAll();
+            var categories = _categoryService.GetAll();
             return View(categories);
         }
     

@@ -13,7 +13,7 @@ namespace EntityLayer.Concrete
         public int? ReceiverID { get; set; }
         public string Subject { get; set; }
         public string Details { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public bool Status { get; set; } = true;
 
         public AppUser SenderUser { get; set; }

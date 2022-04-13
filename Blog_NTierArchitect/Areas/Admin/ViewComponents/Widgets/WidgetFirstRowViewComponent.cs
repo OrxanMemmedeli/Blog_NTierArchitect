@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,22 +11,22 @@ namespace Blog_NTierArchitect.Areas.Admin.ViewComponents.Widgets
 {
     public class WidgetFirstRowViewComponent : ViewComponent
     {
-        private readonly BlogManager _blogManager;
-        private readonly ContactManager _contactManager;
-        private readonly CommentManager _commentManager;
+        private readonly IBlogService _blogService;
+        private readonly IContactService _contactService;
+        private readonly ICommentService _commentService;
 
-        public WidgetFirstRowViewComponent()
+        public WidgetFirstRowViewComponent(IBlogService blogService, IContactService contactService, ICommentService commentService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
-            _contactManager = new ContactManager(new EFContactRepository());
-            _commentManager = new CommentManager(new EFCommentRepository());
+            _blogService = blogService;
+            _contactService = contactService;
+            _commentService = commentService;
         }
 
         public IViewComponentResult Invoke()
         {
-            ViewBag.TotalBlogs = _blogManager.GetAll().Count();
-            ViewBag.TotalContacts = _contactManager.GetAll().Count();
-            ViewBag.TotalComments = _commentManager.GetAll().Count();
+            ViewBag.TotalBlogs = _blogService.GetAll().Count();
+            ViewBag.TotalContacts = _contactService.GetAll().Count();
+            ViewBag.TotalComments = _commentService.GetAll().Count();
 
             string key = "7d0c4896cef55074b785aeecda572585";
             string city = "Baku";

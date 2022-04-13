@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,24 +11,25 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     [Area("Writer")]
     public class NotificationController : Controller
     {
-        private readonly NotificationManager _notificationManager;
-        public NotificationController()
+        private readonly INotificationService _notificationService;
+
+        public NotificationController(INotificationService notificationService)
         {
-            _notificationManager = new NotificationManager(new EFNotificationRepository());
+            _notificationService = notificationService;
         }
 
         public IActionResult Index()
         {
-            var notifications = _notificationManager.GetAll();
+            var notifications = _notificationService.GetAll();
             return View(notifications);
         }
 
         public IActionResult IsRead(int id)
         {
 
-            var notification = _notificationManager.GetById(id);
+            var notification = _notificationService.GetById(id);
             notification.Status = false;
-            _notificationManager.Update(notification);
+            _notificationService.Update(notification);
             return RedirectToAction(nameof(Index));
         }
     }

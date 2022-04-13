@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,16 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents
 {
     public class UserLayoutFooter_AboutViewComponent : ViewComponent
     {
-        private readonly AboutManager _aboutManager;
+        private readonly IAboutService _aboutService;
 
-        public UserLayoutFooter_AboutViewComponent()
+        public UserLayoutFooter_AboutViewComponent(IAboutService aboutService)
         {
-            _aboutManager = new AboutManager(new EFAboutRepository());
+            _aboutService = aboutService;
         }
 
         public IViewComponentResult Invoke()
         {
-            var aboutDatas = _aboutManager.GetAll();
+            var aboutDatas = _aboutService.GetAll();
             return View(aboutDatas);
         }
     }

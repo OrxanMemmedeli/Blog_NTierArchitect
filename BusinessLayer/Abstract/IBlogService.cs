@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BusinessLayer.Abstract
 {
-    interface IBlogService : IGenericService<Blog>
+    public interface IBlogService : IGenericService<Blog>
     {
         List<Blog> GetAllWithRelationships();
         List<Blog> GetAllWithRelationshipsByWriter(int id);

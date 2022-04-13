@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,16 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 {
     public class DashboardLastPostsViewComponent : ViewComponent
     {
-        private readonly BlogManager _blogManager;
+        private readonly IBlogService _blogService;
 
-        public DashboardLastPostsViewComponent()
+        public DashboardLastPostsViewComponent(IBlogService blogService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository()); 
+            _blogService = blogService;
         }
 
         public IViewComponentResult Invoke()
         {
-            var blogs = _blogManager.GetAllWithRelationships();
+            var blogs = _blogService.GetAllWithRelationships();
             return View(blogs);
         }
     }

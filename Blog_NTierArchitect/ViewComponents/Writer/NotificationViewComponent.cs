@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,15 +10,16 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 {
     public class NotificationViewComponent : ViewComponent
     {
-        private readonly NotificationManager _notificationManager;
-        public NotificationViewComponent()
+        private readonly INotificationService _notificationService;
+
+        public NotificationViewComponent(INotificationService notificationService)
         {
-            _notificationManager = new NotificationManager(new EFNotificationRepository());
+            _notificationService = notificationService;
         }
 
         public IViewComponentResult Invoke()
         {
-            var notification = _notificationManager.GetAll(x => x.Status == true);
+            var notification = _notificationService.GetAll(x => x.Status == true);
             return View(notification);
         }
     }

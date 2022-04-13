@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,15 +12,16 @@ namespace Blog_NTierArchitect.Areas.Admin.ViewComponents.Widgets
 {
     public class WidgetSecondRowViewComponent : ViewComponent
     {
-        private readonly BlogManager _blogManager;
-        public WidgetSecondRowViewComponent()
+        private readonly IBlogService _blogservice;
+
+        public WidgetSecondRowViewComponent(IBlogService blogservice)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
+            _blogservice = blogservice;
         }
 
         public IViewComponentResult Invoke()
         {
-            ViewBag.LastBlog = _blogManager.GetAll().OrderByDescending(x => x.ID).Take(1).First();
+            ViewBag.LastBlog = _blogservice.GetAll().OrderByDescending(x => x.ID).Take(1).First();
 
             string today = DateTime.Now.ToString("dd.MM.yyyy");
             string url = "https://www.cbar.az/currencies/" + today + ".xml";
