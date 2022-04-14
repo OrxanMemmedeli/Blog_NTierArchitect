@@ -7,7 +7,7 @@
 
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Yeni Bildiriş</a>
 </p>
 <table class="table">
     <thead>
@@ -31,36 +31,54 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr style="border: 4px solid @item.Color">
-            <td>
-                @item.Type
-            </td>
-            <td>
-                <i class="@item.Symbol"></i>
-            </td>
-            <td>
-                @item.Details
-            </td>
-            <td>
-                @if (item.Status)
-                {
-                    <span class="badge badge-success">Aktiv</span>
-                }
-                else
-                {
-                    <span class="badge badge-danger">Passiv</span>
-                }
-            </td>
-            <td>
-                ~ @(Math.Round((DateTime.Now - item.NotificationDate).TotalDays, 0)) gün əvvəl
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr style="border: 4px solid @item.Color">
+                <td>
+                    @item.Type
+                </td>
+                <td>
+                    <i class="@item.Symbol"></i>
+                </td>
+                <td>
+                    @item.Details
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Passiv</span>
+                    }
+                </td>
+                <td>
+                    ~ @(Math.Round((DateTime.Now - item.NotificationDate).TotalDays, 0)) gün əvvəl
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş Et"><i class="fa fa-pencil" style="color:green"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash" style="color:red"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["DeleteNotification"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteNotification"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditNotification"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditNotification"].ToString()))");
+    </script>
+}

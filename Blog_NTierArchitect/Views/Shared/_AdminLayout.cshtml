@@ -17,10 +17,9 @@
     <link href="~/admin/css/animate.css" rel="stylesheet">
     <link href="~/admin/css/style.css" rel="stylesheet">
 
-    <link href="~/admin/font-awesome/css/fa-brands.css" rel="stylesheet" />
-    <link href="~/admin/font-awesome/css/fa-regular.css" rel="stylesheet" />
-    <link href="~/admin/font-awesome/css/fa-solid.css" rel="stylesheet" />
-    <link href="~/admin/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    @*<link href="~/admin/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />*@
+
+    <link href="~/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
 
     @*<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
 
@@ -55,22 +54,16 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/Admin/Dashboard"><i class="fas fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="/Admin/Dashboard"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="/Admin/Widget"><i class="fas fa-gem"></i> <span class="nav-label">Widget panel</span></a>
+                        <a href="/Admin/Widget"><i class="fa fa-diamond"></i> <span class="nav-label">Widget panel</span></a>
                     </li>
                     <li>
                         <a href="/Admin/Category"><i class="fa fa-sitemap"></i> <span class="nav-label">Kateqoriyalar</span></a>
                     </li>
                     <li>
-                        <a href="/Admin/Message/Inbox"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="/Admin/Message/Inbox">Gələnlar</a></li>
-                            <li><a href="/Admin/Message/Sentbox">Göndərilənlər</a></li>
-                            <li><a href="/Admin/Message/SendMessage">Yeni Mesaj</a></li>
-                            <li><a href="/Admin/Message/Contact">Əlaqə Mesajları</a></li>
-                        </ul>
+                        <a href="/Admin/Blog"><i class="fa fa-pencil-square"></i> <span class="nav-label">Bloqlar</span></a>
                     </li>
                     <li>
                         <a href="/Admin/Notification"><i class="fa fa-bell"></i> <span class="nav-label">Bildirişlər</span></a>
@@ -82,10 +75,16 @@
                         <a href="/Admin/NewsLetter"><i class="fa fa-registered"></i> <span class="nav-label">Mail qeydiyyatları</span></a>
                     </li>
                     <li>
-                        <a href="/Admin/GoogleChart"><i class="fa fa-pie-chart"></i> <span class="nav-label">Google Chart</span>  </a>
+                        <a href="/Admin/Message/Inbox"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/Admin/Message/Inbox">Gələnlar</a></li>
+                            <li><a href="/Admin/Message/Sentbox">Göndərilənlər</a></li>
+                            <li><a href="/Admin/Message/Common">Bütün Mesajlar</a></li>
+                            <li><a href="/Admin/Contact">Əlaqə Mesajları</a></li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="/Admin/Writer"><i class="fa fa-user"></i> <span class="nav-label">Yazarlar (Ajax)</span>  </a>
+                        <a href="/Admin/GoogleChart"><i class="fa fa-pie-chart"></i> <span class="nav-label">Google Chart</span>  </a>
                     </li>
                     <li>
                         <hr />
@@ -95,6 +94,9 @@
                     </li>
                     <li>
                         <a href="/Admin/Contact"><i class="fa fa-address-book"></i> <span class="nav-label">Əlaqə</span></a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Writer"><i class="fa fa-user"></i> <span class="nav-label">Yazarlar (Ajax)</span>  </a>
                     </li>
                     <li>
                         <hr />

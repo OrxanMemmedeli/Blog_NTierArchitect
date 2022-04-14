@@ -19,6 +19,10 @@ namespace DataAccessLayer.EntityFramework
         {
             return context.Messages.Include(x => x.ReceiverUser).Include(x => x.SenderUser).Where(filter).ToList();
         }
+        public List<Message> GetAllWithWriter()
+        {
+            return context.Messages.Include(x => x.ReceiverUser).Include(x => x.SenderUser).ToList();
+        }
 
         public Message GetOneWithWriter(Expression<Func<Message, bool>> filter)
         {

@@ -9,6 +9,7 @@ namespace BusinessLayer.Abstract
     public interface IMessageService : IGenericService<Message>
     {
         List<Message> GetAllWithWriter(Expression<Func<Message, bool>> filter);
+        List<Message> GetAllWithWriter();
         Message GetOneWithWriter(Expression<Func<Message, bool>> filter);
 
     }

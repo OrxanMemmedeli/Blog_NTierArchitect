@@ -1,17 +1,17 @@
 ﻿@model EntityLayer.Concrete.Notification
 
 @{
-    ViewData["Title"] = "Yeni Bildiriş";
+    ViewData["Title"] = "Bildirişi Yenilə";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<h4>Yeni Bildiriş</h4>
+<h4>Bildirişi Yenilə </h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <label class="control-label">Bildiriş Tipi</label>
                 <input asp-for="Type" class="form-control" />
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Bildiriş rəngi</label>
-                <input asp-for="Color" class="form-control" type="color"/>
+                <input asp-for="Color" class="form-control" type="color" />
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -44,7 +44,7 @@
                 <span asp-validation-for="NotificationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Əlavə Et" class="btn btn-primary" />
+                <input type="submit" value="Yadda saxla" class="btn btn-primary" />
             </div>
         </form>
     </div>

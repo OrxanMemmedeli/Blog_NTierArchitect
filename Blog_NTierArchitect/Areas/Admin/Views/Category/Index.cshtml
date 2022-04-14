@@ -49,8 +49,8 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş Et"><i class="fa fa-edit test" style="color:green"></i></a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash-alt" style="color:red"></i></a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş Et"><i class="fa fa-pencil" style="color:green"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash" style="color:red"></i></a>
                 </td>
             </tr>
         }
@@ -64,3 +64,21 @@
                         PageClasses = new string[] { "page-link" }
                     }
                )
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["DeleteCategory"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteCategory"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditCategory"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditCategory"].ToString()))");
+    </script>
+}
