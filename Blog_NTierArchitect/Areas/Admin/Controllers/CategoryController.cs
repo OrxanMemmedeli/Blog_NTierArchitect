@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -16,19 +16,19 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly CategoryManager _categoryManager;
+        private readonly ICategoryService _categoryService;
         private readonly CategoryValidator _validator;
         private readonly ExcelExport<Category> _excelExport;
-        public CategoryController()
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryManager = new CategoryManager(new EFCategoryRepository());
+            _categoryService = categoryService;
             _validator = new CategoryValidator();
             _excelExport = new ExcelExport<Category>();
         }
 
         public IActionResult Index(int page = 1)
         {
-            var categories = _categoryManager.GetAll().ToPagedList(page, 10);
+            var categories = _categoryService.GetAll().ToPagedList(page, 10);
             return View(categories);
         }
 
@@ -51,7 +51,42 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 return View(category);
             }
 
-            _categoryManager.Add(category);
+            _categoryService.Add(category);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = _categoryService.GetById((int)id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category category)
+        {
+            ValidationResult results = _validator.Validate(category);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(category);
+            }
+
+            _categoryService.Update(category);
+            TempData["EditCategory"] = "Məlumat yeniləndi.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -62,22 +97,23 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var category = _categoryManager.GetById((int)id);
-            
+            var category = _categoryService.GetById((int)id);
+
             if (category == null)
             {
                 return NotFound();
             }
-            
-            _categoryManager.Delete(category);
+
+            _categoryService.Delete(category);
+            TempData["DeleteCategory"] = "Məlumat silindi.";
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult ExportDataToExcel()
         {
-            List<Category> categories = _categoryManager.GetAll();
+            List<Category> categories = _categoryService.GetAll();
 
-            var content =  _excelExport.ExportToExcel(categories);
+            var content = _excelExport.ExportToExcel(categories);
 
             return File(content, "application/vdn.openxmlformats-officedocument.spreadsheetml.sheet", "Cateqoriyalar-Admin.xlsx");
         }

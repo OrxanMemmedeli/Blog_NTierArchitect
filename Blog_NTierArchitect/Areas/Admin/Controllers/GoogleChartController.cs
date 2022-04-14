@@ -1,5 +1,5 @@
 ﻿using Blog_NTierArchitect.Areas.Admin.Models;
-using BusinessLayer.Concrete;
+using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,13 +12,13 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     [Area("Admin")]
     public class GoogleChartController : Controller
     {
-        private readonly BlogManager _blogManager;
-        private readonly CategoryManager _categoryManager;
+        private readonly IBlogService _blogService;
+        private readonly ICategoryService _categoryService;
 
-        public GoogleChartController()
+        public GoogleChartController(IBlogService blogService, ICategoryService categoryService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
-            _categoryManager = new CategoryManager(new EFCategoryRepository());
+            _blogService = blogService;
+            _categoryService = categoryService;
         }
 
         public IActionResult Index()
@@ -31,8 +31,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         {
             List<CategoryChartViewModel> list = new List<CategoryChartViewModel>();
 
-            var blogs = _blogManager.GetAll();
-            var categories = _categoryManager.GetAll();
+            var blogs = _blogService.GetAll();
+            var categories = _categoryService.GetAll();
 
             foreach (var item in categories)
             {

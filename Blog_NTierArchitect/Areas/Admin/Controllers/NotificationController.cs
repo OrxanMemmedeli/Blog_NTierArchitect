@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,17 +14,17 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     [Area("Admin")]
     public class NotificationController : Controller
     {
-        private readonly NotificationManager _notificationManager;
+        private readonly INotificationService _notificationService;
         private readonly NotificationValidator _validator;
-        public NotificationController()
+        public NotificationController(INotificationService notificationService)
         {
-            _notificationManager = new NotificationManager(new EFNotificationRepository());
+            _notificationService = notificationService;
             _validator = new NotificationValidator();
         }
 
         public IActionResult Index()
         {
-            var notifications = _notificationManager.GetAll();
+            var notifications = _notificationService.GetAll();
             return View(notifications);
         }
 
@@ -48,7 +48,62 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                 return View(notification);
             }
 
-            _notificationManager.Add(notification);
+            _notificationService.Add(notification);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var notification = _notificationService.GetById((int)id);
+
+            if (notification == null)
+            {
+                return NotFound();
+            }
+            return View(notification);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Notification notification)
+        {
+            ValidationResult results = _validator.Validate(notification);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(notification);
+            }
+
+            _notificationService.Update(notification);
+            TempData["EditNotification"] = "Məlumat yeniləndi.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var notification = _notificationService.GetById((int)id);
+
+            if (notification == null)
+            {
+                return NotFound();
+            }
+
+            _notificationService.Delete(notification);
+            TempData["DeleteNotification"] = "Məlumat silindi.";
             return RedirectToAction(nameof(Index));
         }
 
