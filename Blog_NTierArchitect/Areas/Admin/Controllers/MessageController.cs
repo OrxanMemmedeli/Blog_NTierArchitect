@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Validations;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +13,11 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageService _messageService;
-        private readonly MessageValidator _messageValidator;
         private readonly UserManager<AppUser> _userManager;
 
         public MessageController(IMessageService messageService, UserManager<AppUser> userManager)
         {
             _messageService = messageService;
-            _messageValidator = new MessageValidator();
             _userManager = userManager;
         }
 

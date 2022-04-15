@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Validations;
 using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -21,7 +20,6 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     {
         private readonly IBlogService _blogService;
         private readonly ICategoryService _categoryService;
-        private readonly BlogValidator _blogValidator;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly UserManager<AppUser> _userManager;
 
@@ -31,7 +29,6 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         {
             _blogService = blogService;
             _categoryService = categoryService;
-            _blogValidator = new BlogValidator();
             _hostEnvironment = hostEnvironment;
             _userManager = userManager;
             //_context = new BlogContext();
@@ -69,22 +66,19 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             {
                 UploadThumbnailImage(blog);
             }
-            ValidationResult results = _blogValidator.Validate(blog);
-            if (!results.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 List<SelectListItem> categories = (from x in _categoryService.GetAll()
-                                              select new SelectListItem
-                                              {
-                                                  Text = x.Name,
-                                                  Value = x.ID.ToString()
-                                              }).ToList();
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.Name,
+                                                       Value = x.ID.ToString()
+                                                   }).ToList();
                 ViewData["CategoryID"] = categories;
                 return View(blog);
             }
+
             blog.WriterID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             _blogService.Add(blog);
             return RedirectToAction(nameof(Index));
@@ -186,22 +180,18 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
             {
                 UploadThumbnailImage(blog);
             }
-            ValidationResult results = _blogValidator.Validate(blog);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 List<SelectListItem> categories = (from x in _categoryService.GetAll()
-                                              select new SelectListItem
-                                              {
-                                                  Text = x.Name,
-                                                  Value = x.ID.ToString()
-                                              }).ToList();
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.Name,
+                                                       Value = x.ID.ToString()
+                                                   }).ToList();
                 ViewData["CategoryID"] = categories;
                 return View(blog);
             }
+
 
             _blogService.Update(blog);
             TempData["EditBlog"] = "Blog məlumatları yeniləndi.";

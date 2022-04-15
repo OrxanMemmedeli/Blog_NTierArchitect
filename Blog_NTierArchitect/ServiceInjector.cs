@@ -1,7 +1,10 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.Validations;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,6 +26,19 @@ namespace Blog_NTierArchitect
             services.AddTransient<IMessageService, MessageManager>().AddTransient<IMessageDal, EFMessageRepository>();
             services.AddTransient<INewsLetterService, NewsLetterManager>().AddTransient<INewsLetterDal, EFNewsLetterRepository>();
             services.AddTransient<INotificationService, NotificationManager>().AddTransient<INotificationDal, EFNotificationRepository>();
+        }
+
+        public static void Validators(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<About>, AboutValidator>();
+            services.AddTransient<IValidator<Admin>, AdminValidator>();
+            services.AddTransient<IValidator<Blog>, BlogValidator>();
+            services.AddTransient<IValidator<Category>, CategoryValidator>();
+            services.AddTransient<IValidator<Comment>, CommentValidator>();
+            services.AddTransient<IValidator<Contact>, ContactValidator>();
+            services.AddTransient<IValidator<Message>, MessageValidator>();
+            services.AddTransient<IValidator<NewsLetter>, NewsLetterValidator>();
+            services.AddTransient<IValidator<Notification>, NotificationValidator>();
         }
     }
 }
