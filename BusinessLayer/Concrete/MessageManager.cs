@@ -26,6 +26,11 @@ namespace BusinessLayer.Concrete
             _messageDal.Delete(t);
         }
 
+        public void DeleteRange(List<Message> messages)
+        {
+            _messageDal.DeleteRange(messages);
+        }
+
         public List<Message> GetAll()
         {
             return _messageDal.GetAll();
@@ -61,5 +66,9 @@ namespace BusinessLayer.Concrete
             _messageDal.Update(t);
         }
 
+        public void UpdateRange(List<Message> messages)
+        {
+            _messageDal.UpdateRange(messages);
+        }
     }
 }

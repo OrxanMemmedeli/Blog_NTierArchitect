@@ -39,7 +39,7 @@ namespace Blog_NTierArchitect
             services.Register();
 
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
             {
