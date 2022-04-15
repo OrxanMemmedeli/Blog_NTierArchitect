@@ -11,16 +11,7 @@
             <h2>
                 Gələnlər (@Model.Count())
             </h2>
-            <div class="mail-tools tooltip-demo m-t-md">
-                <div class="btn-group float-right">
-                    <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                    <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-
-                </div>
-                <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Səhifəni yenilə"><i class="fa fa-refresh"></i> Yenilə</button>
-                <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Oxundu kimi qeyd ele"><i class="fa fa-eye"></i> </button>
-                <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mesajı Sil"><i class="fa fa-trash-o"></i> </button>
-            </div>
+            @await Component.InvokeAsync("MainButtons")
         </div>
         <div class="mail-box">
             <table class="table table-hover table-mail">
@@ -29,12 +20,13 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr class="read">
+                            <tr class="read" id="@item.ID">
                                 <td class="check-mail">
                                     <input type="checkbox" class="i-checks" value="@item.ID">
                                 </td>
                                 <td class="mail-ontact"><a href="/admin/Message/Details/@item.ID">@item.SenderUser.Email</a></td>
                                 <td class="mail-subject"><a href="/admin/Message/Details/@item.ID">@(item.Details.Length <= 100 ? item.Details : item.Details.Substring(0, item.Details.Substring(0,100).LastIndexOf(" "))+"...")</a></td>
+                                <td class="mail-subject"><a href="/admin/Message/Details/@item.ID">@Html.Raw(item.Status == true ? "<span class='badge badge-danger'>Oxunmadı</span>" : "<span class='badge badge-success'>Oxundu</span>")</a></td>
                                 <td class="text-right mail-date">
                                     ~ @(Math.Round((DateTime.Now - item.CreatedDate).TotalDays, 0)) gün əvvəl
                                 </td>
@@ -57,3 +49,39 @@
     </div>
 </div>
 
+
+@section Scripts{
+    <script>
+        var array = [];
+        $("input[type='checkbox']").on("click", function () {
+            if ($(this).is(':checked')) {
+                var id = $(this).closest('tr').prop('id');
+                array.push(id);
+            }
+        });
+
+        document.getElementById("isread").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Message/IsRead/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+
+        document.getElementById("delete").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Message/Delete/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+    </script>
+}

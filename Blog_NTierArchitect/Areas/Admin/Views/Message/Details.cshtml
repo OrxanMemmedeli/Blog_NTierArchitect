@@ -1,0 +1,85 @@
+﻿@model EntityLayer.Concrete.Message
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    @await Component.InvokeAsync("LeftMenu")
+
+    <div class="col-lg-9 animated fadeInRight">
+        <div class="mail-box-header" id="printContent">
+            <div class="float-right tooltip-demo">
+                <button class="btn btn-white btn-sm" id="isread" title="Oxundu kimi qeyd ele"><i class="fa fa-eye"></i> </button>
+                <button class="btn btn-white btn-sm" id="print" title="Çap Et"><i class="fa fa-print"></i></button>
+                <button class="btn btn-white btn-sm" id="delete" title="Mesajı Sil"><i class="fa fa-trash-o"></i></button>
+            </div>
+            <h2>
+                Ətraflı baxış
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md">
+
+
+                <h3>
+                    <span class="font-normal">Başlıq: </span>@Model.Subject
+                </h3>
+                <h5>
+                    <span class="float-right font-normal">@Model.CreatedDate.ToShortDateString()</span>
+                    <span class="font-normal">Kimdən: </span>@Model.SenderUser.Email - (@Model.SenderUser.UserName)
+                    <span class="font-normal">Kimə: </span>@Model.ReceiverUser.Email - (@Model.ReceiverUser.UserName)
+                </h5>
+            </div>
+        </div>
+        <div class="mail-box">
+
+
+            <div class="mail-body">
+                @Html.Raw(Model.Details)
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        var array = [];
+
+        array.push(@Model.ID);
+
+
+        document.getElementById("isread").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Message/IsRead/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+
+        document.getElementById("delete").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Message/Delete/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+
+        document.getElementById("print").onclick = function () {
+            var printContents = document.getElementById("printContent").innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        };
+    </script>
+}

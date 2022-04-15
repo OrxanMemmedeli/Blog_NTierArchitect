@@ -11,6 +11,7 @@ namespace BusinessLayer.Abstract
         List<Message> GetAllWithWriter(Expression<Func<Message, bool>> filter);
         List<Message> GetAllWithWriter();
         Message GetOneWithWriter(Expression<Func<Message, bool>> filter);
-
+        void UpdateRange(List<Message> messages);
+        void DeleteRange(List<Message> messages);
     }
 }
