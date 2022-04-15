@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -17,12 +16,10 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        private readonly CategoryValidator _validator;
         private readonly ExcelExport<Category> _excelExport;
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
-            _validator = new CategoryValidator();
             _excelExport = new ExcelExport<Category>();
         }
 
@@ -41,13 +38,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
         {
-            ValidationResult results = _validator.Validate(category);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 return View(category);
             }
 
@@ -75,13 +67,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
         {
-            ValidationResult results = _validator.Validate(category);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 return View(category);
             }
 

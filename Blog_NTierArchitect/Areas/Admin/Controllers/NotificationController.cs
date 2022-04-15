@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -15,11 +14,9 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
     public class NotificationController : Controller
     {
         private readonly INotificationService _notificationService;
-        private readonly NotificationValidator _validator;
         public NotificationController(INotificationService notificationService)
         {
             _notificationService = notificationService;
-            _validator = new NotificationValidator();
         }
 
         public IActionResult Index()
@@ -38,13 +35,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Notification notification)
         {
-            ValidationResult results = _validator.Validate(notification);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 return View(notification);
             }
 
@@ -73,13 +65,8 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Notification notification)
         {
-            ValidationResult results = _validator.Validate(notification);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
                 return View(notification);
             }
 

@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -17,13 +16,11 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageService _messageService;
-        private readonly MessageValidator _messageValidator;
         private readonly UserManager<AppUser> _userManager;
 
         public MessageController(UserManager<AppUser> userManager, IMessageService messageService)
         {
             _messageService = messageService;
-            _messageValidator = new MessageValidator();
             _userManager = userManager;
         }
 
@@ -74,16 +71,11 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
         {
             message.SenderID = Convert.ToInt32(_userManager.GetUserId(User));
 
-            ValidationResult results = _messageValidator.Validate(message);
-            if (!results.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-                ViewData["UsersEmail"] = GetEmails();
                 return View(message);
             }
+
             _messageService.Add(message);
             return RedirectToAction(nameof(Sentbox));
         }

@@ -1,6 +1,6 @@
 ﻿@model EntityLayer.Concrete.Message
 @{
-    ViewData["Title"] = "SendMessage";
+    ViewData["Title"] = "Yeni Mesaj";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -15,7 +15,9 @@
         </div>
         <div class="mail-box">
 
-            <form method="get">
+            <form method="post" asp-action="SendMessage" asp-controller="Message" asp-area="Admin">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="mail-body">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Alıcı:</label>

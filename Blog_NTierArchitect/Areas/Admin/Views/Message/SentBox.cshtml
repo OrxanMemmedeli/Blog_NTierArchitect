@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Message>
 
 @{
-    ViewData["Title"] = "Gedənlər";
+    ViewData["Title"] = "Göndərilən";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -10,7 +10,7 @@
     <div class="col-lg-9 animated fadeInRight">
         <div class="mail-box-header">
             <h2>
-                Gələnlər (@Model.Count())
+                Göndərilənlər (@Model.Count())
             </h2>
             @await Component.InvokeAsync("MainButtons")
 
