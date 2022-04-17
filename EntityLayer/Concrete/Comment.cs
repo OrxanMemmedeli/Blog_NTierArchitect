@@ -13,8 +13,8 @@ namespace EntityLayer.Concrete
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public bool Status { get; set; } = true;
-        public int Score { get; set; } = 0;
+        public bool Status { get; set; } = false;
+        public int Score { get; set; } = 1;
 
 
         public int BlogID { get; set; }

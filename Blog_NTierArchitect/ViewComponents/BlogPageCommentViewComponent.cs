@@ -19,7 +19,7 @@ namespace Blog_NTierArchitect.ViewComponents
 
         public IViewComponentResult Invoke(int id)
         {
-            var comments = _commentService.GetAll(x => x.BlogID == id);
+            var comments = _commentService.GetAll(x => x.BlogID == id && x.Status== true);
             return View(comments);
         }
     }

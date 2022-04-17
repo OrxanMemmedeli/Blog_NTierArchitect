@@ -1,6 +1,9 @@
-﻿using BusinessLayer.Concrete;
+﻿using Blog_NTierArchitect.Models.ViewModels;
+using BusinessLayer.Abstract;
+using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,11 +16,13 @@ namespace Blog_NTierArchitect.Controllers
     [AllowAnonymous]
     public class CommentController : Controller
     {
-        private readonly CommentManager _commentManager;
+        private readonly ICommentService _commentService;
+        private readonly CommentValidator validator;
 
-        public CommentController()
+        public CommentController(ICommentService commentService)
         {
-            _commentManager = new CommentManager(new EFCommentRepository());
+            _commentService = commentService;
+            validator = new CommentValidator();
         }
 
         public IActionResult Index()
@@ -26,18 +31,39 @@ namespace Blog_NTierArchitect.Controllers
         }
 
         [HttpPost]
-        public IActionResult WriteComment(int id, string Name, string Subject, string Message)
+        [ValidateAntiForgeryToken]
+        public IActionResult WriteComment(CommentViewModel model)
         {
-            Comment comment = new Comment();
-            comment.UserName = Name;
-            comment.Title = Subject;
-            comment.Content = Message;
-            comment.BlogID = id;
+            Comment comment = model;
 
-            _commentManager.Add(comment);
+            if (!ModelState.IsValid)
+            {
+                TempData["CommentErrors"] = null;
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage);
+
+                foreach (var item in errors)
+                {
+                    TempData["CommentErrors"] += "*" + item + "\n";
+                }
+                return Redirect("/Blog/Details/" + model.BlogID);
+            }
+            ValidationResult result = validator.Validate(comment);
+            if (!result.IsValid)
+            {
+                TempData["CommentErrors"] = null;
+                foreach (var item in result.Errors)
+                {
+                    TempData["CommentErrors"] += "*" + item.ErrorMessage + "\n";
+                }
+                return Redirect("/Blog/Details/" + model.BlogID);
+            }
+
+            _commentService.Add(comment);
 
             TempData["CommentSuccess"] = "Şərhiniz qeyde alınmışdır. Şərh üçün təşəkkür edirik.";
-            return Redirect("/Blog/Details/" + id);
+            return Redirect("/Blog/Details/" + model.BlogID);
         }
     }
 }

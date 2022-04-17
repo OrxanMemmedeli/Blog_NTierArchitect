@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Blog>
+@{
+    ViewData["Title"] = "Bloglar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-content product-box">
+
+                    <div style="justify-content:center">
+                        <img src="@item.Image" height="225" width="240" />
+                    </div>
+                    <div class="product-desc">
+                        <span class="product-price">
+                            @item.CreatedDate.ToShortDateString()
+                        </span>
+                        <small class="text-muted">@item.Category.Name</small>
+                        <a href="#" class="product-name"> @(item.Content.Length < 18 ? item.Content : item.Content.Substring(0, item.Content.Substring(0, 18).LastIndexOf(" ")) + "...")</a>
+
+                        <div class="small m-t-xs">
+                            @(item.Content.Length < 200 ? item.Content : item.Content.Substring(0, item.Content.Substring(0,200).LastIndexOf(" "))+ "...")
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="/Blog/Details/@item.ID" class="btn btn-xs btn-outline btn-primary" target="_blank">Baxış<i class="fa fa-long-arrow-right"></i> </a>
+                            <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş et" class="btn btn-xs btn-outline btn-warning"><i class="fa fa-pencil"></i> </a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')" class="btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["DeleteAdminBlog"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteAdminBlog"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditAdminBlog"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditAdminBlog"].ToString()))");
+    </script>
+}

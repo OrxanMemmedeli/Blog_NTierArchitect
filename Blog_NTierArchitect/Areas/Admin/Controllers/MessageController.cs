@@ -50,6 +50,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SendMessage(Message message)
         {
+            message.SenderID = Convert.ToInt32(_userManager.GetUserId(HttpContext.User));
             if (ModelState.IsValid)
             {
                 _messageService.Add(message);
