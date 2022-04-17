@@ -5,16 +5,6 @@
 }
 
 <link rel="stylesheet" href="~/css/single.css">
-
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/">Əsas Səhifə</a>
-    </li>
-    <li class="breadcrumb-item">
-        <a href="/Blog">Blog Yazıları</a>
-    </li>
-    <li class="breadcrumb-item active">@Model.First().Title</li>
-</ol>
 @foreach (var item in Model)
 {
     <section class="banner-bottom">

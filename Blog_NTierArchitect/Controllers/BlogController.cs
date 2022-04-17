@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +12,16 @@ namespace Blog_NTierArchitect.Controllers
     [AllowAnonymous]
     public class BlogController : Controller
     {
-        private readonly BlogManager _blogManager;
-        public BlogController()
+        private readonly IBlogService _blogService;
+
+        public BlogController(IBlogService blogService)
         {
-            _blogManager = new BlogManager(new EFBlogRepository());
+            _blogService = blogService;
         }
 
         public IActionResult Index()
         {
-            var datas = _blogManager.GetAllWithRelationships();
+            var datas = _blogService.GetAllWithRelationships();
             return View(datas);
         }
 
@@ -31,7 +32,7 @@ namespace Blog_NTierArchitect.Controllers
                 return NotFound();
             }
 
-            var blog = _blogManager.GetBlogByID((int)id);
+            var blog = _blogService.GetBlogByID((int)id);
             return View(blog);
         }
 

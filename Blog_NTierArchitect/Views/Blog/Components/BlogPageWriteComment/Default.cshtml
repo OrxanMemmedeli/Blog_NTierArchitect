@@ -3,10 +3,43 @@
     <h4>Yorum yaz</h4>
     <div class="comment-bottom">
         <form asp-action="WriteComment" asp-controller="Comment" method="post">
-            <input type="hidden" name="id" value="@TempData["CommentBlogID"]" />
-            <input class="form-control" type="text" name="Name" placeholder="Ad və Soyadınız" required="" autocomplete="off">
-            <input class="form-control" type="text" name="Subject" placeholder="Başlıq" required="" autocomplete="off">
-            <textarea class="form-control" name="Message" placeholder="Mesajınız..." required=""></textarea>
+            @if (TempData["CommentErrors"] != null)
+            {
+                <span class="text-danger">@TempData["CommentErrors"].ToString()</span>
+            }
+
+            <div class="form-group">
+                <input type="hidden" name="BlogID" value="@TempData["CommentBlogID"]" />
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" type="text" name="UserName" placeholder="Ad və Soyadınız" required="" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" type="text" name="Title" placeholder="Başlıq" required="" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <select name="Score" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5" selected>5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <textarea class="form-control" name="Content" placeholder="Mesajınız..." required=""></textarea>
+            </div>
+
             <button type="submit" class="btn btn-primary submit">Göndər</button>
         </form>
     </div>

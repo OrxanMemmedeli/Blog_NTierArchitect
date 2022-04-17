@@ -17,7 +17,7 @@ namespace BusinessLayer.Validations
 
             RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("Ad və Soyadınız boş ola bilməz")
-                .MinimumLength(10).WithMessage("Ad və Soyadınız ən az 10 simvol ola bilər")
+                .MinimumLength(5).WithMessage("Ad və Soyadınız ən az 5 simvol ola bilər")
                 .MaximumLength(50).WithMessage("Ad və Soyadınız ən çox 50 simvol ola bilər");
 
             RuleFor(x => x.Title)
