@@ -53,6 +53,9 @@ namespace Blog_NTierArchitect.Controllers
         {
             if (ModelState.IsValid)
             {
+                //İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
+                await _signInManager.SignOutAsync();
+
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (result.Succeeded)
                 {
