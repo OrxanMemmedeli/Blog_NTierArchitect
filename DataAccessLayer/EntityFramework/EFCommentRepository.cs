@@ -19,5 +19,13 @@ namespace DataAccessLayer.EntityFramework
                 return context.Comments.Include(x => x.Blog).ToList();
             }
         }
+
+        public Comment GetByIdWithBlog(int id)
+        {
+            using (var context = new BlogContext())
+            {
+                return context.Comments.Include(x => x.Blog).FirstOrDefault(x => x.ID == id);
+            }
+        }
     }
 }

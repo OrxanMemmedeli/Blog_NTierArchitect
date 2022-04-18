@@ -7,7 +7,7 @@
 <div class="col-lg-12">
     <div class="ibox ">
         <div class="ibox-title">
-            <h5>Yorumlar  </h5>
+            <h5>Yorumlar</h5>
         </div>
         <div class="ibox-content">
 
@@ -34,20 +34,20 @@
                                     case 1:
                                     case 2:
                                     case 3:
-                                        <i class="fa fa-level-down text-danger"></i><span>@item.Score</span>
+                                        <i class="fa fa-level-down text-danger"></i><span class="text-danger"> @item.Score</span>
                                         break;
                                     case 4:
                                     case 5:
                                     case 6:
-                                        <i class="fa fa-level-down text-warning"></i><span>@item.Score</span>
+                                        <i class="fa fa-level-down text-warning"></i><span class="text-warning"> @item.Score</span>
                                         break;
                                     case 7:
                                     case 8:
-                                        <i class="fa fa-level-up text-info"></i><span>@item.Score</span>
+                                        <i class="fa fa-level-up text-info"></i><span class="text-info"> @item.Score</span>
                                         break;
                                     case 9:
                                     case 10:
-                                        <i class="fa fa-level-up text-success"></i><span>@item.Score</span>
+                                        <i class="fa fa-level-up text-success"></i><span class="text-success"> @item.Score</span>
                                         break;
                                     default:
                                         goto case 1;
@@ -62,15 +62,20 @@
                                 @if (item.Status)
                                 {
                                     <i class="fa fa-check text-navy"></i>
+                                    <i class="fa fa-check text-navy"></i>
                                 }
                                 else
                                 {
-                                    <i class="fa fa-crosshairs text-danger"></i>
+                                    <i class="fa fa-check text-danger"></i>
                                 }
 
                             </td>
                             <td>
                                 <a href="/Blog/Details/@item.BlogID" class="btn btn-xs btn-outline btn-primary" target="_blank" title="Yoruma baxış"><i class="fa fa-long-arrow-right"></i> </a>
+                                @if (!item.Status)
+                                {
+                                    <a asp-action="Confirm" asp-route-id="@item.ID" title="təsdiq et" class="btn btn-xs btn-outline btn-success"><i class="fa fa-check"></i> </a>
+                                }
                                 <a asp-action="Edit" asp-route-id="@item.ID" title="Düzəliş et" class="btn btn-xs btn-outline btn-warning"><i class="fa fa-pencil"></i> </a>
                                 <a asp-action="Delete" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil.\nSətiri yənədə silmək istəyirsinizmi?')" class="btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
