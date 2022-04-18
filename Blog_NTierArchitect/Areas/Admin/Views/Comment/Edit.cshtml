@@ -1,0 +1,47 @@
+﻿@model EntityLayer.Concrete.Comment
+
+@{
+    ViewData["Title"] = "Yorumu yenilə";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Yorumu yenilə</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="Score" />
+            <input type="hidden" asp-for="BlogID" />
+            <input type="hidden" asp-for="CreatedDate" />
+            <div class="form-group">
+                <label class="control-label">Yazar</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Başlıq</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Yorum</label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Yadda saxla" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-dark">Geri</a>
+</div>

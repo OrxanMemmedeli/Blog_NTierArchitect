@@ -8,5 +8,6 @@ namespace DataAccessLayer.Abstract
     public interface ICommentDal : IGenericDal<Comment>
     {
         List<Comment> GetAllWithBlog();
+        Comment GetByIdWithBlog(int id);
     }
 }

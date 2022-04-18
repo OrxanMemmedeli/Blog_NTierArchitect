@@ -47,6 +47,11 @@ namespace BusinessLayer.Concrete
             return _commentDal.GetById(id);
         }
 
+        public Comment GetByIdWithBlog(int id)
+        {
+            return _commentDal.GetByIdWithBlog(id);
+        }
+
         public void Update(Comment t)
         {
             _commentDal.Update(t);
