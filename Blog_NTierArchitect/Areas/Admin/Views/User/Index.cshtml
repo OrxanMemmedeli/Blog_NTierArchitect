@@ -1,0 +1,84 @@
+﻿@model IEnumerable<EntityLayer.Concrete.AppUser>
+
+@{
+    ViewData["Title"] = "Istifadəçilər";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Istifadəçilər</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Foto
+            </th>
+            <th>
+                Ad Soyad
+            </th>
+            <th>
+                İstifadıçi adı
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.ImageUrl" style="width:70px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameSurname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <span class="badge badge-success">Aktiv</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Passiv</span>
+                    }
+                </td>
+                <td>
+                    <big>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-warning xl" title="Düzəliş et"><i class="mdi mdi-table-edit"></i> </a> |
+                        <a asp-action="EditPassword" asp-route-id="@item.Id" class="text-danger" title="Şifrəni yenilə"><i class="mdi mdi-key"></i> </a>
+                    </big>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["EditPassword"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditPassword"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditUserData"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditUserData"].ToString()))");
+    </script>
+}

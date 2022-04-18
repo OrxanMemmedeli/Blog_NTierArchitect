@@ -1,0 +1,62 @@
+﻿@model Blog_NTierArchitect.Areas.Admin.Models.EditUserViewModel
+
+@{
+    ViewData["Title"] = "İstifadəçini yenilə";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h4>İstifadəçini yenilə</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="id" value="@ViewBag.editUserID" />
+            <div class="form-group">
+                <label class="control-label">Ad Soyad</label>
+                <input asp-for="NameSurname" class="form-control" />
+                <span asp-validation-for="NameSurname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">İstifadəçi adı</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Şəkil</label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+                @if (Model.Image != null)
+                {
+                    <img src="@Model.Image" style="width:250px" />
+                }
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="exampleTextarea1">Haqqında yazısı </label>
+                <textarea class="form-control" asp-for="About" rows="10"></textarea>
+                <span asp-validation-for="About" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Yadda saxla" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-dark">Geri</a>
+</div>
+
+

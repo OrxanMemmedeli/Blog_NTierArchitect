@@ -1,4 +1,4 @@
-using Blog_NTierArchitect.IdentityLabrery;
+﻿using Blog_NTierArchitect.IdentityLabrery;
 using DataAccessLayer.Concrete.Context;
 using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -32,12 +33,30 @@ namespace Blog_NTierArchitect
         {
             services.AddDbContext<BlogContext>();
             services.AddIdentity<AppUser, AppRole>(x => {
-                x.Password.RequireUppercase = false; 
+                x.Password.RequireUppercase = false;
+                x.Password.RequiredLength = 5; //min simvol sayi
+                x.User.RequireUniqueEmail = true; //emailin uniq olmasi
+                
             })
                 .AddErrorDescriber<TranslateErrorMessage>()
                 .AddEntityFrameworkStores<BlogContext>();
             services.Register();
 
+            services.ConfigureApplicationCookie(_ =>
+            {
+                _.LoginPath = new PathString("/Account/Login");
+                _.LogoutPath = new PathString("/Account/LogOut");
+                _.Cookie = new CookieBuilder
+                {
+                    Name = "AspNetCoreIdentityExampleCookie", //Olusturulacak Cookie'yi isimlendiriyoruz.
+                    HttpOnly = false, //Kotu niyetli insanlarin client-side tarafindan Cookie'ye erismesini engelliyoruz.
+                    //Expiration = TimeSpan.FromMinutes(2), //Olusturulacak Cookie'nin vadesini belirliyoruz.
+                    SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gonderilmemesini belirtiyoruz.
+                    SecurePolicy = CookieSecurePolicy.Always //HTTPS uzerinden erisilebilir yapiyoruz.
+                };
+                _.SlidingExpiration = true; //Expiration suresinin yarisi kadar sure zarfinda istekte bulunulursa eğer geri kalan yarisini tekrar sifirlayarak ilk ayarlanan sureyi tazeleyecektir.
+                _.ExpireTimeSpan = TimeSpan.FromMinutes(2); //CookieBuilder nesnesinde tanimlanan Expiration degerinin varsayilan degerlerle ezilme ihtimaline karsin tekrardan Cookie vadesi burada da belirtiliyor.
+            });
 
             services.AddControllersWithViews().AddFluentValidation();
             services.Validators();
