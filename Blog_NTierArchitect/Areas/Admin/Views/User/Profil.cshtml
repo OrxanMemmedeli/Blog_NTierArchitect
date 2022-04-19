@@ -1,0 +1,105 @@
+﻿@model Blog_NTierArchitect.Areas.Admin.Models.EditUserViewModel
+@{
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row animated fadeInRight">
+    <div class="col-md-4">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Profil</h5>
+            </div>
+            <div>
+                <div class="ibox-content no-padding border-left-right">
+                    <img alt="image" class="img-fluid" src="@Model.Image">
+                </div>
+                <div class="ibox-content profile-content">
+                    <h4><strong>@Model.NameSurname</strong></h4>
+                    <p><i class="fa fa-user"></i> @Model.UserName</p>
+                    <h5>
+                        Haqqımda
+                    </h5>
+                    <p>
+                        @Model.About
+                    </p>
+                    <div class="user-button">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a asp-action="UpdatePassword" asp-controller="User" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> Şifrəni yenilə</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Məlumatların yenilənməsi</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Profil" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <input type="hidden" name="id" value="@ViewBag.editUserID" />
+                            <div class="form-group">
+                                <label class="control-label">Ad Soyad</label>
+                                <input asp-for="NameSurname" class="form-control" />
+                                <span asp-validation-for="NameSurname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">İstifadəçi adı</label>
+                                <input asp-for="UserName" class="form-control" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Şəkil</label>
+                                <input asp-for="ImageFile" class="form-control" type="file" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Haqqında yazısı </label>
+                                <textarea class="form-control" asp-for="About" rows="10"></textarea>
+                                <span asp-validation-for="About" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block m"><i class="fa fa-arrow-up"></i> Məlumatları yenilə</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["UpdateUserData"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["UpdateUserData"].ToString()))");
+    </script>
+}
