@@ -33,8 +33,45 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
 
         public async Task<IActionResult> Profil()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            EditUserViewModel user = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profil(EditUserViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (model.ImageFile != null)
+            {
+                UploadImage(model);
+            }
+
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            FillModel(model, user);
+
+            IdentityResult result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
+                return View(model);
+            }
+            TempData["UpdateUserData"] = "Məlumat yeniləndi";
+            return RedirectToAction(nameof(Profil));
+
+        }
+
+        private static void FillModel(EditUserViewModel model, AppUser user)
+        {
+            user.UserName = model.UserName;
+            user.ImageUrl = model.Image;
+            user.NameSurname = model.NameSurname;
+            user.About = model.About;
+            user.Email = model.Email;
+            user.Status = model.Status;
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -58,12 +95,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             }
             AppUser user = await _userManager.FindByIdAsync(id.ToString());
 
-            user.UserName = model.UserName;
-            user.ImageUrl = model.Image;
-            user.NameSurname = model.NameSurname;
-            user.About = model.About;
-            user.Email = model.Email;
-            user.Status = model.Status;
+            FillModel(model, user);
 
             IdentityResult result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
