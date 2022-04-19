@@ -1,0 +1,44 @@
+﻿@model List<Blog_NTierArchitect.Areas.Admin.Models.RoleAssignViewModel>
+
+@{
+    ViewData["Title"] = "Role təyin et";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<form asp-action="RoleAssign" asp-controller="Role">
+    <input type="hidden" name="userID" value="@ViewBag.User" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Rol
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td style="width:15px">
+                        <input type="checkbox" asp-for="@Model[i].Exists" />
+                    </td>
+                    <td>
+                        @Model[i].RoleName
+                        <input type="hidden" asp-for="@Model[i].RoleId" />
+                        <input type="hidden" asp-for="@Model[i].RoleName" />
+                    </td>
+                </tr>
+            }
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="btn btn-outline-success">Yenilə</button>                
+                <a asp-action="Index" asp-controller="User" asp-area="Admin" class="btn btn-dark">Geri</a>
+            </td>            
+        </tr>
+        </tbody>
+    </table>
+
+</form>
