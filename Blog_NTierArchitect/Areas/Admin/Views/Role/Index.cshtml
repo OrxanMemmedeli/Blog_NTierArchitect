@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EntityLayer.Concrete.AppRole>
+
+@{
+    ViewData["Title"] = "Rollar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Rollar</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Yeni Rol</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Rol
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <big>
+                        <a asp-action="Edit" asp-route-id="@item.Id" title="Düzəliş Et"><i class="fa fa-pencil" style="color:green"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \n Sətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash" style="color:red"></i></a>
+                    </big>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Default/lib/jquery/dist/jquery.js"></script>
+
+@if (TempData["DeleteRole"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteRole"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditRole"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditRole"].ToString()))");
+    </script>
+}
