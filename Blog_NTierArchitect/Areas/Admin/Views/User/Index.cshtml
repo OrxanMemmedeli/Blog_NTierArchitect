@@ -57,7 +57,8 @@
                 <td>
                     <big>
                         <a asp-action="Edit" asp-route-id="@item.Id" class="text-warning xl" title="Düzəliş et"><i class="mdi mdi-table-edit"></i> </a> |
-                        <a asp-action="EditPassword" asp-route-id="@item.Id" class="text-danger" title="Şifrəni yenilə"><i class="mdi mdi-key"></i> </a>
+                        <a asp-action="EditPassword" asp-route-id="@item.Id" class="text-danger" title="Şifrəni yenilə"><i class="mdi mdi-key"></i> </a> |
+                        <a asp-action="RoleAssign" asp-route-id="@item.Id" asp-controller="Role" asp-area="Admin" class="text-info" title="Rol təyin et"><i class="mdi mdi-lock"></i> </a>
                     </big>
 
                 </td>

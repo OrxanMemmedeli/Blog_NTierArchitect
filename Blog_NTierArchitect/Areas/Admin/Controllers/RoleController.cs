@@ -109,5 +109,42 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> RoleAssign(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            var roles = _roleManager.Roles.ToList();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+
+            List<RoleAssignViewModel> model = new List<RoleAssignViewModel>();
+
+            roles.ForEach(x => model.Add(new RoleAssignViewModel()
+            {
+                RoleName = x.Name,
+                RoleId = x.Id,
+                Exists = userRoles.Contains(x.Name)
+            }));
+            ViewBag.User = id;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RoleAssign(List<RoleAssignViewModel> model, int userID) 
+        {
+            AppUser user = await _userManager.FindByIdAsync(userID.ToString());
+            foreach (RoleAssignViewModel role in model)
+            {
+                if (role.Exists)
+                    await _userManager.AddToRoleAsync(user, role.RoleName);
+                else
+                    await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+            }
+            return Redirect("/Admin/User");
+        }
+
     }
 }
