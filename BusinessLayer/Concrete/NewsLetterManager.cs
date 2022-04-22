@@ -42,6 +42,11 @@ namespace BusinessLayer.Concrete
             return _newsLetterDal.GetById(id);
         }
 
+        public bool UniqueEmailControl(string email)
+        {
+            return _newsLetterDal.UniqueEmailControl(email);
+        }
+
         public void Update(NewsLetter t)
         {
             _newsLetterDal.Update(t);
