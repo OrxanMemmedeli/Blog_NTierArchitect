@@ -22,7 +22,7 @@ namespace BusinessLayer.Validations
             RuleFor(x => x.ImageFirst)
                 .NotEmpty().WithMessage("Haqqında mətninin ilk şəkil hissəsi boş ola bilməz");              
             
-            RuleFor(x => x.MyLocation)
+            RuleFor(x => x.Map)
                 .NotEmpty().WithMessage("Xəritə məlumatları boş ola bilməz");    
         }
     }

@@ -1,15 +1,13 @@
 ﻿using BusinessLayer.Abstract;
-using DataAccessLayer.EntityFramework;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog_NTierArchitect.Controllers
+namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
-    [AllowAnonymous]
+    [Area("Admin")]
     public class AboutController : Controller
     {
         private readonly IAboutService _aboutService;
@@ -19,10 +17,10 @@ namespace Blog_NTierArchitect.Controllers
             _aboutService = aboutService;
         }
 
+
         public IActionResult Index()
         {
-            var aboutData = _aboutService.GetAll(x => x.Status == true).OrderByDescending(x => x.ID).First();
-            return View(aboutData);
+            return View();
         }
     }
 }

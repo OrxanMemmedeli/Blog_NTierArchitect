@@ -1,12 +1,9 @@
-﻿@model List<EntityLayer.Concrete.About>
+﻿@model EntityLayer.Concrete.About
 <h3>Haqqımzda</h3>
 <p style="text-align:justify; text-justify: distribute-all-lines;">
-    @foreach (var item in Model)
-    {
         <span >
-            @(item.DetailsFirst.Length < 650 ? item.DetailsFirst : item.DetailsFirst.Substring(0, item.DetailsFirst.Substring(0,650).LastIndexOf(" ")))
+            @(Model.DetailsFirst.Length < 650 ? Model.DetailsFirst : Model.DetailsFirst.Substring(0, Model.DetailsFirst.Substring(0,650).LastIndexOf(" ")))
         </span>
-    }
     ..
 </p>
 <div class="read">

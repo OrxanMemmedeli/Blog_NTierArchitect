@@ -19,7 +19,7 @@ namespace Blog_NTierArchitect.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var categories = _categoryService.GetAll();
+            var categories = _categoryService.GetAllWithBlog(x => x.Status == true);
             return View(categories);
         }
     }
