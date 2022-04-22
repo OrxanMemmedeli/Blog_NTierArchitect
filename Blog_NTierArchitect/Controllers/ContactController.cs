@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +13,11 @@ namespace Blog_NTierArchitect.Controllers
     [AllowAnonymous]
     public class ContactController : Controller
     {
-        private readonly ContactManager _contactManager;
-        public ContactController()
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
         {
-            _contactManager = new ContactManager(new EFContactRepository());
+            _contactService = contactService;
         }
 
         [HttpGet]
@@ -27,7 +28,7 @@ namespace Blog_NTierArchitect.Controllers
         [HttpPost]
         public IActionResult Index(Contact model)
         {
-            _contactManager.Add(model);
+            _contactService.Add(model);
 
             TempData["MessageSuccess"] = "Mesajınız qeyde alınmışdır. Mesaj üçün təşəkkür edirik.";
             return View();

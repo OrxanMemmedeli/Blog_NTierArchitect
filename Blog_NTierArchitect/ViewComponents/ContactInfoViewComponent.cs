@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace Blog_NTierArchitect.ViewComponents
 {
-    public class UserLayoutFooter_AboutViewComponent : ViewComponent
+    public class ContactInfoViewComponent : ViewComponent
     {
         private readonly IAboutService _aboutService;
 
-        public UserLayoutFooter_AboutViewComponent(IAboutService aboutService)
+        public ContactInfoViewComponent(IAboutService aboutService)
         {
             _aboutService = aboutService;
         }
 
         public IViewComponentResult Invoke()
         {
-            var aboutData = _aboutService.GetAll(x => x.Status == true).OrderByDescending(x => x.ID).First();
-            return View(aboutData);
+            return View(_aboutService.GetAll(x => x.Status == true).OrderByDescending(x => x.ID).First());
         }
     }
 }

@@ -9,5 +9,6 @@ namespace DataAccessLayer.Abstract
     {
         List<Blog> GetAllWithRelationships();
         List<Blog> GetAllWithRelationshipsByWriter(int id);
+        List<Blog> GetLastBlogs(int count);
     }
 }

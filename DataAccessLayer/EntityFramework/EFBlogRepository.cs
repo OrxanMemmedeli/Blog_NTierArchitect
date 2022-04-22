@@ -27,5 +27,13 @@ namespace DataAccessLayer.EntityFramework
                 return context.Blogs.Include(x => x.Category).Where(x => x.WriterID == id).ToList();
             }
         }
+
+        public List<Blog> GetLastBlogs(int count)
+        {
+            using (var cx = new BlogContext())
+            {
+                return cx.Blogs.OrderByDescending(x => x.CreatedDate).Take(count).ToList();
+            }
+        }
     }
 }

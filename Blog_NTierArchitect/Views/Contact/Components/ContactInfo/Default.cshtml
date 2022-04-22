@@ -1,0 +1,55 @@
+﻿@model EntityLayer.Concrete.About
+
+
+    <div class="contact-map inner-sec">
+        @Html.Raw(Model.Map)
+    </div>
+    <div class="ad-inf-sec bg-light">
+        <div class="container">
+            <div class="address row">
+
+                <div class="col-lg-4 address-grid">
+                    <div class="row address-info">
+                        <div class="col-md-4 address-left text-center">
+                            <i class="far fa-map"></i>
+                        </div>
+                        <div class="col-md-8 address-right text-left">
+                            <h6>Ünvan</h6>
+                            <p>
+                                @Html.Raw(Model.Adress)
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 address-grid">
+                    <div class="row address-info">
+                        <div class="col-md-4 address-left text-center">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <div class="col-md-8 address-right text-left">
+                            <h6>Email</h6>
+                            <p>
+                                @Html.Raw(Model.Email)
+
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 address-grid">
+                    <div class="row address-info">
+                        <div class="col-md-4 address-left text-center">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="col-md-8 address-right text-left">
+                            <h6>Telefon</h6>
+                            <p>
+                                @Html.Raw(Model.Telephone)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
