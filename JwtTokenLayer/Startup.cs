@@ -68,6 +68,8 @@ namespace JwtTokenLayer
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
