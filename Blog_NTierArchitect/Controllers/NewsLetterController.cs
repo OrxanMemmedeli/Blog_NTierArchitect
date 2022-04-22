@@ -26,15 +26,23 @@ namespace Blog_NTierArchitect.Controllers
             NewsLetter newsLetter = new NewsLetter();
             newsLetter.Email = Email;
 
-            _newsLetterManager.Add(newsLetter);
+            if (!_newsLetterManager.UniqueEmailControl(Email))
+            {
+                _newsLetterManager.Add(newsLetter);
+                TempData["SubscribeSuccess"] = "Mail adresiniz sistemə uğurla qeyd edildi. Abonə olduğunuz üçün təşəkkür edirik.";
+            }
+            else
+            {
+                TempData["SubscribeSuccess"] = "Mail adresinizin abonəliyi mövcuddur. Fərqli mail ünvanı qeyd edə bilərsiniz.";
+            }
 
-            TempData["SubscribeSuccess"] = "Mail adresiniz sisteme uğurla qeyd edildi. Abone olduğunuz üçün təşəkkür edirik.";
+
             if (id != null)
             {
                 return Redirect("/Blog/Details/" + id);
             }
             return Redirect("/About");
-            
+
         }
     }
 }

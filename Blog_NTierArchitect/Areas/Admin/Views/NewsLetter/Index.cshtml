@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EntityLayer.Concrete.NewsLetter>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <p>
+            <a asp-action="ExportDataToExcel" asp-controller="NewsLetter" asp-area="Admin" class="btn btn-success  dim"><i class="fa fa-upload"></i> Excel kimi saxla</a>
+        </p>
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <ul class="notes">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div>
+                            <small>
+                                Status:
+                                @if (item.Status)
+                                {
+                                    <span class="badge badge-success" style="justify-content:left; margin-right:60px">Aktiv</span> 
+                                    <a asp-action="Status" asp-controller="NewsLetter" asp-area="Admin" asp-route-id="@item.ID" class="btn btn-warning dim" title="Passiv et" style="justify-content:left"><i class="fa fa-warning"></i></a>
+
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger" style="justify-content:left; margin-right:60px">Passiv</span>
+                                    <a asp-action="Status" asp-controller="NewsLetter" asp-area="Admin" asp-route-id="@item.ID" class="btn btn-primary dim" title="Aktiv et"><i class="fa fa-check"></i></a>
+
+                                }
+                            </small>
+                            <h4 style="max-width: 200px;word-break: break-all; white-space: normal;">@item.Email</h4>
+                            <hr />
+
+
+                            <a asp-action="Delete" asp-controller="NewsLetter" asp-area="Admin" asp-route-id="@item.ID" class="btn btn-danger  dim " title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash-o "></i></a>
+                            </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
