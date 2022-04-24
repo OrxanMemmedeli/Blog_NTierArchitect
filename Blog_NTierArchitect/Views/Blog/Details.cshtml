@@ -1,12 +1,11 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Blog>
+﻿@model EntityLayer.Concrete.Blog
 @{
-    ViewData["Title"] = Model.First().Title;
+    ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/single.css">
-@foreach (var item in Model)
-{
+
     <section class="banner-bottom">
         <!--/blog-->
         <div class="container">
@@ -17,42 +16,45 @@
                         <div class="b-grid-top">
                             <div class="blog_info_left_grid">
                                 <a>
-                                    <img src="@Html.Raw(item.Image)" class="img-fluid" alt="@item.Title" title="@item.Title" style="width:100%; height:auto">
+                                    <img src="@Html.Raw(Model.Image)" class="img-fluid" alt="@Model.Title" title="@Model.Title" style="width:100%; height:auto">
                                 </a>
                             </div>
                             <div class="blog-info-middle">
                                 <ul style="color:white">
                                     <li>
                                         <a>
-                                            <i class="far fa-calendar-alt"></i> @item.CreatedDate.ToString("dd-MMM-yyyy")
+                                            <i class="far fa-calendar-alt"></i> @Model.CreatedDate.ToString("dd-MMM-yyyy")
                                         </a>
                                     </li>
-                                    <li class="mx-2">
-                                        <a>
-                                            <i class="far fa-thumbs-up"></i> 0 bəyənmə
-                                        </a>
-                                    </li>
+                                    <li> | </li>
+                                    @await Component.InvokeAsync("BlogDetailsScore", new { id = Model.ID })
+                                    <li> | </li>
                                     <li>
                                         <a>
-                                            <i class="far fa-comment"></i> 0 baxış
+                                            <i class="far fa-comment"></i> @Model.Comments.Where(x => x.Status == true).Count()
                                         </a>
                                     </li>
-
+                                    <li> | </li>
+                                    <li>
+                                        <a>
+                                            <i class="fas fa-list-alt"></i> @Model.Category.Name
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
 
                         <h3>
-                            @item.Title
+                            @Model.Title
                         </h3>
                         <p>
-                            @Html.Raw(item.Content)
+                            @Html.Raw(Model.Content)
                         </p>
                     </div>
 
-                    @await Component.InvokeAsync("BlogPageComment", new { id = item.ID })
+                    @await Component.InvokeAsync("BlogPageComment", new { id = Model.ID })
 
-                    @await Component.InvokeAsync("BlogPageWriteComment", new { id = item.ID })
+                    @await Component.InvokeAsync("BlogPageWriteComment", new { id = Model.ID })
                 </div>
 
                 <!--//left-->
@@ -60,7 +62,7 @@
                 <aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
                     <div class="right-blog-info text-left">
 
-                        @await Component.InvokeAsync("BlogPageMailSubscribe", new { id = item.ID })
+                        @await Component.InvokeAsync("BlogPageMailSubscribe", new { id = Model.ID })
 
                         @await Component.InvokeAsync("BlogPageCategory")
 
@@ -78,7 +80,7 @@
         </div>
     </section>
 
-}
+
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

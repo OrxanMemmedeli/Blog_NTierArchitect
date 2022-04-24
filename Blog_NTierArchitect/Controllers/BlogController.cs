@@ -1,11 +1,13 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Blog_NTierArchitect.Controllers
 {
@@ -19,10 +21,26 @@ namespace Blog_NTierArchitect.Controllers
             _blogService = blogService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string text, int? categoryID = 0, int? page = 1)
         {
-            var datas = _blogService.GetAllWithRelationships();
-            return View(datas);
+            if (!string.IsNullOrEmpty(text) || !string.IsNullOrWhiteSpace(text))
+            {
+                var blogs = _blogService.GetAllWithCategoryAndComments();
+                var list = _blogService.SerachData(blogs, text);
+                TempData["text"] = text;
+                return View(await list.ToPagedListAsync((int)page, 9));
+            }
+                TempData["text"] = null;
+            if (categoryID != 0)
+            {
+                var datas = await _blogService.GetAllWithCategoryAndComments(x => x.CategoryID == categoryID).ToPagedListAsync((int)page, 9);
+                return View(datas);
+            }
+            else
+            {
+                var datas = await _blogService.GetAllWithCategoryAndComments().ToPagedListAsync((int)page, 9);
+                return View(datas);
+            }
         }
 
         public IActionResult Details(int? id)
@@ -32,7 +50,7 @@ namespace Blog_NTierArchitect.Controllers
                 return NotFound();
             }
 
-            var blog = _blogService.GetBlogByID((int)id);
+            var blog = _blogService.GetByIDWithComments((int)id);
             return View(blog);
         }
 

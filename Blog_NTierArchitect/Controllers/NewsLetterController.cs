@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +13,12 @@ namespace Blog_NTierArchitect.Controllers
     [AllowAnonymous]
     public class NewsLetterController : Controller
     {
-        private readonly NewsLetterManager _newsLetterManager;
+        private readonly INewsLetterService _newsLetterService;
 
-        public NewsLetterController()
+
+        public NewsLetterController(INewsLetterService newsLetterService)
         {
-            _newsLetterManager = new NewsLetterManager(new EFNewsLetterRepository());
+            _newsLetterService = newsLetterService;
         }
 
         [HttpPost]
@@ -26,9 +27,9 @@ namespace Blog_NTierArchitect.Controllers
             NewsLetter newsLetter = new NewsLetter();
             newsLetter.Email = Email;
 
-            if (!_newsLetterManager.UniqueEmailControl(Email))
+            if (!_newsLetterService.UniqueEmailControl(Email))
             {
-                _newsLetterManager.Add(newsLetter);
+                _newsLetterService.Add(newsLetter);
                 TempData["SubscribeSuccess"] = "Mail adresiniz sistemə uğurla qeyd edildi. Abonə olduğunuz üçün təşəkkür edirik.";
             }
             else

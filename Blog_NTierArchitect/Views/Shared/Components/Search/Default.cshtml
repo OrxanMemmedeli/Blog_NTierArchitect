@@ -1,0 +1,5 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<form asp-action="Index" asp-controller="Blog" class="form-inline my-2 my-lg-0 header-search">
+    <input class="form-control mr-sm-2" type="search" placeholder="Burada axtarın ..." name="text" value="@(TempData["text"] == null ? "" : TempData["text"])">
+    <button class="btn btn1 my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+</form>
