@@ -16,11 +16,11 @@ namespace BlogApiDemo.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class AccountController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
-        public AccountController(IConfiguration configuration)
+        public LoginController(IConfiguration configuration)
         {
             _configuration = configuration;
         }

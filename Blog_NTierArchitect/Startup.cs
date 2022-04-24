@@ -50,12 +50,12 @@ namespace Blog_NTierArchitect
                 {
                     Name = "AspNetCoreIdentityExampleCookie", //Olusturulacak Cookie'yi isimlendiriyoruz.
                     HttpOnly = false, //Kotu niyetli insanlarin client-side tarafindan Cookie'ye erismesini engelliyoruz.
-                    //Expiration = TimeSpan.FromMinutes(2), //Olusturulacak Cookie'nin vadesini belirliyoruz.
+                    //Expiration = TimeSpan.FromMinutes(180), //Olusturulacak Cookie'nin vadesini belirliyoruz.
                     SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gonderilmemesini belirtiyoruz.
                     SecurePolicy = CookieSecurePolicy.Always //HTTPS uzerinden erisilebilir yapiyoruz.
                 };
                 _.SlidingExpiration = true; //Expiration suresinin yarisi kadar sure zarfinda istekte bulunulursa eğer geri kalan yarisini tekrar sifirlayarak ilk ayarlanan sureyi tazeleyecektir.
-                _.ExpireTimeSpan = TimeSpan.FromMinutes(2); //CookieBuilder nesnesinde tanimlanan Expiration degerinin varsayilan degerlerle ezilme ihtimaline karsin tekrardan Cookie vadesi burada da belirtiliyor.
+                _.ExpireTimeSpan = TimeSpan.FromMinutes(180); //CookieBuilder nesnesinde tanimlanan Expiration degerinin varsayilan degerlerle ezilme ihtimaline karsin tekrardan Cookie vadesi burada da belirtiliyor.
             });
 
             services.AddControllersWithViews().AddFluentValidation();

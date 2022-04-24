@@ -1,0 +1,145 @@
+﻿@model IEnumerable<EntityLayer.Concrete.About>
+
+@{
+    ViewData["Title"] = "Haqqımda";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-default  dim " title="Yeni məluat"><i class="fa fa-star"></i> Yeni məluat</a>
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox product-detail">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-md-5">
+
+
+                            <div class="product-images">
+
+                                <div>
+                                    <div class="image-imitation" style="justify-content:center; justify-items:center">
+                                        <img src="@item.ImageFirst" alt="ImageFirst" style="width:350px; height:auto"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="image-imitation" style="justify-content:center; justify-items:center">
+                                        <img src="@item.ImageSecond" alt="ImageFirst" style="width:350px; height:auto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>
+                                Status:
+                                @if (item.Status)
+                                {
+                                    <span class="badge badge-success">Aktiv</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Passiv</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-7">
+
+                            <h2 class="font-bold m-b-xs">
+                                Haqqımda mətni (1)
+                            </h2>
+                            <small>@item.DetailsFirst</small>
+                            <br />
+                            <h2 class="font-bold m-b-xs">
+                                Haqqımda mətni (2)
+                            </h2>
+                            <small>@Html.Raw(item.DetailsSecond)</small>
+
+                            <hr>
+
+                            <h4>Əlaqə məlumatları</h4>
+
+                            <dl class="small m-t-md">
+                                <dt>Ünvan</dt>
+                                <dd>@Html.Raw(item.Adress)</dd>
+                                <dt>Email</dt>
+                                <dd>@Html.Raw(item.Email)</dd>
+                                <dt>Telefon</dt>
+                                <dd>@Html.Raw(item.Telephone)</dd>
+                            </dl>
+                            <hr>
+
+                            <div>
+                                <div class="btn-group">
+                                    @if (item.Status)
+                                    {
+                                        <a asp-action="Status" asp-controller="About" asp-area="Admin" asp-route-id="@item.ID" class="btn btn-warning dim" title="Passiv et" style="justify-content:left"><i class="fa fa-warning"></i> Passiv et</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Status" asp-controller="About" asp-area="Admin" asp-route-id="@item.ID" class="btn btn-primary dim" title="Aktiv et" style="justify-content:left"><i class="fa fa-warning"></i> Aktiv et</a>
+                                    }
+
+                                    <a class="btn btn-info  dim" asp-action="Edit" asp-controller="About" asp-area="Admin" asp-route-id="@item.ID" title="Düzəliş et"><i class="fa fa-paste"></i> Düzəliş et</a>
+                                    <a class="btn btn-danger  dim" asp-action="Delete" asp-controller="About" asp-area="Admin" asp-route-id="@item.ID" title="Sil" onclick="return confirm('Seçdiyiniz sətr silinəcək. Silinən məlumatların geri qaytarılması mümkün deyil. \nSətiri yənədə silmək istəyirsinizmi?')"><i class="fa fa-trash"></i> Sil</a>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ibox-footer">
+                    @Html.Raw(item.Map)
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+
+            $('.product-images').slick({
+                dots: true
+            });
+
+        });
+
+    </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @if (TempData["StatusAbout"] != null)
+    {
+        <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["StatusAbout"].ToString()))");
+        </script>
+    }
+
+    @if (TempData["DeleteAbout"] != null)
+    {
+        <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteAbout"].ToString()))");
+        </script>
+    }
+
+    @if (TempData["EditAbout"] != null)
+    {
+        <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditAbout"].ToString()))");
+        </script>
+    }
+
+}
