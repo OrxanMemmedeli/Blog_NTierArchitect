@@ -18,7 +18,7 @@
 
                     <div class="blog_info_left_grid">
                         <a >
-                            <img src="@Model.ImageFirst" class="img-fluid" alt="">
+                            <img src="@Model.ImageFirst" class="img-fluid" alt="" style="width:100%">
                         </a>
                     </div>
                     <h3>
@@ -30,11 +30,11 @@
                     <hr />
                     <div class="blog_info_left_grid">
                         <a >
-                            <img src="@Model.ImageSecond" class="img-fluid" alt="">
+                            <img src="@Model.ImageSecond" class="img-fluid" alt="" style="width:100%">
                         </a>
                     </div>
                     <p>
-                        @Model.DetailsSecond
+                        @Html.Raw(Model.DetailsSecond)
                     </p>
                 </div>
             </div>
@@ -48,7 +48,7 @@
 
                     <div class="tech-btm">
                         <h4>Son Paylaşımlar</h4>
-                        @await Component.InvokeAsync("LastSharedPosts", new { count = 3})
+                        @await Component.InvokeAsync("LastSharedPosts", new { count = 5})
 
                     </div>
                 </div>

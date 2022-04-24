@@ -55,17 +55,20 @@ namespace Blog_NTierArchitect.Controllers
             {
                 //İlgili kullanıcıya dair önceden oluşturulmuş bir Cookie varsa siliyoruz.
                 await _signInManager.SignOutAsync();
-
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
-                if (result.Succeeded)
+                AppUser user = _userManager.Users.FirstOrDefault(x => x.UserName == model.UserName && x.Status == true);
+                if (user != null)
                 {
-                    if (!string.IsNullOrEmpty(returnUrl))
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
+                    if (result.Succeeded)
                     {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return Redirect("/Writer/Dashboard");
+                        if (!string.IsNullOrEmpty(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            return Redirect("/Writer/Dashboard");
+                        }
                     }
                 }
             }
@@ -82,7 +85,7 @@ namespace Blog_NTierArchitect.Controllers
         {
             await _signInManager.SignOutAsync();
             //HttpContext.SignOutAsync();
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Login", "Account");
         }
 
 

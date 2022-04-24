@@ -19,7 +19,7 @@ namespace Blog_NTierArchitect.ViewComponents.Writer
 
         public IViewComponentResult Invoke()
         {
-            var notification = _notificationService.GetAll(x => x.Status == true);
+            var notification = _notificationService.GetAll(x => x.Status == true).OrderByDescending(x => x.NotificationDate);
             return View(notification);
         }
     }

@@ -1,0 +1,101 @@
+﻿@model EntityLayer.Concrete.About
+
+@{
+    ViewData["Title"] = "MəlumatıYenilə";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>MəlumatıYenilə</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="ImageFirst" />
+            <input type="hidden" asp-for="ImageSecond" />
+            <div class="form-group">
+                <label class="control-label">Haqqımda mətni (1)</label>
+                <textarea asp-for="DetailsFirst" class="form-control" style="height:250px"></textarea>
+                <span asp-validation-for="DetailsFirst" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Şəkil (1)</label>
+                <input asp-for="FileFirst" class="form-control" type="file" />
+                <img src="@Model.ImageFirst" style="width:250px" />
+                <span asp-validation-for="ImageFirst" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Haqqımda mətni (2)</label>
+                <textarea id="DetailsSecond" class="form-control" asp-for="DetailsSecond"></textarea>
+                <span asp-validation-for="DetailsSecond" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Şəkil (2)</label>
+                <input asp-for="FileSecond" class="form-control" type="file" />
+                <img src="@Model.ImageSecond" style="width:250px" />
+                <span asp-validation-for="ImageSecond" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ünvan</label>
+                <textarea id="Adress" class="form-control" asp-for="Adress"></textarea>
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <textarea id="Email" class="form-control" asp-for="Email"></textarea>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Telefon</label>
+                <textarea id="Telephone" class="form-control" asp-for="Telephone"></textarea>
+                <span asp-validation-for="Telephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Xəritə</label>
+                <textarea id="Map" class="form-control" asp-for="Map"></textarea>
+                <span asp-validation-for="Map" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Yadda saxla" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-dark">Geri</a>
+</div>
+
+@section Scripts{
+
+    <script src="https://cdn.tiny.cloud/1/5fri9qvj8j8o609qcyj6pujpvy0yexezsf47t8wphcsbcnp1/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#DetailsSecond',
+        });
+        tinymce.init({
+            selector: '#Adress',
+        });
+        tinymce.init({
+            selector: '#Email',
+        });
+        tinymce.init({
+            selector: '#Telephone',
+        });
+        tinymce.init({
+            selector: '#Map',
+            menubar: false,
+            plugins: "code",
+            external_plugins: { tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js' },
+            toolbar1: 'code ',
+        });
+    </script>
+}

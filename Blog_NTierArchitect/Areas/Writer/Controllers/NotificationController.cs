@@ -20,7 +20,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
 
         public IActionResult Index()
         {
-            var notifications = _notificationService.GetAll();
+            var notifications = _notificationService.GetAll().OrderByDescending(x => x.NotificationDate);
             return View(notifications);
         }
 
