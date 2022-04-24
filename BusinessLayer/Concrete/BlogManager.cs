@@ -43,6 +43,16 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetAll(x => x.WriterID == id);
         }
 
+        public List<Blog> GetAllWithCategoryAndComments()
+        {
+            return _blogDal.GetAllWithCategoryAndComments();
+        }
+
+        public List<Blog> GetAllWithCategoryAndComments(Expression<Func<Blog, bool>> filter)
+        {
+            return _blogDal.GetAllWithCategoryAndComments(filter);
+        }
+
         public List<Blog> GetAllWithRelationships()
         {
             return _blogDal.GetAllWithRelationships();
@@ -63,9 +73,19 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetById(id);
         }
 
+        public Blog GetByIDWithComments(int id)
+        {
+            return _blogDal.GetByIDWithComments(id);
+        }
+
         public List<Blog> GetLastPosts(int count)
         {
             return _blogDal.GetAll().OrderByDescending(x => x.CreatedDate).Take(count).ToList();
+        }
+
+        public List<Blog> SerachData(List<Blog> blogs, string data)
+        {
+            return _blogDal.SerachData(blogs, data);
         }
 
         public void Update(Blog t)

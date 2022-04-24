@@ -1,0 +1,15 @@
+﻿@model EntityLayer.Concrete.BlogScore
+
+
+<li class="mx-2">
+    <a>
+        @if (Model.ScoreCount == 0)
+        {
+            <i class="far fa-thumbs-up"></i> <span>0</span> 
+        }
+        else
+        {
+            <i class="far fa-thumbs-up"></i> @Math.Round(Convert.ToDecimal(Model.Total / Model.ScoreCount), 2)
+        }
+    </a>
+</li>
