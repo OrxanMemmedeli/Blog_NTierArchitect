@@ -36,9 +36,10 @@ namespace Blog_NTierArchitect
                 x.Password.RequireUppercase = false;
                 x.Password.RequiredLength = 5; //min simvol sayi
                 x.User.RequireUniqueEmail = true; //emailin uniq olmasi
-                
+
             })
                 .AddErrorDescriber<TranslateErrorMessage>()
+                .AddRoles<AppRole>()
                 .AddEntityFrameworkStores<BlogContext>();
             services.Register();
 
@@ -55,7 +56,7 @@ namespace Blog_NTierArchitect
                     SecurePolicy = CookieSecurePolicy.Always //HTTPS uzerinden erisilebilir yapiyoruz.
                 };
                 _.SlidingExpiration = true; //Expiration suresinin yarisi kadar sure zarfinda istekte bulunulursa eğer geri kalan yarisini tekrar sifirlayarak ilk ayarlanan sureyi tazeleyecektir.
-                _.ExpireTimeSpan = TimeSpan.FromMinutes(180); //CookieBuilder nesnesinde tanimlanan Expiration degerinin varsayilan degerlerle ezilme ihtimaline karsin tekrardan Cookie vadesi burada da belirtiliyor.
+                _.ExpireTimeSpan = TimeSpan.FromMinutes(120); //CookieBuilder nesnesinde tanimlanan Expiration degerinin varsayilan degerlerle ezilme ihtimaline karsin tekrardan Cookie vadesi burada da belirtiliyor.
             });
 
             services.AddControllersWithViews().AddFluentValidation();
@@ -66,13 +67,14 @@ namespace Blog_NTierArchitect
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                 o.LoginPath = "/Account/Login";
                 o.LogoutPath = "/Account/LogOut";
-                o.AccessDeniedPath = "/Account/Denied"; //Role uygun olmadiqda yonelmeni temin edecekdir.
+                o.AccessDeniedPath = "/Account/AccessDenied"; //Role uygun olmadiqda yonelmeni temin edecekdir.
                 o.SlidingExpiration = true;
             });
 
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
+                .RequireRole("Admin, Manager, Writer, User")
                 .RequireAuthenticatedUser()
                 .Build();
 
