@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using Tools.Conrete;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class NewsLetterController : Controller
     {
         private readonly INewsLetterService _newsLetterService;

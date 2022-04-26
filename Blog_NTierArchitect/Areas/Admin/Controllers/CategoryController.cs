@@ -2,6 +2,7 @@
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using X.PagedList;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -77,6 +79,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int? id)
         {
             if (id == null)

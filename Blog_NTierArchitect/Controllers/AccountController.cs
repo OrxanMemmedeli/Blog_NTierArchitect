@@ -33,17 +33,17 @@ namespace Blog_NTierArchitect.Controllers
         public IActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                if (Url.IsLocalUrl(ViewBag.ReturnUrl))
-                {
-                    return Redirect(ViewBag.ReturnUrl);
-                }
-                else
-                {
-                    return Redirect("/Writer");
-                }
-            }
+            //if (HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    if (Url.IsLocalUrl(ViewBag.ReturnUrl))
+            //    {
+            //        return Redirect(ViewBag.ReturnUrl);
+            //    }
+            //    else
+            //    {
+            //        return Redirect("/Writer");
+            //    }
+            //}
             return View();
         }
 
@@ -76,7 +76,7 @@ namespace Blog_NTierArchitect.Controllers
             return View(model);
         }
 
-        public IActionResult Denied()
+        public IActionResult AccessDenied()
         {
             return View();
         }
