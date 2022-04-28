@@ -1,0 +1,88 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Contact>
+
+@{
+    ViewData["Title"] = "Əlaqə mesajları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    @await Component.InvokeAsync("LeftMenu")
+    <div class="col-lg-9 animated fadeInRight">
+        <div class="mail-box-header">
+            <h2>
+                Əlaqə mesajları (@Model.Count())
+            </h2>
+            @await Component.InvokeAsync("MainButtons")
+        </div>
+        <div class="mail-box">
+            <table class="table table-hover table-mail">
+                <tbody>
+                    @if (Model.Count() != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="read" id="@item.ID">
+                                <td class="check-mail">
+                                    <input type="checkbox" class="i-checks" value="@item.ID">
+                                </td>
+                                <td class="mail-ontact"><a href="/admin/Contact/Details/@item.ID">@item.Email</a></td>
+                                <td class="mail-subject"><a href="/admin/Contact/Details/@item.ID">@(item.Message.Length <= 100 ? item.Message : item.Message.Substring(0, item.Message.Substring(0,100).LastIndexOf(" "))+"...")</a></td>
+                                <td class="mail-subject"><a href="/admin/Contact/Details/@item.ID">@Html.Raw(item.Status == true ? "<span class='badge badge-danger'>Oxunmadı</span>" : "<span class='badge badge-success'>Oxundu</span>")</a></td>
+                                <td class="text-right mail-date">
+                                    ~ @(Math.Round((DateTime.Now - item.CreatedDate).TotalDays, 0)) gün əvvəl
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="read">
+                            <td class="text-danger">Göstəriləcək mesaj yoxdur.</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        var array = [];
+        $("input[type='checkbox']").on("click", function () {
+            if ($(this).is(':checked')) {
+                var id = $(this).closest('tr').prop('id');
+                array.push(id);
+            }
+        });
+
+        document.getElementById("isread").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Contact/IsRead/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+
+        document.getElementById("delete").onclick = function () {
+            console.log(array);
+            $.ajax({
+                type: "Post",
+                url: "/Admin/Contact/Delete/",
+                data: { array: array },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        };
+    </script>
+}

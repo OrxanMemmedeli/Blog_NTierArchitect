@@ -10,27 +10,27 @@ namespace Blog_NTierArchitect.Customattributes
         private readonly string[] Roles;
         public CustomAuthorizeAttribute(string roles)
         {
-[CustomAuthorize("Admin")]   Roles = roles.Split(",");
+            Roles = roles.Split(",");
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-[CustomAuthorize("Admin")]   var originalUrl = context.HttpContext.Request.Path.ToUriComponent();
-[CustomAuthorize("Admin")]   var userInRole = false;
-[CustomAuthorize("Admin")]   foreach (var item in Roles)
-[CustomAuthorize("Admin")]   {
-[CustomAuthorize("Admin")]       userInRole = context.HttpContext.User.IsInRole(item);
-[CustomAuthorize("Admin")]       if (userInRole)
-[CustomAuthorize("Admin")][CustomAuthorize("Admin")]  break;
-[CustomAuthorize("Admin")]   }
+            var originalUrl = context.HttpContext.Request.Path.ToUriComponent();
+            var userInRole = false;
+            foreach (var item in Roles)
+            {
+                userInRole = context.HttpContext.User.IsInRole(item.Trim());
+                if (userInRole)
+                    break;
+            }
 
-[CustomAuthorize("Admin")]   if (!userInRole)
-[CustomAuthorize("Admin")]   {
-[CustomAuthorize("Admin")]       //context.Result = new RedirectResult(originalUrl);
-[CustomAuthorize("Admin")]       //context.Result = new RedirectToRouteResult(originalUrl);
-[CustomAuthorize("Admin")]       context.Result = new RedirectResult("/Account/AccessDenied");
+            if (!userInRole)
+            {
+                //context.Result = new RedirectResult(originalUrl);
+                //context.Result = new RedirectToRouteResult(originalUrl);
+                context.Result = new RedirectResult("/Account/AccessDenied");
 
-[CustomAuthorize("Admin")]   }
+            }
 
         }
     }

@@ -1,9 +1,10 @@
-﻿@model EntityLayer.Concrete.Message
+﻿@model EntityLayer.Concrete.Contact
 
 @{
     ViewData["Title"] = "Ətraflı baxış";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div class="row">
     @await Component.InvokeAsync("LeftMenu")
 
@@ -25,8 +26,7 @@
                 </h3>
                 <h5>
                     <span class="float-right font-normal">@Model.CreatedDate.ToShortDateString()</span>
-                    <span class="font-normal">Kimdən: </span>@Model.SenderUser.Email - (@Model.SenderUser.UserName)
-                    <span class="font-normal">Kimə: </span>@Model.ReceiverUser.Email - (@Model.ReceiverUser.UserName)
+                    <span class="font-normal">Kimdən: </span>@Model.Email 
                 </h5>
             </div>
         </div>
@@ -34,7 +34,7 @@
 
 
             <div class="mail-body">
-                @Html.Raw(Model.Details)
+                @Html.Raw(Model.Message)
             </div>
 
         </div>
@@ -54,7 +54,7 @@
             console.log(array);
             $.ajax({
                 type: "Post",
-                url: "/Admin/Message/IsRead/",
+                url: "/Admin/Contact/IsRead/",
                 data: { array: array },
                 success: function () {
                     location.reload(true);
@@ -66,7 +66,7 @@
             console.log(array);
             $.ajax({
                 type: "Post",
-                url: "/Admin/Message/Delete/",
+                url: "/Admin/Contact/Delete/",
                 data: { array: array },
                 success: function () {
                     location.reload(true);
