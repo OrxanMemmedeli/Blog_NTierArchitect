@@ -1,4 +1,5 @@
 ﻿using Blog_NTierArchitect.Areas.Admin.Models;
+using Blog_NTierArchitect.Customattributes;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [CustomAuthorize("Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

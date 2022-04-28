@@ -1,5 +1,6 @@
 ﻿using Blog_NTierArchitect.Areas.Writer.Models.ViewModels;
 using Blog_NTierArchitect.Areas.Writer.Models.ViewModelValidators;
+using Blog_NTierArchitect.Customattributes;
 using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Writer.Controllers
 {
     [Area("Writer")]
+    [CustomAuthorize("Admin, Manager, Writer, User")]
     public class WriterController : Controller
     {
         private readonly WriterDataUpdateValidator _validator;

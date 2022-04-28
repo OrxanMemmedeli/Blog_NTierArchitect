@@ -1,4 +1,5 @@
 ﻿using Blog_NTierArchitect.Areas.Admin.Models;
+using Blog_NTierArchitect.Customattributes;
 using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Manager")]
+    [CustomAuthorize("Admin, Manager")]
     public class GoogleChartController : Controller
     {
         private readonly IBlogService _blogService;

@@ -6,11 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Blog_NTierArchitect.Customattributes;
 
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Manager")]
+    [CustomAuthorize("Admin, Manager")]
     public class CommentController : Controller
     {
         private readonly ICommentService _commentService;
@@ -57,7 +58,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             TempData["EditComment"] = "Məlumat yeniləndi.";
             return RedirectToAction(nameof(Index));
         }
-        [Authorize(Roles = "Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult Delete(int? id)
         {
             if (id == null)

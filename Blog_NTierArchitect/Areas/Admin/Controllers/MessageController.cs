@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Abstract;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Manager")]
+    [CustomAuthorize("Admin, Manager")]
     public class MessageController : Controller
     {
         private readonly IMessageService _messageService;
@@ -85,7 +86,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult Delete(int[] array)
         {
             if (array.Count() > 0)

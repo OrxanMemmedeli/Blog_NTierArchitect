@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Manager")]
+    [CustomAuthorize("Admin, Manager")]
     public class NotificationController : Controller
     {
         private readonly INotificationService _notificationService;
