@@ -27,6 +27,11 @@ namespace BusinessLayer.Concrete
             _contactDal.Delete(t);
         }
 
+        public void DeleteRange(List<Contact> contacts)
+        {
+            _contactDal.DeleteRange(contacts);
+        }
+
         public List<Contact> GetAll()
         {
             return _contactDal.GetAll();
@@ -45,6 +50,11 @@ namespace BusinessLayer.Concrete
         public void Update(Contact t)
         {
             _contactDal.Update(t);
+        }
+
+        public void UpdateRange(List<Contact> contacts)
+        {
+            _contactDal.UpdateRange(contacts);
         }
     }
 }

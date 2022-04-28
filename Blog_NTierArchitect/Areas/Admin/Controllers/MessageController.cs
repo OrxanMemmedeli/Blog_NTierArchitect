@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +45,19 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
             return View(messages);
         }
 
+        private List<SelectListItem> GetEmails()
+        {
+            return (from x in _userManager.Users.Where(x => x.Status == true)
+                    select new SelectListItem
+                    {
+                        Text = x.Email + (x.UserName),
+                        Value = x.Id.ToString()
+                    }).ToList();
+        }
+
         public IActionResult SendMessage()
         {
+            ViewData["AdminEmails"] = GetEmails();
             return View();
         }
 
@@ -79,7 +91,7 @@ namespace Blog_NTierArchitect.Areas.Admin.Controllers
                     }
 
                 }
-                _messageService.UpdateRange(messages);
+                _messageService.UpdateRange(list);
                 TempData["MessageIsRead"] = array.Count() +" mesaj oxundu olaraq qeyd edildi.";
                 return Ok();
             }

@@ -7,5 +7,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IContactDal : IGenericDal<Contact>
     {
+        void UpdateRange(List<Contact> contacts);
+        void DeleteRange(List<Contact> contacts);
     }
 }

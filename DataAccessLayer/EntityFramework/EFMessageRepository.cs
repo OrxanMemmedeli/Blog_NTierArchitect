@@ -20,7 +20,11 @@ namespace DataAccessLayer.EntityFramework
             context.Messages.RemoveRange(messages);
             context.SaveChanges();
         }
-
+        public void UpdateRange(List<Message> messages)
+        {
+            context.UpdateRange(messages);
+            context.SaveChanges();
+        }
         public List<Message> GetAllWithWriter(Expression<Func<Message, bool>> filter)
         {
             return context.Messages.Include(x => x.ReceiverUser).Include(x => x.SenderUser).Where(filter).ToList();
@@ -35,10 +39,6 @@ namespace DataAccessLayer.EntityFramework
             return context.Messages.Include(x => x.ReceiverUser).Include(x => x.SenderUser).FirstOrDefault(filter);
         }
 
-        public void UpdateRange(List<Message> messages)
-        {
-            context.UpdateRange(messages);
-            context.SaveChanges();
-        }
+
     }
 }
