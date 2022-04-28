@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Abstract;
 using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -16,6 +17,8 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Writer.Controllers
 {
     [Area("Writer")]
+    [CustomAuthorize("Admin, Manager, Writer, User")]
+
     public class BlogController : Controller
     {
         private readonly IBlogService _blogService;
@@ -119,6 +122,7 @@ namespace Blog_NTierArchitect.Areas.Writer.Controllers
 
         }
 
+        [CustomAuthorize("Admin, Manager ")]
         public IActionResult Delete(int? id)
         {
             if (id == null)

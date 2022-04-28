@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Concrete;
 using BusinessLayer.Validations;
 using DataAccessLayer.EntityFramework;
 using FluentValidation.Results;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [CustomAuthorize("Admin")]
     public class WriterController : Controller
     {
         private readonly WriterManager _writerManager;

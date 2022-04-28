@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Writer.Controllers
 {
     [Area("Writer")]
+    [CustomAuthorize("Admin, Manager, Writer")]
     public class MessageController : Controller
     {
         private readonly IMessageService _messageService;

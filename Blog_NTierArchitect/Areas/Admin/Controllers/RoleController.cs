@@ -1,4 +1,5 @@
 ﻿using Blog_NTierArchitect.Areas.Admin.Models;
+using Blog_NTierArchitect.Customattributes;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [CustomAuthorize("Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;

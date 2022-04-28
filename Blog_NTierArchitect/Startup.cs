@@ -32,14 +32,14 @@ namespace Blog_NTierArchitect
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BlogContext>();
-            services.AddIdentity<AppUser, AppRole>(x => {
+            services.AddIdentity<AppUser, AppRole>(x =>
+            {
                 x.Password.RequireUppercase = false;
                 x.Password.RequiredLength = 5; //min simvol sayi
                 x.User.RequireUniqueEmail = true; //emailin uniq olmasi
 
             })
                 .AddErrorDescriber<TranslateErrorMessage>()
-                .AddRoles<AppRole>()
                 .AddEntityFrameworkStores<BlogContext>();
             services.Register();
 
@@ -51,7 +51,7 @@ namespace Blog_NTierArchitect
                 {
                     Name = "AspNetCoreIdentityExampleCookie", //Olusturulacak Cookie'yi isimlendiriyoruz.
                     HttpOnly = false, //Kotu niyetli insanlarin client-side tarafindan Cookie'ye erismesini engelliyoruz.
-                    //Expiration = TimeSpan.FromMinutes(180), //Olusturulacak Cookie'nin vadesini belirliyoruz.
+                                      //Expiration = TimeSpan.FromMinutes(180), //Olusturulacak Cookie'nin vadesini belirliyoruz.
                     SameSite = SameSiteMode.Lax, //Top level navigasyonlara sebep olmayan requestlere Cookie'nin gonderilmemesini belirtiyoruz.
                     SecurePolicy = CookieSecurePolicy.Always //HTTPS uzerinden erisilebilir yapiyoruz.
                 };
@@ -74,7 +74,6 @@ namespace Blog_NTierArchitect
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
-                .RequireRole("Admin, Manager, Writer, User")
                 .RequireAuthenticatedUser()
                 .Build();
 
@@ -105,6 +104,7 @@ namespace Blog_NTierArchitect
 
             app.UseAuthorization();
             app.UseAuthentication();
+
 
             app.UseEndpoints(endpoints =>
             {

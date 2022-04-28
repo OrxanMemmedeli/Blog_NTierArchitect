@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using Blog_NTierArchitect.Customattributes;
+using BusinessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace Blog_NTierArchitect.Areas.Writer.Controllers
 {
     [Area("Writer")]
+    [CustomAuthorize("Admin, Manager, Writer, User")]
     public class DashboardController : Controller
     {
         private readonly IBlogService _blogService;
