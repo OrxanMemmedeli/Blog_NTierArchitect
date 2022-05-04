@@ -12,7 +12,8 @@ namespace DataAccessLayer.Concrete.Context
         {
             //optionsBuilder.UseSqlServer(@"Server=ILQAR\SQLEXPRESS01; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-TROAMS4; Database=Blog; Integrated Security = true; MultipleActiveResultSets = True");
-            optionsBuilder.UseSqlServer(@"workstation id=CoreBlog.mssql.somee.com;packet size=4096;user id=OrkhanCore_SQLLogin_1;pwd=9gc1b4uvm8;data source=CoreBlog.mssql.somee.com;persist security info=False;initial catalog=CoreBlog; MultipleActiveResultSets = True");
+            //optionsBuilder.UseSqlServer(@"workstation id=CoreBlog.mssql.somee.com;packet size=4096;user id=OrkhanCore_SQLLogin_1;pwd=9gc1b4uvm8;data source=CoreBlog.mssql.somee.com;persist security info=False;initial catalog=CoreBlog; MultipleActiveResultSets = True");
+            optionsBuilder.UseSqlServer(@"Server=161.97.166.102; Database=HilalDemoFirst; User Id=orxan; password=Ov!tBg@A2g2jA@Z; Trusted_Connection=False; MultipleActiveResultSets=true;");
 
         }
 
